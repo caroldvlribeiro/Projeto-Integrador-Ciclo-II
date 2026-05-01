@@ -1,5 +1,6 @@
 <?php
 require_once '../interfaces/ICrud.php';
+
 abstract class Model implements ICrud {
     protected $_PDO;
     protected $_table;
@@ -9,46 +10,52 @@ abstract class Model implements ICrud {
         $this->_PDO = $PDO;
         $this->_table = $table;
     }
+
     public function getError() {
         return $this->_error;
     }
-    //buscar item na tabela por id
-    public function buscarID($id) {
-        $select = $this->_PDO->prepare("SELECT * FROM {$this->_table} where id = :id");
-        $select->bindParam(':id', $id);
-        $select->execute();
-        return $select->fetchAll(PDO::FETCH_ASSOC);
+
+    // BUSCAR POR ID
+    public function buscarPorId($id) {
+        $sql = "SELECT * FROM {$this->_table} WHERE id = :id";
+        $stmt = $this->_PDO->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    //deletar
-    public function deletar($id){
-        $delete = $this->_PDO->prepare("DELETE FROM {$this->_table} where id = :id");
-        $delete->bindParam(':id', $id);
-        return $delete->execute();
+
+    // DELETAR
+    public function deletar($id) {
+        $sql = "DELETE FROM {$this->_table} WHERE id = :id";
+        $stmt = $this->_PDO->prepare($sql);
+        return $stmt->execute(['id' => $id]);
     }
-    //listar todos os itens da tabela
-    public function listar(){
-        $select = $this->_PDO->prepare("SELECT * FROM {$this->_table}");
-        $select->execute();
-        return $select->fetchAll(PDO::FETCH_ASSOC);
+
+    // LISTAR TODOS
+    public function listarTodos() {
+        $sql = "SELECT * FROM {$this->_table}";
+        $stmt = $this->_PDO->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    //validar se os campos estão preenchidos
+
+    // VALIDAR CAMPOS
     public function validar($dados) {
         foreach ($dados as $dado) {
-            if (empty($dado)) {
+            if (empty($dado) && $dado !== "0") {
                 $this->_error = "Preencha todos os campos!";
                 return false;
             }
         }
         return true;
     }
+
+    // EXECUTAR SQL (INSERT/UPDATE)
     public function executar($sql, $dados) {
-        $insert = $this->_PDO->prepare($sql);
-        foreach ($dados as $key => $dado) {
-            $insert->bindValue(":$key", $dado);
-        }
-        return $insert->execute();
+        $stmt = $this->_PDO->prepare($sql);
+        return $stmt->execute($dados);
     }
 
+    // ABSTRACTS
     abstract public function salvar();
-    abstract public function atualizar($id);
+    abstract public function atualizar();
 }

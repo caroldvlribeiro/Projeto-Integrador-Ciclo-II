@@ -2,7 +2,7 @@
 
 interface IAutenticavel
 {
-    public function autenticar($usuario, $senha);
+    public function autenticar($user, $senha);
     public function logout();
     public function temPermissao($acao);
 }
