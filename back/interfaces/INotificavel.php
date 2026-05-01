@@ -2,8 +2,8 @@
 
 interface INotificavel
 {
-    public function notificar($mensagem);
-    public function enviarAlerta($tipo);
+    public function notificar(string $mensagem): void;
+    public function enviarAlerta(string $tipo): bool;
 }
 
 ?>

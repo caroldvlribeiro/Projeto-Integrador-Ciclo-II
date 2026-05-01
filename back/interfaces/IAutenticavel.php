@@ -2,9 +2,9 @@
 
 interface IAutenticavel
 {
-    public function autenticar($user, $senha);
-    public function logout();
-    public function temPermissao($acao);
+    public function autenticar(string $usuario, string $senha): bool;
+    public function logout(): void;
+    public function temPermissao(string $acao): bool;
 }
 
 ?>
