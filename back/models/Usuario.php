@@ -1,21 +1,26 @@
-<?php 
+<?php
 require_once 'Pessoa.php';
+require_once '../interfaces/IAutenticavel.php';
 
-class Usuario extends Pessoa implements IAutenticavel {
+class Usuario extends Pessoa implements IAutenticavel
+{
 
-    private $senha;
+    private $idUsuario;
     private $tpUsuario;
 
-    public function __construct(PDO $pdo) {
+    public function __construct(PDO $pdo)
+    {
         parent::__construct($pdo, 'usuarios');
     }
 
     // SETTERS
-    public function setSenha($senha) {
-        $this->senha = $senha;
+    public function setIdUsuario($idUsuario)
+    {
+        $this->idUsuario = $idUsuario;
     }
 
-    public function setTpUsuario($tpUsuario) {
+    public function setTpUsuario($tpUsuario)
+    {
         $tiposValidos = ['admin', 'vendedor', 'cliente'];
 
         if (!in_array($tpUsuario, $tiposValidos)) {
@@ -26,107 +31,111 @@ class Usuario extends Pessoa implements IAutenticavel {
     }
 
     // GETTERS
-    public function getTpUsuario() {
+    public function getIdUsuario()
+    {
+        return $this->idUsuario;
+    }
+
+    public function getTpUsuario()
+    {
         return $this->tpUsuario;
     }
 
-    // CREATE
-    public function salvar() {
-        if (!$this->validar([
-            $this->getNome(), 
-            $this->getTelefone(), 
-            $this->senha,
-            $this->tpUsuario
-        ])) {
-            return false;
-        }
-
-        $sql = "INSERT INTO {$this->_table} 
-                (nome, telefone, senha, tp_usuario) 
-                VALUES (:nome, :telefone, :senha, :tp_usuario)";
-
-        return $this->executar($sql, [
-            'nome' => $this->getNome(),
-            'telefone' => $this->getTelefone(),
-            'senha' => password_hash($this->senha, PASSWORD_DEFAULT),
-            'tp_usuario' => $this->tpUsuario
-        ]);
+    // MÉTODOS DO DIAGRAMA
+    public function getPerfil(): string
+    {
+        return "Usuário: {$this->nome} | Tipo: {$this->tpUsuario}";
     }
 
-    // UPDATE
-    public function atualizar() {
-        if (!$this->getId()) {
-            throw new Exception("ID do usuário não definido");
-        }
+    public function isAdmin(): bool
+    {
+        return $this->tpUsuario === 'admin';
+    }
 
-        if (!$this->validar([
-            $this->getNome(), 
-            $this->getTelefone(),
-            $this->tpUsuario
-        ])) {
-            return false;
-        }
-
+    // CREATE
+    public function salvar(): bool
+    {
         $dados = [
-            'id' => $this->getId(),
-            'nome' => $this->getNome(),
-            'telefone' => $this->getTelefone(),
+            'nome' => $this->nome,
+            'telefone' => $this->telefone,
+            'senha' => $this->senha,
             'tp_usuario' => $this->tpUsuario
         ];
 
-        $sql = "UPDATE {$this->_table} SET 
-                nome = :nome, 
-                telefone = :telefone,
-                tp_usuario = :tp_usuario";
-
-        if ($this->senha) {
-            $sql .= ", senha = :senha";
-            $dados['senha'] = password_hash($this->senha, PASSWORD_DEFAULT);
+        if ($this->validar($dados)) {
+            $sql = "INSERT INTO {$this->_table} 
+                    (nome, telefone, senha, tp_usuario) 
+                    VALUES (:nome, :telefone, :senha, :tp_usuario)";
+            return $this->executar($sql, $dados);
         }
-
-        $sql .= " WHERE id = :id";
-
-        return $this->executar($sql, $dados);
+        return false;
     }
 
-    // LOGIN
-    public function autenticar($telefone, $senha) {
-        $sql = "SELECT * FROM {$this->_table} WHERE telefone = :telefone";
+    // UPDATE
+    public function atualizar(int $id): bool
+    {
+        $dados = [
+            'id' => $id,
+            'nome' => $this->nome,
+            'telefone' => $this->telefone,
+            'tp_usuario' => $this->tpUsuario
+        ];
+
+        if ($this->validar($dados)) {
+            $sql = "UPDATE {$this->_table} SET 
+                    nome = :nome, 
+                    telefone = :telefone,
+                    tp_usuario = :tp_usuario";
+
+            if ($this->senha) {
+                $sql .= ", senha = :senha";
+                $dados['senha'] = $this->senha;
+            }
+
+            $sql .= " WHERE id = :id";
+
+            return $this->executar($sql, $dados);
+        }
+        return false;
+    }
+
+    // LOGIN (IAutenticavel)
+    public function autenticar(string $usuario, string $senha): bool
+    {
+        $sql = "SELECT * FROM {$this->_table} WHERE nome = :nome";
         $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['telefone' => $telefone]);
+        $stmt->execute(['nome' => $usuario]);
 
-        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($usuario && password_verify($senha, $usuario['senha'])) {
+        if ($user && password_verify($senha, $user['senha'])) {
+            unset($user['senha']);
 
-            unset($usuario['senha']);
-
-            // inicia sessão com segurança
             if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
 
             session_regenerate_id(true);
+            $_SESSION['usuario'] = $user;
 
-            $_SESSION['usuario'] = $usuario;
-
-            return $usuario;
+            return true;
         }
 
         return false;
     }
 
-    // LOGOUT
-    public function logout(){
+    // LOGOUT (IAutenticavel)
+    public function logout(): void
+    {
         if (session_status() === PHP_SESSION_ACTIVE) {
             session_unset();
             session_destroy();
         }
     }
 
-    // PERMISSÃO
-    public function temPermissao($acao){
-        // exemplo simples
+    // PERMISSÃO (IAutenticavel)
+    public function temPermissao(string $acao): bool
+    {
         if ($this->tpUsuario === 'admin') {
             return true;
         }
@@ -138,3 +147,4 @@ class Usuario extends Pessoa implements IAutenticavel {
         return false;
     }
 }
+?>

@@ -1,125 +1,145 @@
-<?php 
+<?php
 require_once 'Pessoa.php';
+require_once '../interfaces/IAutenticavel.php';
 
-class Vendedor extends Pessoa implements IAutenticavel {
+class Vendedor extends Pessoa implements IAutenticavel
+{
 
-    private $senha;
+    private $idVendedor;
     private $vlComissao;
 
-    public function __construct(PDO $pdo) {
+    public function __construct(PDO $pdo)
+    {
         parent::__construct($pdo, 'vendedores');
     }
 
-    public function setSenha($senha) {
-        $this->senha = $senha;
+    // GETTERS E SETTERS
+    public function setIdVendedor($idVendedor)
+    {
+        $this->idVendedor = $idVendedor;
     }
 
-    public function getVlComissao() {
+    public function getIdVendedor()
+    {
+        return $this->idVendedor;
+    }
+
+    public function getVlComissao()
+    {
         return $this->vlComissao;
     }
 
-    public function setVlComissao($vlComissao) {
+    public function setVlComissao($vlComissao)
+    {
         $this->vlComissao = $vlComissao;
     }
 
-    // CREATE
-    public function salvar() {
-        if (!$this->validar([
-            $this->getNome(), 
-            $this->getTelefone(), 
-            $this->senha, 
-            $this->vlComissao
-        ])) {
-            return false;
-        }
-
-        $sql = "INSERT INTO {$this->_table} 
-                (nome, telefone, senha, vl_comissao) 
-                VALUES (:nome, :telefone, :senha, :vl_comissao)";
-
-        return $this->executar($sql, [
-            'nome' => $this->getNome(),
-            'telefone' => $this->getTelefone(),
-            'senha' => password_hash($this->senha, PASSWORD_DEFAULT),
-            'vl_comissao' => $this->vlComissao
-        ]);
+    // MÉTODOS DO DIAGRAMA
+    public function getPerfil(): string
+    {
+        return "Vendedor: {$this->nome} | Comissão: {$this->vlComissao}%";
     }
 
-    // UPDATE
-    public function atualizar() {
-        if (!$this->getId()) {
-            throw new Exception("ID do vendedor não definido");
-        }
+    public function calcularComissao($vl)
+    {
+        return $vl * ($this->vlComissao / 100);
+    }
 
-        if (!$this->validar([
-            $this->getNome(), 
-            $this->getTelefone(), 
-            $this->vlComissao
-        ])) {
-            return false;
-        }
+    public function listarVendas()
+    {
+        $sql = "SELECT * FROM vendas WHERE vendedor_id = :vendedor_id";
+        $stmt = $this->_PDO->prepare($sql);
+        $stmt->execute(['vendedor_id' => $this->idVendedor]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
+    // CREATE
+    public function salvar(): bool
+    {
         $dados = [
-            'id' => $this->getId(),
-            'nome' => $this->getNome(),
-            'telefone' => $this->getTelefone(),
+            'nome' => $this->nome,
+            'telefone' => $this->telefone,
+            'senha' => $this->senha,
             'vl_comissao' => $this->vlComissao
         ];
 
-        $sql = "UPDATE {$this->_table} 
-                SET nome = :nome, telefone = :telefone, vl_comissao = :vl_comissao";
-
-        if ($this->senha) {
-            $sql .= ", senha = :senha";
-            $dados['senha'] = password_hash($this->senha, PASSWORD_DEFAULT);
+        if ($this->validar($dados)) {
+            $sql = "INSERT INTO {$this->_table} 
+                    (nome, telefone, senha, vl_comissao) 
+                    VALUES (:nome, :telefone, :senha, :vl_comissao)";
+            return $this->executar($sql, $dados);
         }
-
-        $sql .= " WHERE id = :id";
-
-        return $this->executar($sql, $dados);
+        return false;
     }
 
-    // LOGIN
-    public function autenticar($telefone, $senha) {
-        $sql = "SELECT * FROM {$this->_table} WHERE telefone = :telefone";
+    // UPDATE
+    public function atualizar(int $id): bool
+    {
+        $dados = [
+            'id' => $id,
+            'nome' => $this->nome,
+            'telefone' => $this->telefone,
+            'vl_comissao' => $this->vlComissao
+        ];
+
+        if ($this->validar($dados)) {
+            $sql = "UPDATE {$this->_table} 
+                    SET nome = :nome, telefone = :telefone, vl_comissao = :vl_comissao";
+
+            if ($this->senha) {
+                $sql .= ", senha = :senha";
+                $dados['senha'] = $this->senha;
+            }
+
+            $sql .= " WHERE id = :id";
+
+            return $this->executar($sql, $dados);
+        }
+        return false;
+    }
+
+    // LOGIN (IAutenticavel)
+    public function autenticar(string $usuario, string $senha): bool
+    {
+        $sql = "SELECT * FROM {$this->_table} WHERE nome = :nome";
         $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['telefone' => $telefone]);
+        $stmt->execute(['nome' => $usuario]);
 
         $vendedor = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($vendedor && password_verify($senha, $vendedor['senha'])) {
             unset($vendedor['senha']);
-            return $vendedor;
+
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+
+            $_SESSION['vendedor'] = $vendedor;
+            return true;
         }
         return false;
     }
 
-    public function logout(){
-        session_unset();
-        session_destroy();
+    // LOGOUT (IAutenticavel)
+    public function logout(): void
+    {
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_unset();
+            session_destroy();
+        }
     }
 
-    
+    // PERMISSÃO (IAutenticavel)
+    public function temPermissao(string $acao): bool
+    {
+        $permissoes = [
+            'visualizar_vendas',
+            'cadastrar_venda',
+            'calcular_comissao',
+            'ver_cliente'
+        ];
 
-    public function calcularComissao($vl){
-        return $vl * ($this->vlComissao / 100);
+        return in_array($acao, $permissoes);
     }
-
-    public function listarVendas() {
-        $sql = "SELECT * FROM vendas WHERE vendedor_id = :vendedor_id";
-        $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['vendedor_id' => $this->getId()]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    public function temPermissao($acao){
-
-    $permissoes = [
-        'visualizar_vendas',
-        'cadastrar_venda',
-        'calcular_comissao',
-        'ver_cliente'
-    ];
-
-    return in_array($acao, $permissoes);
 }
-}
+?>
