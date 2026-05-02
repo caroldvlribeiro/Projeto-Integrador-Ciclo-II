@@ -46,6 +46,10 @@ class Orcamento extends Model implements IRelatorio
     {
         $this->st_orcamento = $status;
     }
+    public function setDtPedido($data)
+    {
+        $this->dt_pedido = $data;
+    }
 
     // Cria um novo orçamento (padrão: Aberto)
     public function salvar(): bool
