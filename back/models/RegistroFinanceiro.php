@@ -1,5 +1,10 @@
 <?php
 require_once 'Model.php';
+
+/**
+ * Classe Abstrata RegistroFinanceiro
+ * Base para movimentações de dinheiro (Vendas, Pagamentos).
+ */
 abstract class RegistroFinanceiro extends Model
 {
     protected $idOrcamento;
@@ -11,36 +16,36 @@ abstract class RegistroFinanceiro extends Model
         parent::__construct($PDO, $table);
     }
 
+    // Getters e Setters
     public function getIdOrcamento()
     {
         return $this->idOrcamento;
     }
-    public function setIdOrcamento($idOrcamento)
+    public function setIdOrcamento($id)
     {
-        $this->idOrcamento = $idOrcamento;
+        $this->idOrcamento = $id;
     }
+
     public function getVlTotal()
     {
         return $this->vlTotal;
     }
-    public function setVlTotal($vlTotal)
+    public function setVlTotal($valor)
     {
-        $this->vlTotal = $vlTotal;
+        $this->vlTotal = $valor;
     }
+
     public function getDtRegistro()
     {
         return $this->dtRegistro;
     }
-    public function setDtRegistro($dtRegistro)
+    public function setDtRegistro($data)
     {
-        $this->dtRegistro = $dtRegistro;
+        $this->dtRegistro = $data;
     }
 
-    // Função faltante: calcularValor conforme diagrama
-    abstract public function calcularValor();
-
-    // Métodos abstratos do Model para implementação nas classes filhas (Venda, Pagamento)
-    abstract public function salvar(): bool;
-    abstract public function atualizar(int $id): bool;
+    // Cada registro financeiro calcula seu valor total de forma específica
+    abstract public function calcularValor(): float;
 }
+
 ?>
