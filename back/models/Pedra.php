@@ -1,40 +1,65 @@
 <?php
 require_once 'ItemEstoque.php';
 
+/**
+ * Model Pedra
+ * Gerencia os tipos de mármores e granitos (tabela 'pedra').
+ */
 class Pedra extends ItemEstoque
 {
-    private $idPedra;
-
     public function __construct(PDO $PDO)
     {
-        parent::__construct($PDO, 'pedras');
+        parent::__construct($PDO, 'pedra');
     }
 
-    public function getIdPedra()
-    {
-        return $this->idPedra;
-    }
-
-    public function setIdPedra($idPedra)
-    {
-        $this->idPedra = $idPedra;
-    }
-
-    // MÉTODOS DO DIAGRAMA
+    /**
+     * Calcula o valor de venda sugerido (ex: 50% de lucro).
+     */
     public function calcularVlVenda()
     {
-        // Exemplo de lógica: margem de 50% sobre o valor de compra
-        $this->vlVenda = $this->vlCompra * 1.5;
-        return $this->vlVenda;
+        return $this->vlCompra * 1.5;
     }
 
-    public function calcularVenda()
+    // Salva uma nova pedra no catálogo
+    public function salvar(): bool
     {
-        return $this->calcularVlVenda();
+        $dados = [
+            'nm_pedra' => $this->nome,
+            'ds_pedra' => $this->descricao,
+            'vl_compra_pedra' => $this->vlCompra,
+            'vl_venda_pedra' => $this->vlVenda ?? $this->calcularVlVenda()
+        ];
+
+        if ($this->validar($dados)) {
+            $sql = "INSERT INTO {$this->_table} (nm_pedra, ds_pedra, vl_compra_pedra, vl_venda_pedra) 
+                    VALUES (:nm_pedra, :ds_pedra, :vl_compra_pedra, :vl_venda_pedra)";
+            return $this->executar($sql, $dados);
+        }
+        return false;
     }
 
-    // Implementação do salvar e atualizar herdados de ItemEstoque
-    // Eles já usam os atributos protected (nome, descricao, vlCompra, vlVenda)
+    // Atualiza dados da pedra
+    public function atualizar(int $id): bool
+    {
+        $dados = [
+            'id' => $id,
+            'nm_pedra' => $this->nome,
+            'ds_pedra' => $this->descricao,
+            'vl_compra_pedra' => $this->vlCompra,
+            'vl_venda_pedra' => $this->vlVenda
+        ];
+
+        if ($this->validar($dados)) {
+            $sql = "UPDATE {$this->_table} SET 
+                    nm_pedra = :nm_pedra, 
+                    ds_pedra = :ds_pedra, 
+                    vl_compra_pedra = :vl_compra_pedra, 
+                    vl_venda_pedra = :vl_venda_pedra 
+                    WHERE id_pedra = :id";
+            return $this->executar($sql, $dados);
+        }
+        return false;
+    }
 }
 
 ?>

@@ -1,50 +1,71 @@
 <?php
 require_once 'ItemEstoque.php';
 
+/**
+ * Model Produto
+ * Gerencia acessórios como cubas e torneiras (tabela 'produto').
+ */
 class Produto extends ItemEstoque
 {
-    private $idProduto;
-    private $idCategoria;
+    protected $id_categoria;
 
     public function __construct(PDO $PDO)
     {
-        parent::__construct($PDO, 'produtos');
+        parent::__construct($PDO, 'produto');
     }
 
-    public function getIdProduto()
+    public function setCategoria($id)
     {
-        return $this->idProduto;
+        $this->id_categoria = $id;
     }
 
-    public function setIdProduto($idProduto)
-    {
-        $this->idProduto = $idProduto;
-    }
-
-    public function getIdCategoria()
-    {
-        return $this->idCategoria;
-    }
-
-    public function setIdCategoria($idCategoria)
-    {
-        $this->idCategoria = $idCategoria;
-    }
-
-    // MÉTODOS DO DIAGRAMA
+    /**
+     * Calcula o valor de venda sugerido (ex: 30% de lucro).
+     */
     public function calcularVlVenda()
     {
-        // Exemplo de lógica: margem de 30% para produtos prontos
-        $this->vlVenda = $this->vlCompra * 1.3;
-        return $this->vlVenda;
+        return $this->vlCompra * 1.3;
     }
 
-    public function listarPorCategoria($id)
+    // Salva um novo produto
+    public function salvar(): bool
     {
-        $sql = "SELECT * FROM {$this->_table} WHERE idCategoria = :id";
-        $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['id' => $id]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $dados = [
+            'id_categoria' => $this->id_categoria,
+            'nm_produto' => $this->nome,
+            'ds_produto' => $this->descricao,
+            'vl_produto' => $this->vlVenda ?? $this->calcularVlVenda()
+        ];
+
+        if ($this->validar($dados)) {
+            $sql = "INSERT INTO {$this->_table} (id_categoria, nm_produto, ds_produto, vl_produto) 
+                    VALUES (:id_categoria, :nm_produto, :ds_produto, :vl_produto)";
+            return $this->executar($sql, $dados);
+        }
+        return false;
+    }
+
+    // Atualiza dados do produto
+    public function atualizar(int $id): bool
+    {
+        $dados = [
+            'id' => $id,
+            'id_categoria' => $this->id_categoria,
+            'nm_produto' => $this->nome,
+            'ds_produto' => $this->descricao,
+            'vl_produto' => $this->vlVenda
+        ];
+
+        if ($this->validar($dados)) {
+            $sql = "UPDATE {$this->_table} SET 
+                    id_categoria = :id_categoria, 
+                    nm_produto = :nm_produto, 
+                    ds_produto = :ds_produto, 
+                    vl_produto = :vl_produto 
+                    WHERE id_produto = :id";
+            return $this->executar($sql, $dados);
+        }
+        return false;
     }
 }
 
