@@ -2,125 +2,108 @@
 require_once 'Model.php';
 require_once '../interfaces/IRelatorio.php';
 
+/**
+ * Model Orcamento
+ * O coração do sistema. Gerencia pedidos, status e gera relatórios.
+ */
 class Orcamento extends Model implements IRelatorio
 {
-    private $idOrcamento;
-    private $cdCliente;
-    private $dtPedido;
-    private $vlTotal;
-    private $dsDescricao;
-    private $stOrcamento; // enum: aberto, aprovado, cancelado, finalizado
+    protected $cd_cliente;
+    protected $dt_pedido;
+    protected $vl_total;
+    protected $ds_descricao;
+    protected $acabamento;
+    protected $id_pedra;
+    protected $st_orcamento; // Status: Aberto, Aprovado, Cancelado, Finalizado
 
     public function __construct(PDO $PDO)
     {
-        parent::__construct($PDO, 'orcamentos');
+        parent::__construct($PDO, 'orcamento');
     }
 
-    // GETTERS E SETTERS
-    public function getIdOrcamento()
+    // Mapeamento de Setters para facilitar o uso no Controller
+    public function setCliente($id)
     {
-        return $this->idOrcamento;
+        $this->cd_cliente = $id;
     }
-    public function setIdOrcamento($id)
+    public function setPedra($id)
     {
-        $this->idOrcamento = $id;
+        $this->id_pedra = $id;
     }
-    public function getVlTotal()
+    public function setValor($valor)
     {
-        return $this->vlTotal;
+        $this->vl_total = $valor;
     }
-    public function setVlTotal($vl)
+    public function setDescricao($desc)
     {
-        $this->vlTotal = $vl;
+        $this->ds_descricao = $desc;
     }
-
-    // MÉTODOS DO DIAGRAMA
-    public function calcularValor(): float
+    public function setAcabamento($acab)
     {
-        // Lógica para somar itens do orçamento (se houver tabela relacionada)
-        return (float) $this->vlTotal;
+        $this->acabamento = $acab;
     }
-
-    public function aprovar(): bool
+    public function setStatus($status)
     {
-        $this->stOrcamento = 'aprovado';
-        return $this->atualizar($this->idOrcamento);
+        $this->st_orcamento = $status;
     }
 
-    public function cancelar(): bool
-    {
-        $this->stOrcamento = 'cancelado';
-        return $this->atualizar($this->idOrcamento);
-    }
-
-    public function finalizar(): bool
-    {
-        $this->stOrcamento = 'finalizado';
-        return $this->atualizar($this->idOrcamento);
-    }
-
-    public function listarPorCliente($id)
-    {
-        $sql = "SELECT * FROM {$this->_table} WHERE cdCliente = :id";
-        $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['id' => $id]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function listarAbertos()
-    {
-        $sql = "SELECT * FROM {$this->_table} WHERE stOrcamento = 'aberto'";
-        $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    // IMPLEMENTAÇÃO IRelatorio
-    public function gerarRelatorio(): array
-    {
-        return $this->listarTodos();
-    }
-
-    public function filtrarPorPeriodo(string $dataInicio, string $dataFim): array
-    {
-        $sql = "SELECT * FROM {$this->_table} WHERE dtPedido BETWEEN :ini AND :fim";
-        $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['ini' => $dataInicio, 'fim' => $dataFim]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function exportar(string $formato): string
-    {
-        return "Relatório exportado em: " . $formato;
-    }
-
-    // CRUD
+    // Cria um novo orçamento (padrão: Aberto)
     public function salvar(): bool
     {
         $dados = [
-            'cdCliente' => $this->cdCliente,
-            'dtPedido' => $this->dtPedido,
-            'vlTotal' => $this->vlTotal,
-            'dsDescricao' => $this->dsDescricao,
-            'stOrcamento' => 'aberto'
+            'cd_cliente' => $this->cd_cliente,
+            'dt_pedido' => $this->dt_pedido ?? date('Y-m-d'),
+            'vl_total' => $this->vl_total,
+            'ds_descricao' => $this->ds_descricao,
+            'acabamento' => $this->acabamento,
+            'id_pedra' => $this->id_pedra,
+            'st_orcamento' => $this->st_orcamento ?? 'Aberto'
         ];
+
         if ($this->validar($dados)) {
-            $sql = "INSERT INTO {$this->_table} (cdCliente, dtPedido, vlTotal, dsDescricao, stOrcamento) 
-                    VALUES (:cdCliente, :dtPedido, :vlTotal, :dsDescricao, :stOrcamento)";
+            $sql = "INSERT INTO {$this->_table} (cd_cliente, dt_pedido, vl_total, ds_descricao, acabamento, id_pedra, st_orcamento) 
+                    VALUES (:cd_cliente, :dt_pedido, :vl_total, :ds_descricao, :acabamento, :id_pedra, :st_orcamento)";
             return $this->executar($sql, $dados);
         }
         return false;
     }
 
+    // Atualiza status ou valor do orçamento
     public function atualizar(int $id): bool
     {
         $dados = [
             'id' => $id,
-            'vlTotal' => $this->vlTotal,
-            'stOrcamento' => $this->stOrcamento
+            'vl_total' => $this->vl_total,
+            'st_orcamento' => $this->st_orcamento,
+            'ds_descricao' => $this->ds_descricao
         ];
-        $sql = "UPDATE {$this->_table} SET vlTotal = :vlTotal, stOrcamento = :stOrcamento WHERE id = :id";
+
+        $sql = "UPDATE {$this->_table} SET 
+                vl_total = :vl_total, 
+                st_orcamento = :st_orcamento, 
+                ds_descricao = :ds_descricao 
+                WHERE id_orcamento = :id";
         return $this->executar($sql, $dados);
+    }
+
+    // --- IMPLEMENTAÇÃO DA INTERFACE IRelatorio ---
+
+    public function gerarRelatorio(): array
+    {
+        return $this->listarTodos();
+    }
+
+    public function filtrarPorPeriodo(string $ini, string $fim): array
+    {
+        $sql = "SELECT * FROM {$this->_table} WHERE dt_pedido BETWEEN :ini AND :fim";
+        $stmt = $this->_PDO->prepare($sql);
+        $stmt->execute(['ini' => $ini, 'fim' => $fim]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function exportar(string $formato): string
+    {
+        return "Relatório de Orçamentos exportado em formato: $formato";
     }
 }
 
