@@ -1,5 +1,5 @@
 <?php
-require_once '../interfaces/ICrud.php';
+require_once __DIR__ . '/../interfaces/ICrud.php';
 
 /**
  * Classe Base Model
@@ -29,15 +29,18 @@ abstract class Model implements ICrud
     protected function getPrimaryKeyName()
     {
         $pks = [
-            'cliente' => 'cd_cliente',
-            'usuario' => 'id_usuario',
-            'vendedor' => 'id_vendedor',
-            'pedra' => 'id_pedra',
-            'produto' => 'id_produto',
-            'orcamento' => 'id_orcamento',
+            'clientes' => 'cd_cliente',
+            'usuarios' => 'id_usuario',
+            'vendedores' => 'id_vendedor',
+            'pedras' => 'id_pedra',
+            'produtos' => 'id_produto',
+            'orcamentos' => 'id_orcamento',
             'agenda' => 'id_agenda',
-            'pagamento' => 'id_pagamento',
-            'venda' => 'id_venda'
+            'pagamentos' => 'id_pagamento',
+            'vendas' => 'id_venda',
+            'categoria_produto' => 'id_categoria',
+            'estoque' => 'id_estoque',
+            'movimentacao_estoque' => 'id_movimentacao'
         ];
         return $pks[$this->_table] ?? 'id';
     }

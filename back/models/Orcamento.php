@@ -1,6 +1,6 @@
 <?php
 require_once 'Model.php';
-require_once '../interfaces/IRelatorio.php';
+require_once __DIR__ . '/../interfaces/IRelatorio.php';
 
 /**
  * Model Orcamento
