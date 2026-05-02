@@ -1,6 +1,6 @@
 <?php
 require_once 'Pessoa.php';
-require_once '../interfaces/IAutenticavel.php';
+require_once __DIR__ . '/../interfaces/IAutenticavel.php';
 
 /**
  * Model Vendedor
