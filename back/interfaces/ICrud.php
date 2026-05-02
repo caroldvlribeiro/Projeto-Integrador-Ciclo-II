@@ -1,11 +1,10 @@
 <?php
 interface ICrud
 {
-    public function salvar();
-    public function atualizar();
-    public function deletar();
-    public function buscarPorId($id);
-    public function listarTodos();
+    public function salvar(): bool;
+    public function atualizar(int $id): bool;
+    public function deletar(int $id): bool;
+    public function buscarPorId(int $id): mixed;
+    public function listarTodos(): array;
 }
-
 ?>
