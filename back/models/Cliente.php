@@ -28,7 +28,16 @@ class Cliente extends Pessoa
     // Retorna resumo do cliente
     public function getPerfil(): string
     {
-        return "Cliente: {$this->nome} | Tel: {$this->telefone}";
+        return "Cliente: {$this->nome} | Tel: {$this->telefone} | End: {$this->nm_endereco} | ID: {$this->getCd_Cliente($this->nome)}";
+    }
+
+    //pegar o cd do cliente a partir do nome
+    public function getCd_Cliente($nm_cliente)
+    {
+        $sql = "SELECT cd_cliente FROM cliente WHERE nm_cliente = :nm_cliente";
+        $stmt = $this->_PDO->prepare($sql);
+        $stmt->execute(['nm_cliente' => $nm_cliente]);
+        return $stmt->fetchColumn();
     }
 
     /**
@@ -79,6 +88,29 @@ class Cliente extends Pessoa
         }
         return false;
     }
+     public function deletar($cd_cliente): bool {
+    try {
+        $sql = "DELETE FROM cliente WHERE cd_cliente = :id";
+         $stmt = $this->_PDO->prepare($sql);
+        $stmt->execute(['id' => $cd_cliente]);
+        return $stmt->execute();
+        
+    } catch (PDOException $e) {
+        echo "Erro ao deletar: " . $e->getMessage();
+        return false;
+    }}
+
+    public function beginTransaction() {
+    return $this->_PDO->beginTransaction();
+}
+
+public function commit() {
+    return $this->_PDO->commit();
+}
+
+public function rollBack() {
+    return $this->_PDO->rollBack();
+}
 }
 
 ?>

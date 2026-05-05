@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar Orçamento</title>
+</head>
+<body>
+
+    <h2>Novo Orçamento</h2>
+
+    <form action="teste_crud.php?acao=criar" method="POST">
+
+        <label>Nome do Cliente:</label><br>
+        <input type="text" name="nmCliente" required><br><br>
+
+        <label>Telefone:</label><br>
+        <input type="number" name="nrTelefone"><br><br>
+
+        <label>Endereço:</label><br>
+        <input type="text" name="endereco"><br><br>
+
+        <label>Data do Pedido:</label><br>
+        <input type="date" name="dtPedido"><br><br>
+
+        <label>Valor Total:</label><br>
+        <input type="number" step="0.01" name="valorTotal" required><br><br>
+
+        <label>Descrição:</label><br>
+        <textarea name="descricao"></textarea><br><br>
+
+        <label>Acabamento:</label><br>
+        <input type="text" name="acabamento"><br><br>
+
+        <label>ID da Pedra:</label><br>
+        <input type="number" name="idPedra"><br><br>
+
+        <button type="submit">Criar Orçamento</button>
+    </form>
+    <h2>Deletar Orçamento</h2>
+
+<form action="teste_crud.php?acao=deletar" method="POST">
+
+    <label>Nome do Cliente:</label><br>
+    <input type="text" name="nmCliente" required><br><br>
+
+    <label>ID do Cliente:</label><br>
+    <input type="number" name="idCliente"><br><br>
+
+    <button type="submit">Deletar Orçamento</button>
+
+</form>
+
+</body>
+</html>

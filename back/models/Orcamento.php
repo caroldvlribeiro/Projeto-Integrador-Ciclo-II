@@ -51,10 +51,21 @@ class Orcamento extends Model implements IRelatorio
         $this->dt_pedido = $data;
     }
 
+    public function getCd_Orcamento($cd_Cliente){
+       $sql = "SELECT id_orcamento FROM orcamento WHERE cd_cliente = :cd_cliente LIMIT 1";
+        $stmt = $this->_PDO->prepare($sql);
+        $stmt->execute(['cd_cliente' => $cd_Cliente]);
+        return $stmt->fetchColumn();
+    }
+
     // Cria um novo orçamento (padrão: Aberto)
     public function salvar(): bool
     {
-        $dados = [
+          $sql = "INSERT INTO orcamento 
+        (cd_cliente, dt_pedido, vl_total, ds_descricao, acabamento, id_pedra, st_orcamento)
+        VALUES (:cd_cliente, :dt_pedido, :vl_total, :ds_descricao, :acabamento, :id_pedra, :st_orcamento)";
+
+        return $this->executar($sql, [
             'cd_cliente' => $this->cd_cliente,
             'dt_pedido' => $this->dt_pedido ?? date('Y-m-d'),
             'vl_total' => $this->vl_total,
@@ -62,14 +73,7 @@ class Orcamento extends Model implements IRelatorio
             'acabamento' => $this->acabamento,
             'id_pedra' => $this->id_pedra,
             'st_orcamento' => $this->st_orcamento ?? 'Aberto'
-        ];
-
-        if ($this->validar($dados)) {
-            $sql = "INSERT INTO {$this->_table} (cd_cliente, dt_pedido, vl_total, ds_descricao, acabamento, id_pedra, st_orcamento) 
-                    VALUES (:cd_cliente, :dt_pedido, :vl_total, :ds_descricao, :acabamento, :id_pedra, :st_orcamento)";
-            return $this->executar($sql, $dados);
-        }
-        return false;
+        ]);
     }
 
     // Atualiza status ou valor do orçamento
@@ -109,6 +113,26 @@ class Orcamento extends Model implements IRelatorio
     {
         return "Relatório de Orçamentos exportado em formato: $formato";
     }
+
+    public function deletar($cd_orcamento): bool {
+    try {
+        $sql = "DELETE FROM orcamento WHERE id_orcamento = :id";
+        $stmt = $this->_PDO->prepare($sql);
+        $stmt->execute(['id' => $cd_orcamento]);
+        
+        return $stmt->execute();
+        
+    } catch (PDOException $e) {
+        echo "Erro ao deletar: " . $e->getMessage();
+        return false;
+    }}
+    public function deletarPorCliente($cd_cliente): bool {
+        $sql = "DELETE FROM orcamento WHERE cd_cliente = :cd_cliente";
+        $stmt = $this->_PDO->prepare($sql);
+        return $stmt->execute(['cd_cliente' => $cd_cliente]);
+    }
 }
+
+
 
 ?>
