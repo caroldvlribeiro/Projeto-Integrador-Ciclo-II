@@ -11,8 +11,6 @@ abstract class Model implements ICrud
     protected $_table; // Nome da tabela no banco de dados
     protected $_error; // Armazena mensagens de erro
 
-    
-
     public function __construct(PDO $PDO, $table)
     {
         $this->_PDO = $PDO;
@@ -58,7 +56,13 @@ abstract class Model implements ICrud
     }
 
     // Deleta um registro pelo seu ID específico
-    abstract public function deletar($id): bool;
+    public function deletar(int $id): bool
+    {
+        $pk = $this->getPrimaryKeyName();
+        $delete = $this->_PDO->prepare("DELETE FROM {$this->_table} WHERE {$pk} = :id");
+        $delete->bindParam(':id', $id, PDO::PARAM_INT);
+        return $delete->execute();
+    }
 
     // Lista todos os registros da tabela
     public function listarTodos(): array

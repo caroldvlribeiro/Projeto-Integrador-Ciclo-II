@@ -15,7 +15,10 @@ class Pedra extends ItemEstoque
     /**
      * Calcula o valor de venda sugerido (ex: 50% de lucro).
      */
-
+    public function calcularVlVenda()
+    {
+        return $this->vlCompra * 1.5;
+    }
 
     // Salva uma nova pedra no catálogo
     public function salvar(): bool
