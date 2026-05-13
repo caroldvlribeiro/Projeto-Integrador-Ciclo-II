@@ -14,6 +14,10 @@ class Orcamento extends Model implements IRelatorio
     protected $ds_descricao;
     protected $acabamento;
     protected $id_pedra;
+    protected $cuba;
+    protected $vista;
+    protected $saia;
+    protected $dt_entrega;
     protected $st_orcamento; // Status: Aberto, Aprovado, Cancelado, Finalizado
 
     public function __construct(PDO $PDO)
@@ -42,6 +46,22 @@ class Orcamento extends Model implements IRelatorio
     {
         $this->acabamento = $acab;
     }
+    public function setCuba($cuba)
+    {
+        $this->cuba = $cuba;
+    }
+    public function setVista($vista)
+    {
+        $this->vista = $vista;
+    }
+    public function setSaia($saia)
+    {
+        $this->saia = $saia;
+    }
+    public function setDtEntrega($data)
+    {
+        $this->dt_entrega = $data;
+    }
     public function setStatus($status)
     {
         $this->st_orcamento = $status;
@@ -50,6 +70,52 @@ class Orcamento extends Model implements IRelatorio
     {
         $this->dt_pedido = $data;
     }
+    public function getCdCliente()
+    {
+        return $this->cd_cliente;
+    }
+    public function getDtPedido()
+    {
+        return $this->dt_pedido;
+    }
+    public function getValor()
+    {
+        return $this->vl_total;
+    }
+    public function getDescricao()
+    {
+        return $this->ds_descricao;
+    }
+    public function getAcabamento()
+    {
+        return $this->acabamento;
+    }
+    public function getCuba()
+    {
+        return $this->cuba;
+    }
+    public function getVista()
+    {
+        return $this->vista;
+    }
+    public function getSaia()
+    {
+        return $this->saia;
+    }
+    public function getDtEntrega()
+    {
+        return $this->dt_entrega;
+    }
+    public function getStatus()
+    {
+        return $this->st_orcamento;
+    }
+    public function getIdPedra()
+    {
+        return $this->id_pedra;
+    }
+    
+
 
     public function getCd_Orcamento($cd_Cliente){
        $sql = "SELECT id_orcamento FROM orcamento WHERE cd_cliente = :cd_cliente LIMIT 1";
@@ -61,10 +127,10 @@ class Orcamento extends Model implements IRelatorio
     // Cria um novo orçamento (padrão: Aberto)
     public function salvar(): bool
     {
-          $sql = "INSERT INTO orcamento 
-        (cd_cliente, dt_pedido, vl_total, ds_descricao, acabamento, id_pedra, st_orcamento)
-        VALUES (:cd_cliente, :dt_pedido, :vl_total, :ds_descricao, :acabamento, :id_pedra, :st_orcamento)";
-
+        $sql = "INSERT INTO orcamento 
+        (cd_cliente, dt_pedido, vl_total, ds_descricao, acabamento, id_pedra, nm_cuba, vista, saia, dt_entrega, st_orcamento)
+        VALUES (:cd_cliente, :dt_pedido, :vl_total, :ds_descricao, :acabamento, :id_pedra, :nm_cuba, :vista, :saia, :dt_entrega, :st_orcamento)";
+    
         return $this->executar($sql, [
             'cd_cliente' => $this->cd_cliente,
             'dt_pedido' => $this->dt_pedido ?? date('Y-m-d'),
@@ -72,26 +138,35 @@ class Orcamento extends Model implements IRelatorio
             'ds_descricao' => $this->ds_descricao,
             'acabamento' => $this->acabamento,
             'id_pedra' => $this->id_pedra,
+            'nm_cuba' => $this->cuba,
+            'vista' => $this->vista,
+            'saia' => $this->saia,
+            'dt_entrega' => $this->dt_entrega,
             'st_orcamento' => $this->st_orcamento ?? 'Aberto'
         ]);
     }
 
     // Atualiza status ou valor do orçamento
     public function atualizar(int $id): bool
-    {
-        $dados = [
-            'id' => $id,
-            'vl_total' => $this->vl_total,
-            'st_orcamento' => $this->st_orcamento,
-            'ds_descricao' => $this->ds_descricao
-        ];
+{
+    $sql = "UPDATE {$this->_table} 
+            SET 
+                vl_total = :vl_total,
+                st_orcamento = :st_orcamento,
+                ds_descricao = :ds_descricao
+            WHERE id_orcamento = :id";
 
-        $sql = "UPDATE {$this->_table} SET 
-                vl_total = :vl_total, 
-                st_orcamento = :st_orcamento, 
-                ds_descricao = :ds_descricao 
-                WHERE id_orcamento = :id";
-        return $this->executar($sql, $dados);
+    $dados = [
+        'id' => $id,
+        'vl_total' => $this->vl_total,
+        'st_orcamento' => $this->st_orcamento,
+        'ds_descricao' => $this->ds_descricao
+    ];
+
+    $stmt = $this->_PDO->prepare($sql);
+    $stmt->execute($dados);
+
+    return $stmt->rowCount() > 0;
     }
 
     // --- IMPLEMENTAÇÃO DA INTERFACE IRelatorio ---
@@ -114,23 +189,42 @@ class Orcamento extends Model implements IRelatorio
         return "Relatório de Orçamentos exportado em formato: $formato";
     }
 
-    public function deletar($cd_orcamento): bool {
+    
+    public function deletar($id_orcamento): bool
+{
     try {
-        $sql = "DELETE FROM orcamento WHERE id_orcamento = :id";
+
+        $this->_PDO->beginTransaction();
+
+        $sql = "DELETE FROM venda WHERE cd_orcamento = :id_orcamento";
         $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['id' => $cd_orcamento]);
-        
-        return $stmt->execute();
-        
+        $stmt->execute(['id_orcamento' => $id_orcamento]);
+
+        $sql = "DELETE FROM agendamento WHERE cd_orcamento = :id_orcamento";
+        $stmt = $this->_PDO->prepare($sql);
+        $stmt->execute(['id_orcamento' => $id_orcamento]);
+
+        $sql = "DELETE FROM pagamento WHERE cd_orcamento = :id_orcamento";
+        $stmt = $this->_PDO->prepare($sql);
+        $stmt->execute(['id_orcamento' => $id_orcamento]);
+
+        $sql = "DELETE FROM orcamento WHERE id_orcamento = :id_orcamento";
+        $stmt = $this->_PDO->prepare($sql);
+        $stmt->execute(['id_orcamento' => $id_orcamento]);
+
+        $this->_PDO->commit();
+
+        return true;
+
     } catch (PDOException $e) {
+
+        $this->_PDO->rollBack();
+
         echo "Erro ao deletar: " . $e->getMessage();
+
         return false;
-    }}
-    public function deletarPorCliente($cd_cliente): bool {
-        $sql = "DELETE FROM orcamento WHERE cd_cliente = :cd_cliente";
-        $stmt = $this->_PDO->prepare($sql);
-        return $stmt->execute(['cd_cliente' => $cd_cliente]);
     }
+}
 }
 
 

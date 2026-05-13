@@ -9,6 +9,7 @@ class Cliente extends Pessoa
 {
     protected $cd_cliente;
     protected $nm_endereco;
+    protected $telefone;
 
     public function __construct(PDO $pdo)
     {
@@ -28,28 +29,36 @@ class Cliente extends Pessoa
     // Retorna resumo do cliente
     public function getPerfil(): string
     {
-        return "Cliente: {$this->nome} | Tel: {$this->telefone} | End: {$this->nm_endereco} | ID: {$this->getCd_Cliente($this->nome)}";
-    }
+        return "Cliente: {$this->nome} | 
+        Tel: {$this->telefone} | 
+        End: {$this->nm_endereco} | 
+        ID: {$this->cd_cliente}";    }
 
     //pegar o cd do cliente a partir do nome
-    public function getCd_Cliente($nm_cliente)
+    public function getCd_Cliente($cd_telefone)
     {
-        $sql = "SELECT cd_cliente FROM cliente WHERE nm_cliente = :nm_cliente";
+        $sql = "SELECT cd_cliente FROM cliente WHERE cd_telefone = :cd_telefone";
         $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['nm_cliente' => $nm_cliente]);
+        $stmt->execute(['cd_telefone' => $cd_telefone]);
         return $stmt->fetchColumn();
     }
 
     /**
      * Busca todos os orçamentos vinculados a este cliente.
      */
-    public function buscarOrcamentos()
+    public function buscarOrcamentos(int $id): array
     {
-        $sql = "SELECT * FROM orcamento WHERE cd_cliente = :id";
+        $sql = "SELECT * FROM orcamento 
+                WHERE cd_cliente = :id";
+
         $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['id' => $this->cd_cliente]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+
+        $stmt->execute([
+            'id' => $id
+    ]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
     // Insere um novo cliente no banco
     public function salvar(): bool
@@ -88,29 +97,34 @@ class Cliente extends Pessoa
         }
         return false;
     }
-     public function deletar($cd_cliente): bool {
+     public function deletar($cd_cliente): bool
+{
     try {
-        $sql = "DELETE FROM cliente WHERE cd_cliente = :id";
-         $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['id' => $cd_cliente]);
-        return $stmt->execute();
-        
+
+        $sql = "DELETE FROM orcamento 
+                WHERE cd_cliente = :id";
+
+        $stmt = $this->_PDO->prepare($sql);
+
+        $stmt->execute([
+            'id' => $cd_cliente
+        ]);
+
+        $sql = "DELETE FROM cliente 
+                WHERE cd_cliente = :id";
+
+        $stmt = $this->_PDO->prepare($sql);
+
+        return $stmt->execute([
+            'id' => $cd_cliente
+        ]);
+
     } catch (PDOException $e) {
-        echo "Erro ao deletar: " . $e->getMessage();
+
         return false;
-    }}
-
-    public function beginTransaction() {
-    return $this->_PDO->beginTransaction();
+    }
 }
 
-public function commit() {
-    return $this->_PDO->commit();
-}
-
-public function rollBack() {
-    return $this->_PDO->rollBack();
-}
 }
 
 ?>

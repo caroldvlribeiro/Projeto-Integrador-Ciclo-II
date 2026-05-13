@@ -58,13 +58,7 @@ abstract class Model implements ICrud
     }
 
     // Deleta um registro pelo seu ID específico
-   /* public function deletar( $id): 
-    {
-        $pk = $this->getPrimaryKeyName();
-        $delete = $this->_PDO->prepare("DELETE FROM {$this->_table} WHERE {$pk} = :id");
-        $delete->bindParam(':id', $id, PDO::PARAM_INT);
-        return $delete->execute();
-    }*/
+    abstract public function deletar($id): bool;
 
     // Lista todos os registros da tabela
     public function listarTodos(): array

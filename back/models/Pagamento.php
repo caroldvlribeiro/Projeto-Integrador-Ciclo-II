@@ -77,6 +77,19 @@ class Pagamento extends RegistroFinanceiro
                 WHERE id_pagamento = :id";
         return $this->executar($sql, $dados);
     }
+
+    public function deletar($id): bool
+{
+    $sql = "DELETE FROM {$this->_table}
+            WHERE id_pagamento = :id";
+
+    $stmt = $this->_PDO->prepare($sql);
+
+    return $stmt->execute([
+        'id' => $id
+    ]);
+}
+    
 }
 
 ?>
