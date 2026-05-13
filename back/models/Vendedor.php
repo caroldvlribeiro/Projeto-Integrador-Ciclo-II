@@ -97,8 +97,6 @@ class Vendedor extends Pessoa implements IAutenticavel
         $vendedor = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($vendedor && password_verify($senha, $vendedor['cd_senha'])) {
-            if (session_status() === PHP_SESSION_NONE)
-                session_start();
             $_SESSION['vendedor'] = $vendedor;
             return true;
         }
@@ -116,6 +114,12 @@ class Vendedor extends Pessoa implements IAutenticavel
     public function temPermissao(string $acao): bool
     {
         return true; // Vendedores possuem permissões operacionais padrão
+    }
+    public function deletar($id): bool
+    {
+        $pk = $this->getPrimaryKeyName();
+        $sql = "DELETE FROM {$this->_table} WHERE {$pk} = :id";
+        return $this->executar($sql, ['id' => $id]);
     }
 }
 

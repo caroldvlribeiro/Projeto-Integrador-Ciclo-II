@@ -73,9 +73,7 @@ class Usuario extends Pessoa implements IAutenticavel
         return false;
     }
 
-    /**
-     * Realiza a autenticação comparando o hash da senha.
-     */
+    // Busca o usuário no banco e verifica a senha com hash
     public function autenticar(string $usuario, string $senha): bool
     {
         $sql = "SELECT * FROM {$this->_table} WHERE nm_usuario = :nome";
@@ -84,8 +82,6 @@ class Usuario extends Pessoa implements IAutenticavel
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($senha, $user['cd_senha'])) {
-            if (session_status() === PHP_SESSION_NONE)
-                session_start();
             $_SESSION['usuario'] = $user;
             return true;
         }
@@ -103,6 +99,12 @@ class Usuario extends Pessoa implements IAutenticavel
     public function temPermissao(string $acao): bool
     {
         return $this->isAdmin();
+    }
+    public function deletar($id): bool
+    {
+        $pk = $this->getPrimaryKeyName();
+        $sql = "DELETE FROM {$this->_table} WHERE {$pk} = :id";
+        return $this->executar($sql, ['id' => $id]);
     }
 }
 
