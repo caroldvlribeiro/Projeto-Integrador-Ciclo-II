@@ -86,8 +86,8 @@ $orcamentos = $model->listarTodos();
                                     class="
                                         badge
                                         <?= $orcamento['st_orcamento'] === 'Aberto'
-                                            ? 'badge-aberto'
-                                            : 'badge-fechado'
+                                            ? 'badge-Aprovado'
+                                            : 'badge-Cancelado'
                                         ?>
                                     "
                                 >

@@ -15,6 +15,7 @@ class Cliente extends Pessoa
     {
         parent::__construct($pdo, 'cliente');
     }
+    
 
     // Mapeamento para o campo 'nm_endereco' do banco
     public function setEndereco($endereco)
