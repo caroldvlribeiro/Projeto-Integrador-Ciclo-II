@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Canaã</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+
+:root {
+  --color-primary: #161F39;
+  --color-primary-dark: #0C3756;
+  --color-accent: #5C93AA;
+  --color-accent-light: #AFC1F8;
+  --color-bg: #FFFFFF;
+  --color-bg-soft: #EFF2F4;
+  --color-border: #D9D9D9;
+  --color-text: #161F39;
+  --color-text-secondary: #5C93AA;
+  --color-text-light: #EFF2F4;
+  --color-success: #3B6D11;
+  --color-error: #A32D2D;
+  --font-primary: 'Playfair Display', serif;
+  --font-secondary: 'Montserrat', sans-serif;
+  --text-xs: 10px;
+  --text-sm: 12px;
+  --text-md: 14px;
+  --text-lg: 18px;
+  --text-xl: 24px;
+  --text-display: 32px;
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-bold: 700;
+  --font-black: 900;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 40px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 20px;
+  --shadow-soft: 0 2px 6px rgba(0,0,0,0.05);
+  --shadow-focus: 0 0 0 3px rgba(92,147,170,0.15);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+.site { font-family: var(--font-secondary); color: var(--color-text); background: var(--color-bg); }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--color-primary);
+  padding: 0 var(--space-2xl);
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo { display: flex; align-items: center; gap: var(--space-md); cursor: pointer; }
+.isotipo { position: relative; width: 40px; height: 40px; flex-shrink: 0; }
+.isotipo div { position: absolute; border: 1.5px solid var(--color-text-light); }
+.sq1 { width:40px; height:40px; top:0; left:0; }
+.sq2 { width:30px; height:30px; top:5px; left:5px; }
+.sq3 { width:20px; height:20px; top:10px; left:10px; background:var(--color-accent); border-color:var(--color-accent); }
+.dot  { width:9px; height:9px; bottom:0; right:0; background:var(--color-text-light); border:none; position:absolute; }
+.nav-brand { font-family: var(--font-primary); font-size: var(--text-md); font-weight: var(--font-bold); color: var(--color-text-light); line-height:1.1; }
+.nav-brand small { display:block; font-family: var(--font-secondary); font-size: var(--text-xs); font-weight: var(--font-light); letter-spacing:3px; text-transform:uppercase; color: var(--color-accent); }
+.nav-links { display: flex; gap: var(--space-2xl); list-style: none; }
+.nav-links a#login{background-color: var(--color-bg); color: var(--color-text); padding: 10px; border-radius: 10px;}
+.nav-links a { font-size: var(--text-sm); font-weight: var(--font-medium); letter-spacing: 1px; text-transform: uppercase; color: var(--color-text-light); text-decoration: none; opacity: 0.8; transition: opacity 0.2s; cursor: pointer; }
+.nav-links a:hover { opacity: 1; }
+.nav-links a.active { opacity: 1; border-bottom: 2px solid var(--color-accent); padding-bottom: 2px; }
+
+/* ── HERO ── */
+.hero {
+  position: relative; min-height: 560px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; background: var(--color-primary);
+}
+.hero-marble {
+  position: absolute; inset: 0; opacity: 0.12; pointer-events: none;
+}
+.hero-content {
+  position: relative; z-index: 2;
+  text-align: center; padding: var(--space-2xl);
+  max-width: 700px;
+}
+.hero-eyebrow {
+  font-size: var(--text-xs); letter-spacing: 5px; text-transform: uppercase;
+  color: var(--color-accent); font-weight: var(--font-medium); margin-bottom: var(--space-lg);
+}
+.hero h1 {
+  font-family: var(--font-primary); font-size: 52px; font-weight: var(--font-black);
+  color: var(--color-text-light); line-height: 1.05; margin-bottom: var(--space-lg);
+}
+.hero h1 em { font-style: italic; color: var(--color-accent-light); }
+.hero p {
+  font-size: var(--text-lg); font-weight: var(--font-light); color: var(--color-accent-light);
+  margin-bottom: var(--space-2xl); line-height: 1.7;
+}
+.hero-btns { display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;}
+.btn-primary {
+  background: var(--color-text-light); text-decoration: none;
+  padding: var(--space-md) var(--space-2xl);
+  font-family: var(--font-secondary); font-size: var(--text-sm);
+  font-weight: var(--font-bold); letter-spacing: 2px; text-transform: uppercase;
+  border: none; border-radius: var(--radius-md); cursor: pointer; transition: 0.2s;
+}
+.btn-primary a {color: var(--color-primary); text-decoration: none;}
+.btn-primary:hover { background: var(--color-bg-soft); }
+
+.btn-outline {
+  background: transparent;
+  padding: var(--space-md) var(--space-2xl);
+  font-family: var(--font-secondary); font-size: var(--text-sm);
+  font-weight: var(--font-medium); letter-spacing: 2px; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.4); border-radius: var(--radius-md); cursor: pointer; transition: 0.2s;
+}
+
+.btn-outline a { color: var(--color-text-light); text-decoration: none;}
+.btn-outline:hover { border-color: var(--color-text-light); }
+.hero-stats {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-top: 0.5px solid rgba(255,255,255,0.1);
+}
+.hero-stat {
+  padding: var(--space-xl) var(--space-lg);
+  text-align: center;
+  border-right: 0.5px solid rgba(255,255,255,0.1);
+}
+.hero-stat:last-child { border-right: none; }
+.stat-num { font-family: var(--font-primary); font-size: var(--text-display); font-weight: var(--font-bold); color: var(--color-text-light); }
+.stat-label { font-size: var(--text-xs); letter-spacing: 2px; text-transform: uppercase; color: var(--color-accent); margin-top: var(--space-xs); }
+
+/* ── SOBRE ── */
+.sobre { display: grid; grid-template-columns: 1fr 1fr; min-height: 420px; }
+.sobre-text {
+  background: var(--color-bg-soft); padding: 64px var(--space-2xl);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.section-label { font-size: var(--text-xs); letter-spacing: 4px; text-transform: uppercase; color: var(--color-accent); font-weight: var(--font-medium); margin-bottom: var(--space-md); }
+.sobre-text h2 { font-family: var(--font-primary); font-size: 36px; font-weight: var(--font-bold); color: var(--color-primary); line-height: 1.2; margin-bottom: var(--space-xl); }
+.sobre-text h2 em { font-style: italic; color: var(--color-accent); }
+.sobre-text p { font-size: var(--text-md); color: var(--color-text-secondary); line-height: 1.8; margin-bottom: var(--space-lg); }
+.sobre-values { display: flex; flex-direction: column; gap: var(--space-md); margin-top: var(--space-lg); }
+.value-row { display: flex; align-items: center; gap: var(--space-md); }
+.value-dot { width: 6px; height: 6px; background: var(--color-accent); border-radius: 50%; flex-shrink: 0; }
+.value-text { font-size: var(--text-sm); font-weight: var(--font-medium); color: var(--color-primary); letter-spacing: 1px; text-transform: uppercase; }
+.sobre-visual {
+  background: var(--color-primary-dark); position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── PEDRAS ── */
+.pedras { padding: 80px var(--space-2xl); background: var(--color-bg); }
+.section-header { text-align: center; margin-bottom: 48px; }
+.section-header h2 { font-family: var(--font-primary); font-size: 36px; font-weight: var(--font-bold); color: var(--color-primary); margin-top: var(--space-md); }
+.pedras-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); }
+.pedra-card {
+  border-radius: var(--radius-lg); overflow: hidden; border: 0.5px solid var(--color-border);
+  background: var(--color-bg); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;
+}
+.pedra-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(22,31,57,0.1); }
+.pedra-thumb { height: 180px; position: relative; overflow: hidden; }
+.pedra-body { padding: var(--space-lg); }
+.pedra-nome { font-family: var(--font-primary); font-size: var(--text-lg); font-weight: var(--font-bold); color: var(--color-primary); margin-bottom: var(--space-sm); }
+.pedra-desc { font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.6; margin-bottom: var(--space-lg); }
+.pedra-badge {
+  display: inline-flex; align-items: center; gap: var(--space-xs);
+  font-size: var(--text-xs); font-weight: var(--font-medium); letter-spacing: 1px;
+  text-transform: uppercase; color: var(--color-accent);
+  background: var(--color-bg-soft); padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-pill);
+}
+.btn-comprar {
+  width: 100%; margin-top: var(--space-md);
+  background: var(--color-primary); color: var(--color-text-light);
+  padding: var(--space-md); font-family: var(--font-secondary);
+  font-size: var(--text-sm); font-weight: var(--font-medium); letter-spacing: 1.5px;
+  text-transform: uppercase; border: none; border-radius: var(--radius-md); cursor: pointer; transition: 0.2s;
+}
+.btn-comprar:hover { background: var(--color-primary-dark); }
+
+/* ── AVALIAÇÕES ── */
+.avaliacoes { padding: 80px var(--space-2xl); background: var(--color-bg-soft); }
+.av-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); margin-top: 48px; }
+.av-card {
+  background: var(--color-bg); border-radius: var(--radius-lg);
+  border: 0.5px solid var(--color-border); padding: var(--space-xl);
+}
+.av-stars { display: flex; gap: 4px; margin-bottom: var(--space-lg); }
+.av-star { color: #F4A823; font-size: 16px; }
+.av-text { font-size: var(--text-md); color: var(--color-primary); line-height: 1.7; font-style: italic; margin-bottom: var(--space-lg); font-family: var(--font-primary); }
+.av-author { display: flex; align-items: center; gap: var(--space-md); }
+.av-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--color-primary); display: flex; align-items: center; justify-content: center;
+  font-size: var(--text-xs); font-weight: var(--font-bold); color: var(--color-text-light);
+}
+.av-name { font-size: var(--text-sm); font-weight: var(--font-medium); color: var(--color-primary); }
+.av-role { font-size: var(--text-xs); color: var(--color-text-secondary); }
+
+/* ── CONTATO ── */
+.contato { display: grid; grid-template-columns: 1fr 1fr; }
+.contato-info { background: var(--color-primary); padding: 64px var(--space-2xl); }
+.contato-info h2 { font-family: var(--font-primary); font-size: 36px; font-weight: var(--font-bold); color: var(--color-text-light); margin-bottom: var(--space-xl); }
+.contato-info p { font-size: var(--text-md); color: var(--color-accent-light); line-height: 1.8; margin-bottom: var(--space-2xl); }
+.contact-items { display: flex; flex-direction: column; gap: var(--space-lg); }
+.contact-item { display: flex; align-items: center; gap: var(--space-md); }
+.contact-icon {
+  width: 40px; height: 40px; border-radius: var(--radius-md);
+  background: rgba(92,147,170,0.2); display: flex; align-items: center; justify-content: center;
+  color: var(--color-accent-light); font-size: 18px; flex-shrink: 0;
+}
+.contact-text .label { font-size: var(--text-xs); letter-spacing: 2px; text-transform: uppercase; color: var(--color-accent); font-weight: var(--font-medium); }
+.contact-text .value { font-size: var(--text-sm); color: var(--color-text-light); margin-top: 2px; }
+.contato-form { background: var(--color-bg-soft); padding: 64px var(--space-2xl); display: flex; flex-direction: column; justify-content: center; }
+.contato-form h3 { font-family: var(--font-primary); font-size: var(--text-xl); font-weight: var(--font-bold); color: var(--color-primary); margin-bottom: var(--space-2xl); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); margin-bottom: var(--space-md); }
+.form-group { display: flex; flex-direction: column; gap: var(--space-xs); margin-bottom: var(--space-md); }
+.form-label { font-size: var(--text-xs); font-weight: var(--font-medium); letter-spacing: 2px; text-transform: uppercase; color: var(--color-primary-dark); }
+.form-input {
+  width: 100%; padding: var(--space-md);
+  border-radius: var(--radius-md); border: 1px solid var(--color-border);
+  background: var(--color-bg); font-family: var(--font-secondary);
+  font-size: var(--text-md); color: var(--color-text); outline: none; transition: 0.2s;
+}
+.form-input::placeholder { color: var(--color-accent-light); }
+.form-input:focus { border-color: var(--color-accent); box-shadow: var(--shadow-focus); }
+textarea.form-input { resize: vertical; min-height: 100px; }
+.btn-enviar {
+  width: 100%; padding: var(--space-md) var(--space-lg);
+  background: var(--color-primary); color: var(--color-text-light);
+  font-family: var(--font-secondary); font-size: var(--text-sm);
+  font-weight: var(--font-medium); letter-spacing: 2px; text-transform: uppercase;
+  border: none; border-radius: var(--radius-md); cursor: pointer; transition: 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: var(--space-sm);
+}
+.btn-enviar:hover { background: var(--color-primary-dark); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--color-primary-dark); padding: var(--space-2xl);
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-lg);
+}
+.footer-brand { font-family: var(--font-primary); font-size: var(--text-md); font-weight: var(--font-bold); color: var(--color-text-light); }
+.footer-copy { font-size: var(--text-xs); color: var(--color-accent); margin-top: var(--space-xs); }
+.footer-socials { display: flex; gap: var(--space-md); }
+.social-btn {
+  width: 36px; height: 36px; border-radius: var(--radius-md);
+  border: 1px solid rgba(175,193,248,0.25); background: transparent;
+  color: var(--color-accent-light); font-size: 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: 0.2s;
+}
+.social-btn:hover { background: rgba(92,147,170,0.2); border-color: var(--color-accent); }
+</style>
+</head>
+<body>
+    
+
+<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Marmoraria Nova Canaã — Página institucional</h2>
+
+<div class="site">
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">
+      <div class="isotipo">
+        <svg width="40" height="40" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+          <rect x="12" y="12" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+          <rect x="22" y="22" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+          <rect x="46" y="46" width="14" height="14" fill="#EFF2F4"/>
+        </svg>
+      </div>
+      <div class="nav-brand">Nova Canaã<small>Marmoraria</small></div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#hero" class="active">Home</a></li>
+      <li><a href="#sobre">Sobre Nós</a></li>
+      <li><a href="#pedras">Pedras</a></li>
+      <li><a href="#avaliacoes">Avaliações</a></li>
+      <li><a href="#contato">Contato</a></li>
+      <li><a href="Login.php" id="login">ENTRAR</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <svg class="hero-marble" viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 120 Q180 80 360 140 Q540 195 720 120 Q810 85 900 110" stroke="#AFC1F8" stroke-width="1.5" fill="none"/>
+      <path d="M0 220 Q200 180 400 240 Q600 295 800 215 Q860 195 900 210" stroke="#AFC1F8" stroke-width="1" fill="none"/>
+      <path d="M0 320 Q150 290 300 340 Q500 395 700 310 Q810 275 900 310" stroke="#AFC1F8" stroke-width="0.8" fill="none"/>
+      <path d="M0 420 Q200 385 380 435 Q560 480 760 405 Q840 380 900 410" stroke="#AFC1F8" stroke-width="1.2" fill="none"/>
+      <path d="M120 0 Q140 140 115 280 Q95 400 130 560" stroke="#5C93AA" stroke-width="0.8" fill="none"/>
+      <path d="M350 0 Q370 120 345 260 Q325 380 360 560" stroke="#5C93AA" stroke-width="0.6" fill="none"/>
+      <path d="M620 0 Q640 150 615 300 Q598 420 630 560" stroke="#5C93AA" stroke-width="0.7" fill="none"/>
+      <path d="M820 0 Q835 130 812 270 Q798 380 825 560" stroke="#5C93AA" stroke-width="0.5" fill="none"/>
+    </svg>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Qualidade · Precisão · Elegância</div>
+      <h1>Marmoraria<br><em>Nova Canaã</em></h1>
+      <p>Trabalhamos com peças de qualidade, transformando pedras naturais em obras que resistem ao tempo.</p>
+      <div class="hero-btns">
+        <button class="btn-primary"><a href="#pedras">Ver Pedras</a></button>
+        <button class="btn-outline"><a href="#contato">Solicitar Orçamento</a></button>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="stat-num">15+</div><div class="stat-label">Anos de experiência</div></div>
+      <div class="hero-stat"><div class="stat-num">500+</div><div class="stat-label">Projetos entregues</div></div>
+      <div class="hero-stat"><div class="stat-num">30+</div><div class="stat-label">Tipos de pedra</div></div>
+    </div>
+  </section>
+
+  <!-- SOBRE NÓS -->
+  <section class="sobre" id="sobre">
+    <div class="sobre-text">
+      <div class="section-label">Sobre Nós</div>
+      <h2>Tradição e qualidade<br>em cada <em>detalhe</em></h2>
+      <p>Na Marmoraria Nova Canaã, trabalhamos com granitos, mármores e quartzitos selecionados para entregar o melhor resultado em cada projeto — seja uma bancada, um piso ou um revestimento completo.</p>
+      <p>Com atendimento personalizado e equipe especializada, garantimos precisão do corte à instalação.</p>
+      <div class="sobre-values">
+        <div class="value-row"><div class="value-dot"></div><div class="value-text">Qualidade garantida</div></div>
+        <div class="value-row"><div class="value-dot"></div><div class="value-text">Entrega no prazo</div></div>
+        <div class="value-row"><div class="value-dot"></div><div class="value-text">Atendimento personalizado</div></div>
+        <div class="value-row"><div class="value-dot"></div><div class="value-text">Materiais certificados</div></div>
+      </div>
+    </div>
+    <div class="sobre-visual">
+      <svg width="100%" height="100%" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
+        <rect width="420" height="420" fill="#0C3756"/>
+        <path d="M0 80 Q80 55 160 90 Q240 122 320 80 Q370 58 420 75" stroke="#5C93AA" stroke-width="1.5" fill="none" opacity="0.4"/>
+        <path d="M0 160 Q100 138 200 172 Q300 205 400 162 Q412 158 420 160" stroke="#AFC1F8" stroke-width="1" fill="none" opacity="0.25"/>
+        <path d="M0 240 Q90 218 180 255 Q270 288 380 244 Q400 238 420 242" stroke="#5C93AA" stroke-width="1.2" fill="none" opacity="0.35"/>
+        <path d="M0 320 Q110 298 210 335 Q310 368 410 322 Q415 320 420 322" stroke="#AFC1F8" stroke-width="0.8" fill="none" opacity="0.2"/>
+        <path d="M100 0 Q118 80 95 180 Q78 260 108 420" stroke="#5C93AA" stroke-width="0.8" fill="none" opacity="0.3"/>
+        <path d="M260 0 Q278 90 255 200 Q240 280 268 420" stroke="#AFC1F8" stroke-width="0.6" fill="none" opacity="0.2"/>
+        <rect x="140" y="140" width="140" height="140" fill="none" stroke="#5C93AA" stroke-width="1" opacity="0.3"/>
+        <rect x="155" y="155" width="110" height="110" fill="none" stroke="#AFC1F8" stroke-width="0.8" opacity="0.2"/>
+        <rect x="170" y="170" width="80" height="80" fill="#5C93AA" opacity="0.15"/>
+        <text x="210" y="218" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#AFC1F8" opacity="0.6" letter-spacing="3">PEDRA</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- PEDRAS -->
+  <section class="pedras" id="pedras">
+    <div class="section-header">
+      <div class="section-label">Catálogo</div>
+      <h2>Pedras em Destaque</h2>
+    </div>
+    <div class="pedras-grid">
+
+      <div class="pedra-card">
+        <div class="pedra-thumb">
+          <svg width="100%" height="180" viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+            <rect width="300" height="180" fill="#ddd8d0"/>
+            <path d="M0 40 Q60 28 120 45 Q180 60 240 38 Q270 28 300 35" stroke="#b8b0a4" stroke-width="2" fill="none"/>
+            <path d="M0 90 Q80 75 160 95 Q220 110 300 88" stroke="#c8c0b4" stroke-width="1.5" fill="none"/>
+            <path d="M10 135 Q70 122 140 140 Q210 155 280 132 Q290 129 300 132" stroke="#b0a898" stroke-width="1" fill="none"/>
+            <path d="M60 0 Q72 50 58 110 Q48 150 65 180" stroke="#a89e90" stroke-width="1" fill="none" opacity="0.7"/>
+            <path d="M180 0 Q192 60 178 120 Q168 158 185 180" stroke="#b8b0a4" stroke-width="0.8" fill="none" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="pedra-body">
+          <span class="pedra-badge"><i class="ti ti-diamond" aria-hidden="true"></i> Granito</span>
+          <div class="pedra-nome" style="margin-top:8px;">Branco Dallas</div>
+          <div class="pedra-desc">Pedra clara e refinada, perfeita para quem busca sofisticação e leveza no ambiente.</div>
+          <button class="btn-comprar">Solicitar Orçamento</button>
+        </div>
+      </div>
+
+      <div class="pedra-card">
+        <div class="pedra-thumb">
+          <svg width="100%" height="180" viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+            <rect width="300" height="180" fill="#2a1f18"/>
+            <path d="M0 35 Q50 48 110 30 Q170 16 230 42 Q265 55 300 38" stroke="#5a4535" stroke-width="2" fill="none"/>
+            <path d="M0 85 Q60 98 130 78 Q195 62 260 90 Q280 97 300 88" stroke="#4a3828" stroke-width="1.5" fill="none"/>
+            <path d="M0 135 Q70 148 140 128 Q205 112 270 138 Q285 144 300 135" stroke="#5a4535" stroke-width="1" fill="none"/>
+            <ellipse cx="80" cy="60" rx="12" ry="7" fill="#3a2c20" opacity="0.6"/>
+            <ellipse cx="210" cy="110" rx="9" ry="5" fill="#3a2c20" opacity="0.5"/>
+            <path d="M140 0 Q155 55 140 115 Q130 150 145 180" stroke="#4a3828" stroke-width="0.8" fill="none" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="pedra-body">
+          <span class="pedra-badge"><i class="ti ti-diamond" aria-hidden="true"></i> Granito</span>
+          <div class="pedra-nome" style="margin-top:8px;">Imperial Coffee</div>
+          <div class="pedra-desc">Pedra em tom marrom intenso, que traz elegância e personalidade ao ambiente.</div>
+          <button class="btn-comprar">Solicitar Orçamento</button>
+        </div>
+      </div>
+
+      <div class="pedra-card">
+        <div class="pedra-thumb">
+          <svg width="100%" height="180" viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+            <rect width="300" height="180" fill="#1a1c1a"/>
+            <circle cx="30" cy="25" r="2" fill="#3a3c3a"/><circle cx="80" cy="45" r="1.5" fill="#4a4c4a"/>
+            <circle cx="150" cy="20" r="2.5" fill="#2a2c2a"/><circle cx="220" cy="55" r="1.8" fill="#3a3c3a"/>
+            <circle cx="270" cy="30" r="1.2" fill="#4a4c4a"/><circle cx="50" cy="90" r="2" fill="#3a3c3a"/>
+            <circle cx="120" cy="100" r="1.5" fill="#4a4c4a"/><circle cx="200" cy="85" r="2.2" fill="#2a2c2a"/>
+            <circle cx="260" cy="110" r="1.5" fill="#3a3c3a"/><circle cx="30" cy="140" r="1.8" fill="#4a4c4a"/>
+            <circle cx="100" cy="155" r="2" fill="#3a3c3a"/><circle cx="180" cy="145" r="1.5" fill="#2a2c2a"/>
+            <circle cx="240" cy="160" r="2.5" fill="#3a3c3a"/><circle cx="290" cy="140" r="1.2" fill="#4a4c4a"/>
+          </svg>
+        </div>
+        <div class="pedra-body">
+          <span class="pedra-badge"><i class="ti ti-diamond" aria-hidden="true"></i> Granito</span>
+          <div class="pedra-nome" style="margin-top:8px;">Ubatuba</div>
+          <div class="pedra-desc">Pedra de tom escuro, elegante e resistente, ideal para ambientes modernos.</div>
+          <button class="btn-comprar">Solicitar Orçamento</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- AVALIAÇÕES -->
+  <section class="avaliacoes" id="avaliacoes">
+    <div class="section-header">
+      <div class="section-label">Clientes</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--color-primary);margin-top:8px;">Avaliações de Clientes</h2>
+    </div>
+    <div class="av-grid">
+      <div class="av-card">
+        <div class="av-stars">
+          <i class="ti ti-star-filled av-star" style="color:#F4A823;" aria-hidden="true"></i>
+          <i class="ti ti-star-filled av-star" style="color:#F4A823;" aria-hidden="true"></i>
+          <i class="ti ti-star-filled av-star" style="color:#F4A823;" aria-hidden="true"></i>
+          <i class="ti ti-star-filled av-star" style="color:#F4A823;" aria-hidden="true"></i>
+          <i class="ti ti-star-filled av-star" style="color:#F4A823;" aria-hidden="true"></i>
+        </div>
+        <div class="av-text">"Trabalho impecável! O acabamento do mármore da minha cozinha ficou perfeito. Profissionais muito atenciosos."</div>
+        <div class="av-author">
+          <div class="av-avatar">MR</div>
+          <div><div class="av-name">Maria Rosa</div><div class="av-role">Cliente</div></div>
+        </div>
+      </div>
+      <div class="av-card">
+        <div class="av-stars">
+          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
+          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
+          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
+          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
+          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
+        </div>
+        <div class="av-text">"Material de excelente qualidade e entrega no prazo. Recomendo para quem busca sofisticação e durabilidade."</div>
+        <div class="av-author">
+          <div class="av-avatar" style="background:var(--color-accent);">JS</div>
+          <div><div class="av-name">João Silva</div><div class="av-role">Cliente</div></div>
+        </div>
+      </div>
+      <div class="av-card">
+        <div class="av-stars">
+          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
+          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
+          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
+          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
+          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
+        </div>
+        <div class="av-text">"Transformaram meu banheiro com uma bancada de granito linda e resistente. Superou minhas expectativas!"</div>
+        <div class="av-author">
+          <div class="av-avatar" style="background:var(--color-primary-dark);">AL</div>
+          <div><div class="av-name">Ana Lima</div><div class="av-role">Cliente</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section class="contato" id="contato">
+    <div class="contato-info">
+      <div class="section-label" style="color:var(--color-accent);">Fale Conosco</div>
+      <h2>Entre em<br>contato</h2>
+      <p>Estamos prontos para ajudar no seu projeto. Entre em contato e solicite um orçamento sem compromisso.</p>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="contact-icon"><i class="ti ti-phone" aria-hidden="true"></i></div>
+          <div class="contact-text">
+            <div class="label">Telefone</div>
+            <div class="value">(13) 12345-6789</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="ti ti-mail" aria-hidden="true"></i></div>
+          <div class="contact-text">
+            <div class="label">E-mail</div>
+            <div class="value">contato@novacanaa.com.br</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
+          <div class="contact-text">
+            <div class="label">Endereço</div>
+            <div class="value">Praia Grande, SP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contato-form">
+      <h3>Envie uma mensagem</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Nome</label>
+          <input class="form-input" type="text" placeholder="Seu nome">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Telefone</label>
+          <input class="form-input" type="text" placeholder="(13) 00000-0000">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">E-mail</label>
+        <input class="form-input" type="email" placeholder="seu@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mensagem</label>
+        <textarea class="form-input" placeholder="Descreva seu projeto..."></textarea>
+      </div>
+      <button class="btn-enviar" id="btnEnviar">
+        Enviar mensagem <i class="ti ti-send" aria-hidden="true"></i>
+      </button>
+      <div id="formMsg" style="display:none;margin-top:12px;padding:10px 14px;border-radius:var(--radius-md);font-size:var(--text-sm);font-weight:500;text-align:center;"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="footer-brand">Nova Canaã Marmoraria</div>
+      <div class="footer-copy">© 2025 Nova Canaã Marmoraria. Todos os direitos reservados.</div>
+    </div>
+    <div class="footer-socials">
+      <button class="social-btn" aria-label="Facebook"><i class="ti ti-brand-facebook" aria-hidden="true"></i></button>
+      <button class="social-btn" aria-label="Instagram"><i class="ti ti-brand-instagram" aria-hidden="true"></i></button>
+      <button class="social-btn" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i></button>
+    </div>
+  </footer>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+<script>
+document.getElementById('btnEnviar').addEventListener('click', () => {
+  const inputs = document.querySelectorAll('.form-input');
+  let vazio = false;
+  inputs.forEach(i => { if (!i.value.trim()) vazio = true; });
+  const msg = document.getElementById('formMsg');
+  if (vazio) {
+    msg.style.display = 'block';
+    msg.style.background = '#FCEBEB';
+    msg.style.color = '#A32D2D';
+    msg.style.border = '0.5px solid #F09595';
+    msg.textContent = 'Preencha todos os campos antes de enviar.';
+  } else {
+    msg.style.display = 'block';
+    msg.style.background = '#EAF3DE';
+    msg.style.color = '#3B6D11';
+    msg.style.border = '0.5px solid #97C459';
+    msg.textContent = 'Mensagem enviada com sucesso! Entraremos em contato em breve.';
+    inputs.forEach(i => i.value = '');
+  }
+});
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
