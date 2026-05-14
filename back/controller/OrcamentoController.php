@@ -1,15 +1,18 @@
 <?php
+header('Content-Type: application/json');
 require_once '../config/database.php';
 require_once '../models/Orcamento.php';
 require_once '../models/Cliente.php';
 require_once '../models/Pagamento.php';
-require_once '../models/Venda.php'; 
+require_once '../models/Venda.php';
+require_once '../models/Agenda.php'; 
 $acao = $_GET['acao'] ?? null;
 
 $orcamentoModel = new Orcamento($pdo);  
 $clienteModel = new Cliente($pdo);
 $pagamentoModel = new Pagamento($pdo);
 $vendaModel = new Venda($pdo);
+$agendamentoModel = new Agenda($pdo);
  
 
 switch ($acao) {
@@ -18,16 +21,18 @@ switch ($acao) {
         break;
     case 'atualizar':
         atualizar($orcamentoModel,$pagamentoModel);
+
         break;
     // Outros casos para editar, excluir, etc.
     case 'deletar':
-        deletar($orcamentoModel, $clienteModel);
+        deletar($orcamentoModel, $vendaModel, $pagamentoModel);
         break;
 }
 
 // Função para criar um novo orçamento
 function criar($orcamentoModel, $clienteModel, $pagamentoModel, $vendaModel)
 {
+
     // dados do form:
     $Nmcliente = $_POST['nmCliente'];    
     $telefone = $_POST['telefone'];
@@ -48,12 +53,13 @@ function criar($orcamentoModel, $clienteModel, $pagamentoModel, $vendaModel)
     $vlSaida = $_POST['valorSaida'];
     $vendedor = $_POST['vendedor'];
 
+    try{
     // Criar cliente
     $clienteModel->setNmCliente($Nmcliente);    
     $clienteModel->setTelefone($telefone);
     $clienteModel->setEndereco($endereco);
     $clienteModel->salvar();
-    $cdCliente = $clienteModel->getCdCliente($telefone);
+    $cdCliente = $clienteModel->getCd_Cliente($telefone);
     // Criar orçamento
     $orcamentoModel->setCdCliente($cdCliente);
     $orcamentoModel->setDtPedido($dataPedido);
@@ -78,6 +84,12 @@ function criar($orcamentoModel, $clienteModel, $pagamentoModel, $vendaModel)
     // Criar venda
     $vendaModel->setCdOrcamento($cdOrcamento);
     $vendaModel->setVendedor($vendedor);
+    $vendaModel->salvar();}
+    catch (Exception $e) {
+
+        echo "Erro ao salvar: " . $e->getMessage();
+
+    }
 
 }
 function atualizar($orcamentoModel, $pagamentoModel)
@@ -90,7 +102,7 @@ function atualizar($orcamentoModel, $pagamentoModel)
     $vlEntrada = $_POST['valorEntrada'];
     $dtPagamentoSaida = $_POST['dtPagamentoSaida'];
     $vlSaida = $_POST['valorSaida'];
-
+try{
     // Atualizar orçamento
     $orcamentoModel->setStatus($status);
     $orcamentoModel->setVlTotal($vlTotal);
@@ -100,20 +112,37 @@ function atualizar($orcamentoModel, $pagamentoModel)
     $pagamentoModel->setVlEntrada($vlEntrada);
     $pagamentoModel->setDtPagamentoSaida($dtPagamentoSaida);
     $pagamentoModel->setVlSaida($vlSaida);
-    $pagamentoModel->atualizarPorOrcamento($idOrcamento);
+    $pagamentoModel->atualizarPorOrcamento($idOrcamento);}
+catch (Exception $e) {
+
+        echo "Erro ao atualizar: " . $e->getMessage();
+
+    }
 
 }
-function deletar($orcamentoModel, $clienteModel)
+function deletar($orcamentoModel, $vendaModel, $pagamentoModel)
 {
-    $idOrcamento = $_POST['idOrcamento'];
-    $cdCliente = $_POST['cdCliente'];
+    try{
+    $idOrcamento = $_GET['idOrcamento'];
+    $vendaModel->deletar($idOrcamento);
+    $pagamentoModel->deletar($idOrcamento);
     $orcamentoModel->deletar($idOrcamento);
-    $clienteModel->deletar($cdCliente);
+    }catch (Exception $e) {
+
+        echo "Erro ao deletar: " . $e->getMessage();
+
+    }
 }
 function buscar($orcamentoModel, $clienteModel)
 {
     $cdCliente = $_GET['cdCliente'];
     $orcamentos = $clienteModel->buscarOrcamentos($cdCliente);
     // Retornar ou exibir os orçamentos encontrados
+    return $orcamentos;
+}
+function listar($orcamentoModel)
+{
+    $orcamentos = $orcamentoModel->listarTodos();
+    // Retornar ou exibir a lista de orçamentos
     return $orcamentos;
 }

@@ -31,9 +31,9 @@ abstract class Model implements ICrud
     protected function getPrimaryKeyName()
     {
         $pks = [
-            'clientes' => 'cd_cliente',
-            'usuarios' => 'id_usuario',
-            'vendedores' => 'id_vendedor',
+            'cliente'  => 'cd_cliente',
+            'usuario'  => 'id_usuario',
+            'vendedor' => 'id_vendedor',
             'pedras' => 'id_pedra',
             'produtos' => 'id_produto',
             'orcamentos' => 'id_orcamento',

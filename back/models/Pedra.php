@@ -57,6 +57,17 @@ class Pedra extends ItemEstoque
         }
         return false;
     }
+    // Adicionar em Pedra.php:
+public function calcularVlVenda()
+{
+    return $this->vlCompra * 1.5; // 50% de margem, por exemplo
+}
+public function deletar($id): bool
+{
+    $sql = "DELETE FROM {$this->_table} WHERE id_pedra = :id";
+    $stmt = $this->_PDO->prepare($sql);
+    return $stmt->execute(['id' => $id]);
+}
 }
 
 ?>

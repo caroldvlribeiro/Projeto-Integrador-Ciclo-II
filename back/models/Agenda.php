@@ -101,6 +101,27 @@ class Agenda extends Model
                 WHERE id_agenda = :id";
         return $this->executar($sql, $dados);
     }
+    // Deleta um compromisso da agenda
+    public function deletar($id): bool
+    {
+        $sql = "DELETE FROM {$this->_table}
+                WHERE id_agenda = :id";
+
+        $stmt = $this->_PDO->prepare($sql);
+
+        return $stmt->execute(['id' => $id]);
+    }
+    // Deleta compromissos relacionados a um orçamento específico (ex: ao deletar um orçamento)
+    public function deletarPorOrcamento($idOrcamento): bool
+    {
+        $sql = "DELETE FROM {$this->_table}
+                WHERE id_orcamento = :id";
+
+        $stmt = $this->_PDO->prepare($sql);
+
+        return $stmt->execute(['id' => $idOrcamento]);
+    }
+    
 }
 
 ?>

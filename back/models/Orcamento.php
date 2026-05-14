@@ -118,7 +118,7 @@ class Orcamento extends Model implements IRelatorio
 
 
     public function getCd_Orcamento($cd_Cliente){
-       $sql = "SELECT id_orcamento FROM orcamento WHERE cd_cliente = :cd_cliente LIMIT 1";
+        $sql = "SELECT id_orcamento FROM orcamento WHERE cd_cliente = :cd_cliente ORDER BY id_orcamento DESC LIMIT 1"; 
         $stmt = $this->_PDO->prepare($sql);
         $stmt->execute(['cd_cliente' => $cd_Cliente]);
         return $stmt->fetchColumn();
@@ -196,15 +196,15 @@ class Orcamento extends Model implements IRelatorio
 
         $this->_PDO->beginTransaction();
 
-        $sql = "DELETE FROM venda WHERE cd_orcamento = :id_orcamento";
+        $sql = "DELETE FROM venda WHERE id_orcamento = :id_orcamento";
         $stmt = $this->_PDO->prepare($sql);
         $stmt->execute(['id_orcamento' => $id_orcamento]);
 
-        $sql = "DELETE FROM agendamento WHERE cd_orcamento = :id_orcamento";
+        $sql = "DELETE FROM agenda WHERE id_orcamento = :id_orcamento";
         $stmt = $this->_PDO->prepare($sql);
         $stmt->execute(['id_orcamento' => $id_orcamento]);
 
-        $sql = "DELETE FROM pagamento WHERE cd_orcamento = :id_orcamento";
+        $sql = "DELETE FROM pagamento WHERE id_orcamento = :id_orcamento";
         $stmt = $this->_PDO->prepare($sql);
         $stmt->execute(['id_orcamento' => $id_orcamento]);
 

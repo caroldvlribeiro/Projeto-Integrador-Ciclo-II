@@ -42,6 +42,12 @@ class Pagamento extends RegistroFinanceiro
         $this->vl_pagamento_saida = $valor;
         $this->dt_pagamento_saida = $data;
     }
+    // Correção — adicionar os setters que o controller espera em Pagamento.php:
+    public function setCdOrcamento($id) { $this->idOrcamento = $id; }
+    public function setVlEntrada($valor) { $this->vl_pagamento_entrada = $valor; }
+    public function setVlSaida($valor)   { $this->vl_pagamento_saida  = $valor; }
+    public function setDtPagamentoEntrada($data) { $this->dt_pagamento_entrada = $data; }
+    public function setDtPagamentoSaida($data)   { $this->dt_pagamento_saida  = $data; }
 
     // Registra um novo pagamento
     public function salvar(): bool

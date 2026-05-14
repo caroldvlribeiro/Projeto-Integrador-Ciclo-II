@@ -83,6 +83,15 @@ class Venda extends RegistroFinanceiro
         $sql = "UPDATE {$this->_table} SET vl_total = :vl_total WHERE id_venda = :id";
         return $this->executar($sql, $dados);
     }
+    public function deletar($id): bool
+    {
+        $sql = "DELETE FROM {$this->_table}
+                WHERE id_venda = :id";
+
+        $stmt = $this->_PDO->prepare($sql);
+
+        return $stmt->execute(['id' => $id]);
+}
 }
 
 ?>
