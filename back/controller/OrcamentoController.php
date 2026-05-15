@@ -53,11 +53,16 @@ function criar($orcamentoModel, $clienteModel, $pagamentoModel, $vendaModel)
 
     try{
     // Criar cliente
+    //fazer uma condição para caso já exista um cliente com esse nm
+    $cdCliente = $clienteModel->getCd_Cliente($telefone);
+    if(!$cdCliente){
     $clienteModel->setNome($Nmcliente);    
     $clienteModel->setTelefone($telefone);
     $clienteModel->setEndereco($endereco);
     $clienteModel->salvar();
     $cdCliente = $clienteModel->getCd_Cliente($telefone);
+    }
+    
     // Criar orçamento
     $orcamentoModel->setCliente($cdCliente);
     $orcamentoModel->setDtPedido($dataPedido);

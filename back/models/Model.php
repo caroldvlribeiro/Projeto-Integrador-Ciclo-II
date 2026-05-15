@@ -72,7 +72,7 @@ abstract class Model implements ICrud
     protected function validar(array $dados): bool
     {
         foreach ($dados as $key => $valor) {
-            if ($valor === null || $valor === '') {
+            if ($valor === '') {//tem que deixar add null
                 $this->_error = "O campo {$key} deve ser preenchido!";
                 return false;
             }
