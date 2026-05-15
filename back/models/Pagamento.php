@@ -78,7 +78,9 @@ class Pagamento extends RegistroFinanceiro
                 dt_pagamento_saida = :dt_pagamento_saida, 
                 vl_pagamento_saida = :vl_pagamento_saida 
                 WHERE id_orcamento = :id";
-        return $this->executar($sql, $dados);
+        $update = $this->_PDO->prepare($sql);
+
+    return $update->execute($dados);
     }
 
     public function deletar($id): bool

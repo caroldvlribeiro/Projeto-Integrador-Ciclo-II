@@ -225,6 +225,11 @@ class Orcamento extends Model implements IRelatorio
         return false;
     }
 }
+public function listarOrcamentoModal(){
+    $select = $this->_PDO->prepare("SELECT id_orcamento, cd_cliente, nm_cliente, dt_pedido, vl_total, dt_entrega, st_orcamento From orcamento join cliente Using(cd_cliente) order by dt_pedido");
+        $select->execute();
+        return $select->fetchAll(PDO::FETCH_ASSOC);
+}
 }
 
 

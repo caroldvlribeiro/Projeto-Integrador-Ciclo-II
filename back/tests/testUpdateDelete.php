@@ -5,7 +5,7 @@ require_once '../models/Orcamento.php';
 
 $model = new Orcamento($pdo);
 
-$orcamentos = $model->listarTodos();
+$orcamentos = $model->listarOrcamentoModal();
 
 ?>
 
@@ -105,6 +105,7 @@ $orcamentos = $model->listarTodos();
             border-radius: 8px;
             font-size: 14px;
             display: inline-block;
+            transition: .2s;
         }
 
         .btn-delete {
@@ -112,9 +113,17 @@ $orcamentos = $model->listarTodos();
             color: white;
         }
 
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+
         .btn-editar {
             background: #3b82f6;
             color: white;
+        }
+
+        .btn-editar:hover {
+            background: #2563eb;
         }
 
         .modal {
@@ -124,6 +133,7 @@ $orcamentos = $model->listarTodos();
             background: rgba(0,0,0,.5);
             justify-content: center;
             align-items: center;
+            z-index: 1000;
         }
 
         .modal:target {
@@ -134,7 +144,7 @@ $orcamentos = $model->listarTodos();
             background: white;
             padding: 24px;
             border-radius: 12px;
-            width: 400px;
+            width: 420px;
             position: relative;
         }
 
@@ -169,6 +179,10 @@ $orcamentos = $model->listarTodos();
             font-weight: bold;
         }
 
+        button:hover {
+            background: #059669;
+        }
+
     </style>
 
 </head>
@@ -201,13 +215,16 @@ $orcamentos = $model->listarTodos();
 
             <table>
 
+                <!-- tabela que lista todos os orçamentos -->
                 <thead>
 
                     <tr>
 
                         <th>#ID</th>
                         <th>Cliente</th>
+                        <th>Data do Orçamento</th>
                         <th>Valor Total</th>
+                        <th>Data de Entrega</th>
                         <th>Status</th>
                         <th>Ações</th>
 
@@ -217,6 +234,7 @@ $orcamentos = $model->listarTodos();
 
                 <tbody>
 
+                    <!-- loop responsável por mostrar os orçamentos -->
                     <?php foreach($orcamentos as $orcamento): ?>
 
                         <tr>
@@ -233,6 +251,12 @@ $orcamentos = $model->listarTodos();
 
                             </td>
 
+                            <td data-label="Data do Orçamento">
+
+                                <?= date('d/m/Y', strtotime($orcamento['dt_pedido'])) ?>
+
+                            </td>
+
                             <td data-label="Valor Total">
 
                                 R$
@@ -240,8 +264,15 @@ $orcamentos = $model->listarTodos();
 
                             </td>
 
+                            <td data-label="Data de Entrega">
+
+                                <?= date('d/m/Y', strtotime($orcamento['dt_entrega'])) ?>
+
+                            </td>
+
                             <td data-label="Status">
 
+                                <!-- badge do status do orçamento -->
                                 <span
                                     class="
                                         badge
@@ -267,6 +298,7 @@ $orcamentos = $model->listarTodos();
 
                             <td data-label="Ações">
 
+                                <!-- botão de deletar -->
                                 <a
                                     class="btn-delete"
                                     href="../controller/OrcamentoController.php?acao=deletar&idOrcamento=<?= $orcamento['id_orcamento'] ?>&cdCliente=<?= $orcamento['cd_cliente'] ?>"
@@ -275,6 +307,7 @@ $orcamentos = $model->listarTodos();
                                     🗑 Deletar
                                 </a>
 
+                                <!-- botão que abre modal de edição -->
                                 <a
                                     class="btn-editar"
                                     href="#editar-<?= $orcamento['id_orcamento'] ?>"
@@ -296,6 +329,7 @@ $orcamentos = $model->listarTodos();
 
     </div>
 
+    <!-- modais de edição -->
     <?php foreach($orcamentos as $orcamento): ?>
 
         <div
@@ -384,8 +418,6 @@ $orcamentos = $model->listarTodos();
                         </option>
 
                     </select>
-
-                    
 
                     <label for="dtSaida-<?= $orcamento['id_orcamento'] ?>">
                         Data Pagamento Saída:

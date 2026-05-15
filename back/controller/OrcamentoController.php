@@ -93,7 +93,8 @@ function criar($orcamentoModel, $clienteModel, $pagamentoModel, $vendaModel)
         echo "Erro ao salvar: " . $e->getMessage();
 
     }
-    echo "id: ".$cdOrcamento;
+    header('Location: ../tests/testUpdateDelete.php');
+exit;
 
 }
 function atualizar($orcamentoModel, $pagamentoModel)
@@ -116,7 +117,8 @@ catch (Exception $e) {
         echo "Erro ao atualizar: " . $e->getMessage();
 
     }
-
+header('Location: ../tests/testUpdateDelete.php');
+exit;
 }
 function deletar($orcamentoModel, $vendaModel, $pagamentoModel)
 {
@@ -129,5 +131,6 @@ function deletar($orcamentoModel, $vendaModel, $pagamentoModel)
 
         echo "Erro ao deletar: " . $e->getMessage();
 
-    }
+    }header('Location: ../tests/testUpdateDelete.php');
+exit;
 }
