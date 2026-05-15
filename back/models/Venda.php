@@ -65,7 +65,7 @@ class Venda extends RegistroFinanceiro
         ];
 
         if ($this->validar($dados)) {
-            $sql = "INSERT INTO {$this->_table} 
+            $sql = "INSERT INTO venda
                     (id_orcamento, id_vendedor, dt_venda, vl_total) 
                     VALUES (:id_orcamento, :id_vendedor, :dt_venda, :vl_total)";
             return $this->executar($sql, $dados);

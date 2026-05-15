@@ -5,14 +5,12 @@ require_once '../models/Orcamento.php';
 require_once '../models/Cliente.php';
 require_once '../models/Pagamento.php';
 require_once '../models/Venda.php';
-require_once '../models/Agenda.php'; 
 $acao = $_GET['acao'] ?? null;
 
 $orcamentoModel = new Orcamento($pdo);  
 $clienteModel = new Cliente($pdo);
 $pagamentoModel = new Pagamento($pdo);
 $vendaModel = new Venda($pdo);
-$agendamentoModel = new Agenda($pdo);
  
 
 switch ($acao) {
@@ -35,61 +33,62 @@ function criar($orcamentoModel, $clienteModel, $pagamentoModel, $vendaModel)
 
     // dados do form:
     $Nmcliente = $_POST['nmCliente'];    
-    $telefone = $_POST['telefone'];
+    $telefone = $_POST['nrTelefone'];
     $endereco = $_POST['endereco'];
     $dataPedido = $_POST['dtPedido'];
     $descricao = $_POST['descricao'];
-    $saia = $_POST['saia'];
-    $acabamento = $_POST['acabamento'];
-    $vista = $_POST['vista'];
+    $acabamento = $_POST['idAcabamento'];
+    $saia = $_POST['saia'] ?: null;
+    $vista = $_POST['vista'] ?: null;
     $cuba = $_POST['cuba'];
-    $pedra = $_POST['pedra'];
+    $pedra = $_POST['idPedra'];
     $dtEntrega = $_POST['dtEntrega'];
     $status = $_POST['status'];
     $vlTotal = $_POST['valorTotal'];
     $dtPagamentoEntrada = $_POST['dtPagamentoEntrada'];
     $vlEntrada = $_POST['valorEntrada'];
-    $dtPagamentoSaida = $_POST['dtPagamentoSaida'];
-    $vlSaida = $_POST['valorSaida'];
+    $dtPagamentoSaida = $_POST['dtPagamentoSaida'] ?: null;
+    $vlSaida = $_POST['valorSaida'] ?: null;
     $vendedor = $_POST['vendedor'];
 
     try{
     // Criar cliente
-    $clienteModel->setNmCliente($Nmcliente);    
+    $clienteModel->setNome($Nmcliente);    
     $clienteModel->setTelefone($telefone);
     $clienteModel->setEndereco($endereco);
     $clienteModel->salvar();
     $cdCliente = $clienteModel->getCd_Cliente($telefone);
     // Criar orçamento
-    $orcamentoModel->setCdCliente($cdCliente);
+    $orcamentoModel->setCliente($cdCliente);
     $orcamentoModel->setDtPedido($dataPedido);
-    $orcamentoModel->setDsDescricao($descricao);
+    $orcamentoModel->setDescricao($descricao);
     $orcamentoModel->setSaia($saia);
     $orcamentoModel->setAcabamento($acabamento);
     $orcamentoModel->setVista($vista);
     $orcamentoModel->setCuba($cuba);
-    $orcamentoModel->setIdPedra($pedra);
+    $orcamentoModel->setPedra($pedra);
     $orcamentoModel->setDtEntrega($dtEntrega);
     $orcamentoModel->setStatus($status);
-    $orcamentoModel->setVlTotal($vlTotal);
+    $orcamentoModel->setValor($vlTotal);
     $orcamentoModel->salvar();
     $cdOrcamento = $orcamentoModel->getCd_Orcamento($cdCliente);
     // Criar pagamento
     $pagamentoModel->setCdOrcamento($cdOrcamento);
-    $pagamentoModel->setDtPagamentoEntrada($dtPagamentoEntrada);
-    $pagamentoModel->setVlEntrada($vlEntrada);
-    $pagamentoModel->setDtPagamentoSaida($dtPagamentoSaida);
-    $pagamentoModel->setVlSaida($vlSaida);
+    $pagamentoModel->setEntrada($vlEntrada, $dtPagamentoEntrada);
+    $pagamentoModel->setSaida($vlSaida, $dtPagamentoSaida);
     $pagamentoModel->salvar();
     // Criar venda
-    $vendaModel->setCdOrcamento($cdOrcamento);
+    $vendaModel->setOrcamento($cdOrcamento);
     $vendaModel->setVendedor($vendedor);
+    $vendaModel->setValorTotal($vlTotal);
+    $vendaModel->setDataVenda($dataPedido);
     $vendaModel->salvar();}
     catch (Exception $e) {
 
         echo "Erro ao salvar: " . $e->getMessage();
 
     }
+    echo "id: ".$cdOrcamento;
 
 }
 function atualizar($orcamentoModel, $pagamentoModel)
@@ -105,13 +104,12 @@ function atualizar($orcamentoModel, $pagamentoModel)
 try{
     // Atualizar orçamento
     $orcamentoModel->setStatus($status);
-    $orcamentoModel->setVlTotal($vlTotal);
+    $orcamentoModel->setValor($vlTotal);
     $orcamentoModel->atualizar($idOrcamento);
     // Atualizar pagamento
-    $pagamentoModel->setDtPagamentoEntrada($dtPagamentoEntrada);
-    $pagamentoModel->setVlEntrada($vlEntrada);
-    $pagamentoModel->setDtPagamentoSaida($dtPagamentoSaida);
-    $pagamentoModel->setVlSaida($vlSaida);
+    $pagamentoModel->setOrcamento($idOrcamento);
+    $pagamentoModel->setEntrada($vlEntrada, $dtPagamentoEntrada);
+    $pagamentoModel->setSaida($vlSaida,$dtPagamentoSaida);
     $pagamentoModel->atualizarPorOrcamento($idOrcamento);}
 catch (Exception $e) {
 
@@ -132,17 +130,4 @@ function deletar($orcamentoModel, $vendaModel, $pagamentoModel)
         echo "Erro ao deletar: " . $e->getMessage();
 
     }
-}
-function buscar($orcamentoModel, $clienteModel)
-{
-    $cdCliente = $_GET['cdCliente'];
-    $orcamentos = $clienteModel->buscarOrcamentos($cdCliente);
-    // Retornar ou exibir os orçamentos encontrados
-    return $orcamentos;
-}
-function listar($orcamentoModel)
-{
-    $orcamentos = $orcamentoModel->listarTodos();
-    // Retornar ou exibir a lista de orçamentos
-    return $orcamentos;
 }

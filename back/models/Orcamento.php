@@ -127,11 +127,7 @@ class Orcamento extends Model implements IRelatorio
     // Cria um novo orçamento (padrão: Aberto)
     public function salvar(): bool
     {
-        $sql = "INSERT INTO orcamento 
-        (cd_cliente, dt_pedido, vl_total, ds_descricao, acabamento, id_pedra, nm_cuba, vista, saia, dt_entrega, st_orcamento)
-        VALUES (:cd_cliente, :dt_pedido, :vl_total, :ds_descricao, :acabamento, :id_pedra, :nm_cuba, :vista, :saia, :dt_entrega, :st_orcamento)";
-    
-        return $this->executar($sql, [
+        $dados = [
             'cd_cliente' => $this->cd_cliente,
             'dt_pedido' => $this->dt_pedido ?? date('Y-m-d'),
             'vl_total' => $this->vl_total,
@@ -143,31 +139,35 @@ class Orcamento extends Model implements IRelatorio
             'saia' => $this->saia,
             'dt_entrega' => $this->dt_entrega,
             'st_orcamento' => $this->st_orcamento ?? 'Aberto'
-        ]);
+        ];
+        if($this->validar($dados)){
+            $sql = "INSERT INTO orcamento 
+            (cd_cliente, dt_pedido, vl_total, ds_descricao, acabamento, id_pedra, nm_cuba, vista, saia, dt_entrega, st_orcamento)
+            VALUES (:cd_cliente, :dt_pedido, :vl_total, :ds_descricao, :acabamento, :id_pedra, :nm_cuba, :vista, :saia, :dt_entrega, :st_orcamento)";
+        
+            return $this->executar($sql, $dados);
+        }return false;
     }
 
     // Atualiza status ou valor do orçamento
     public function atualizar(int $id): bool
 {
-    $sql = "UPDATE {$this->_table} 
-            SET 
-                vl_total = :vl_total,
-                st_orcamento = :st_orcamento,
-                ds_descricao = :ds_descricao
-            WHERE id_orcamento = :id";
-
     $dados = [
         'id' => $id,
         'vl_total' => $this->vl_total,
         'st_orcamento' => $this->st_orcamento,
         'ds_descricao' => $this->ds_descricao
     ];
-
-    $stmt = $this->_PDO->prepare($sql);
-    $stmt->execute($dados);
-
-    return $stmt->rowCount() > 0;
-    }
+    if($this->validar($dados)){
+        $sql = "UPDATE {$this->_table} 
+                SET 
+                vl_total = :vl_total,
+                st_orcamento = :st_orcamento,
+                ds_descricao = :ds_descricao
+                WHERE id_orcamento = :id";
+        return $this->executar($sql, $dados);
+    }return false;
+}
 
     // --- IMPLEMENTAÇÃO DA INTERFACE IRelatorio ---
 
@@ -197,20 +197,24 @@ class Orcamento extends Model implements IRelatorio
         $this->_PDO->beginTransaction();
 
         $sql = "DELETE FROM venda WHERE id_orcamento = :id_orcamento";
-        $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['id_orcamento' => $id_orcamento]);
+        $this->executar($sql, [
+            'id_orcamento' => $id_orcamento
+        ]);
 
         $sql = "DELETE FROM agenda WHERE id_orcamento = :id_orcamento";
-        $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['id_orcamento' => $id_orcamento]);
+        $this->executar($sql, [
+            'id_orcamento' => $id_orcamento
+        ]);
 
         $sql = "DELETE FROM pagamento WHERE id_orcamento = :id_orcamento";
-        $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['id_orcamento' => $id_orcamento]);
+        $this->executar($sql, [
+            'id_orcamento' => $id_orcamento
+        ]);
 
         $sql = "DELETE FROM orcamento WHERE id_orcamento = :id_orcamento";
-        $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['id_orcamento' => $id_orcamento]);
+        $this->executar($sql, [
+            'id_orcamento' => $id_orcamento
+        ]);
 
         $this->_PDO->commit();
 

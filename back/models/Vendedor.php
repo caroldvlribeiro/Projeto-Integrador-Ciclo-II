@@ -85,6 +85,15 @@ class Vendedor extends Pessoa implements IAutenticavel
         }
         return false;
     }
+    public function deletar($id):bool{
+        try{
+            $sql = "DELETE FROM vendedor WHERE id_vendedor = :id";
+            $stmt= $this->_PDO->prepare($sql);
+            return $stmt->execute(['id'=> $id]);
+        }catch (PDOException $e){
+            return false;
+        }
+    }
 
     /**
      * Autenticação do vendedor.
