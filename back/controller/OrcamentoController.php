@@ -101,21 +101,16 @@ function atualizar($orcamentoModel, $pagamentoModel)
     // dados do form:
     $idOrcamento = $_POST['idOrcamento'];
     $status = $_POST['status'];
-    $vlTotal = $_POST['valorTotal'];
-    $dtPagamentoEntrada = $_POST['dtPagamentoEntrada'];
-    $vlEntrada = $_POST['valorEntrada'];
     $dtPagamentoSaida = $_POST['dtPagamentoSaida'];
     $vlSaida = $_POST['valorSaida'];
 try{
     // Atualizar orçamento
     $orcamentoModel->setStatus($status);
-    $orcamentoModel->setValor($vlTotal);
     $orcamentoModel->atualizar($idOrcamento);
     // Atualizar pagamento
     $pagamentoModel->setOrcamento($idOrcamento);
-    $pagamentoModel->setEntrada($vlEntrada, $dtPagamentoEntrada);
     $pagamentoModel->setSaida($vlSaida,$dtPagamentoSaida);
-    $pagamentoModel->atualizarPorOrcamento($idOrcamento);}
+    $pagamentoModel->atualizar($idOrcamento);}
 catch (Exception $e) {
 
         echo "Erro ao atualizar: " . $e->getMessage();

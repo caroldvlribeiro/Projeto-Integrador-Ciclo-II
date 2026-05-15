@@ -154,16 +154,12 @@ class Orcamento extends Model implements IRelatorio
 {
     $dados = [
         'id' => $id,
-        'vl_total' => $this->vl_total,
-        'st_orcamento' => $this->st_orcamento,
-        'ds_descricao' => $this->ds_descricao
+        'st_orcamento' => $this->st_orcamento
     ];
     if($this->validar($dados)){
         $sql = "UPDATE {$this->_table} 
-                SET 
-                vl_total = :vl_total,
-                st_orcamento = :st_orcamento,
-                ds_descricao = :ds_descricao
+                SET
+                st_orcamento = :st_orcamento
                 WHERE id_orcamento = :id";
         return $this->executar($sql, $dados);
     }return false;

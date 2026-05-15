@@ -77,7 +77,7 @@ class Pagamento extends RegistroFinanceiro
         $sql = "UPDATE {$this->_table} SET 
                 dt_pagamento_saida = :dt_pagamento_saida, 
                 vl_pagamento_saida = :vl_pagamento_saida 
-                WHERE id_pagamento = :id";
+                WHERE id_orcamento = :id";
         return $this->executar($sql, $dados);
     }
 

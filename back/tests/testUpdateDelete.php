@@ -13,20 +13,164 @@ $orcamentos = $model->listarTodos();
 <html lang="pt-br">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Orçamentos</title>
+
     <style>
 
-.modal {
-    display: none;
-}
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
 
-.modal:target {
-    display: block;
-}
+        .page {
+            max-width: 1200px;
+            margin: auto;
+        }
 
-</style>
+        header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .logo {
+            font-size: 40px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #fafafa;
+        }
+
+        .badge {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .badge-aberto {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-aprovado {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-cancelado {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-finalizado {
+            background: #ddd6fe;
+            color: #5b21b6;
+        }
+
+        .btn-delete,
+        .btn-editar {
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-editar {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal:target {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            width: 400px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 16px;
+            top: 10px;
+            text-decoration: none;
+            color: black;
+            font-size: 22px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        input,
+        select,
+        button {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background: #10b981;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+    </style>
+
 </head>
 
 <body>
@@ -34,9 +178,13 @@ $orcamentos = $model->listarTodos();
     <div class="page">
 
         <header>
-            <div class="logo">🪨</div>
+
+            <div class="logo">
+                🪨
+            </div>
 
             <div>
+
                 <h1 id="lista-orcamentos">
                     Orçamentos
                 </h1>
@@ -44,21 +192,27 @@ $orcamentos = $model->listarTodos();
                 <p>
                     Gerencie e acompanhe os orçamentos cadastrados
                 </p>
+
             </div>
+
         </header>
 
         <div class="card">
 
-            <table border="1">
+            <table>
 
                 <thead>
+
                     <tr>
+
                         <th>#ID</th>
                         <th>Cliente</th>
                         <th>Valor Total</th>
                         <th>Status</th>
                         <th>Ações</th>
+
                     </tr>
+
                 </thead>
 
                 <tbody>
@@ -68,16 +222,22 @@ $orcamentos = $model->listarTodos();
                         <tr>
 
                             <td data-label="ID">
+
                                 <?= $orcamento['id_orcamento'] ?>
+
                             </td>
 
                             <td data-label="Cliente">
+
                                 <?= $orcamento['nm_cliente'] ?? '—' ?>
+
                             </td>
 
                             <td data-label="Valor Total">
+
                                 R$
                                 <?= number_format($orcamento['vl_total'], 2, ',', '.') ?>
+
                             </td>
 
                             <td data-label="Status">
@@ -85,9 +245,16 @@ $orcamentos = $model->listarTodos();
                                 <span
                                     class="
                                         badge
-                                        <?= $orcamento['st_orcamento'] === 'Aberto'
-                                            ? 'badge-aberto'
-                                            : 'badge-fechado'
+                                        <?=
+                                            match($orcamento['st_orcamento']) {
+
+                                                'Aberto'     => 'badge-aberto',
+                                                'Aprovado'   => 'badge-aprovado',
+                                                'Cancelado'  => 'badge-cancelado',
+                                                'Finalizado' => 'badge-finalizado',
+
+                                                default => 'badge-aberto'
+                                            }
                                         ?>
                                     "
                                 >
@@ -190,46 +357,35 @@ $orcamentos = $model->listarTodos();
 
                         <option
                             value="Aberto"
-                            <?= $orcamento['st_orcamento'] === 'Aberto'
-                                ? 'selected'
-                                : ''
-                            ?>
+                            <?= $orcamento['st_orcamento'] === 'Aberto' ? 'selected' : '' ?>
                         >
                             Aberto
                         </option>
 
                         <option
-                            value="Fechado"
-                            <?= $orcamento['st_orcamento'] === 'Fechado'
-                                ? 'selected'
-                                : ''
-                            ?>
+                            value="Aprovado"
+                            <?= $orcamento['st_orcamento'] === 'Aprovado' ? 'selected' : '' ?>
                         >
-                            Fechado
+                            Aprovado
+                        </option>
+
+                        <option
+                            value="Cancelado"
+                            <?= $orcamento['st_orcamento'] === 'Cancelado' ? 'selected' : '' ?>
+                        >
+                            Cancelado
+                        </option>
+
+                        <option
+                            value="Finalizado"
+                            <?= $orcamento['st_orcamento'] === 'Finalizado' ? 'selected' : '' ?>
+                        >
+                            Finalizado
                         </option>
 
                     </select>
 
-                    <label for="dtEntrada-<?= $orcamento['id_orcamento'] ?>">
-                        Data Pagamento Entrada:
-                    </label>
-
-                    <input
-                        type="date"
-                        name="dtPagamentoEntrada"
-                        id="dtEntrada-<?= $orcamento['id_orcamento'] ?>"
-                    >
-
-                    <label for="valorEntrada-<?= $orcamento['id_orcamento'] ?>">
-                        Valor Entrada:
-                    </label>
-
-                    <input
-                        type="number"
-                        step="0.01"
-                        name="valorEntrada"
-                        id="valorEntrada-<?= $orcamento['id_orcamento'] ?>"
-                    >
+                    
 
                     <label for="dtSaida-<?= $orcamento['id_orcamento'] ?>">
                         Data Pagamento Saída:
