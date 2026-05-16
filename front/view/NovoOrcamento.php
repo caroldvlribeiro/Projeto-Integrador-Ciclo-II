@@ -9,7 +9,7 @@
 
     <h2>Novo Orçamento</h2>
 
-    <form action="../controller/OrcamentoController.php?acao=criar" method="POST">
+    <form action="../back/controller/OrcamentoController.php?acao=criar" method="POST">
         <!-- dados do cliente-->
         <label>Nome do Cliente:</label><br>
         <input type="text" name="nmCliente" required><br><br>

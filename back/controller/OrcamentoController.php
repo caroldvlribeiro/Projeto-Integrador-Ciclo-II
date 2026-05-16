@@ -87,14 +87,16 @@ function criar($orcamentoModel, $clienteModel, $pagamentoModel, $vendaModel)
     $vendaModel->setVendedor($vendedor);
     $vendaModel->setValorTotal($vlTotal);
     $vendaModel->setDataVenda($dataPedido);
-    $vendaModel->salvar();}
+    $vendaModel->salvar();
+    header('Location: ../../front/view/Orcamentos.php');
+exit;
+    }
     catch (Exception $e) {
 
         echo "Erro ao salvar: " . $e->getMessage();
 
     }
-    header('Location: ../tests/testUpdateDelete.php');
-exit;
+    
 
 }
 function atualizar($orcamentoModel, $pagamentoModel)
@@ -111,14 +113,16 @@ try{
     // Atualizar pagamento
     $pagamentoModel->setOrcamento($idOrcamento);
     $pagamentoModel->setSaida($vlSaida,$dtPagamentoSaida);
-    $pagamentoModel->atualizar($idOrcamento);}
+    $pagamentoModel->atualizar($idOrcamento);
+    header('Location: ../../front/view/Orcamentos.php');
+exit;
+    }
 catch (Exception $e) {
 
         echo "Erro ao atualizar: " . $e->getMessage();
 
     }
-header('Location: ../tests/testUpdateDelete.php');
-exit;
+
 }
 function deletar($orcamentoModel, $vendaModel, $pagamentoModel)
 {
@@ -127,10 +131,12 @@ function deletar($orcamentoModel, $vendaModel, $pagamentoModel)
     $vendaModel->deletar($idOrcamento);
     $pagamentoModel->deletar($idOrcamento);
     $orcamentoModel->deletar($idOrcamento);
+    header('Location: ../../front/view/Orcamentos.php');
+exit;
+    
     }catch (Exception $e) {
 
         echo "Erro ao deletar: " . $e->getMessage();
 
-    }header('Location: ../tests/testUpdateDelete.php');
-exit;
+    }
 }
