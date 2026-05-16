@@ -3,7 +3,7 @@ require_once '../config/database.php';
 require_once '../models/Orcamento.php';
 require_once '../models/Cliente.php';
 require_once '../models/Pagamento.php';
-require_once '../models/Venda.php'; 
+require_once '../models/Venda.php';
 $acao = $_GET['acao'] ?? null;
 
 $orcamentoModel = new Orcamento($pdo);  
@@ -18,66 +18,85 @@ switch ($acao) {
         break;
     case 'atualizar':
         atualizar($orcamentoModel,$pagamentoModel);
+
         break;
     // Outros casos para editar, excluir, etc.
     case 'deletar':
-        deletar($orcamentoModel, $clienteModel);
+        deletar($orcamentoModel, $vendaModel, $pagamentoModel);
         break;
+    
 }
 
 // Função para criar um novo orçamento
 function criar($orcamentoModel, $clienteModel, $pagamentoModel, $vendaModel)
 {
+
     // dados do form:
     $Nmcliente = $_POST['nmCliente'];    
-    $telefone = $_POST['telefone'];
+    $telefone = $_POST['nrTelefone'];
     $endereco = $_POST['endereco'];
-    $dataPedido = $_POST['dtPedido'];
+    $dataPedido = $_POST['dtPagamentoEntrada'];
     $descricao = $_POST['descricao'];
-    $saia = $_POST['saia'];
-    $acabamento = $_POST['acabamento'];
-    $vista = $_POST['vista'];
-    $cuba = $_POST['cuba'];
-    $pedra = $_POST['pedra'];
+    $acabamento = $_POST['idAcabamento'];
+    $saia = $_POST['saia'] ?: null;
+    $vista = $_POST['vista'] ?: null;
+    $cuba = $_POST['cuba'] ?: null;
+    $pedra = $_POST['idPedra'];
     $dtEntrega = $_POST['dtEntrega'];
     $status = $_POST['status'];
     $vlTotal = $_POST['valorTotal'];
     $dtPagamentoEntrada = $_POST['dtPagamentoEntrada'];
     $vlEntrada = $_POST['valorEntrada'];
-    $dtPagamentoSaida = $_POST['dtPagamentoSaida'];
-    $vlSaida = $_POST['valorSaida'];
+    $dtPagamentoSaida = $_POST['dtPagamentoSaida'] ?: null;
+    $vlSaida = $_POST['valorSaida'] ?: null;
     $vendedor = $_POST['vendedor'];
 
+    try{
     // Criar cliente
-    $clienteModel->setNmCliente($Nmcliente);    
+    //fazer uma condição para caso já exista um cliente com esse nm
+    $cdCliente = $clienteModel->getCd_Cliente($telefone);
+    if(!$cdCliente){
+    $clienteModel->setNome($Nmcliente);    
     $clienteModel->setTelefone($telefone);
     $clienteModel->setEndereco($endereco);
     $clienteModel->salvar();
-    $cdCliente = $clienteModel->getCdCliente($telefone);
+    $cdCliente = $clienteModel->getCd_Cliente($telefone);
+    }
+    
     // Criar orçamento
-    $orcamentoModel->setCdCliente($cdCliente);
+    $orcamentoModel->setCliente($cdCliente);
     $orcamentoModel->setDtPedido($dataPedido);
-    $orcamentoModel->setDsDescricao($descricao);
+    $orcamentoModel->setDescricao($descricao);
     $orcamentoModel->setSaia($saia);
     $orcamentoModel->setAcabamento($acabamento);
     $orcamentoModel->setVista($vista);
     $orcamentoModel->setCuba($cuba);
-    $orcamentoModel->setIdPedra($pedra);
+    $orcamentoModel->setPedra($pedra);
     $orcamentoModel->setDtEntrega($dtEntrega);
     $orcamentoModel->setStatus($status);
-    $orcamentoModel->setVlTotal($vlTotal);
+    $orcamentoModel->setValor($vlTotal);
     $orcamentoModel->salvar();
     $cdOrcamento = $orcamentoModel->getCd_Orcamento($cdCliente);
     // Criar pagamento
     $pagamentoModel->setCdOrcamento($cdOrcamento);
-    $pagamentoModel->setDtPagamentoEntrada($dtPagamentoEntrada);
-    $pagamentoModel->setVlEntrada($vlEntrada);
-    $pagamentoModel->setDtPagamentoSaida($dtPagamentoSaida);
-    $pagamentoModel->setVlSaida($vlSaida);
+    $pagamentoModel->setEntrada($vlEntrada, $dtPagamentoEntrada);
+    $pagamentoModel->setSaida($vlSaida, $dtPagamentoSaida);
     $pagamentoModel->salvar();
     // Criar venda
-    $vendaModel->setCdOrcamento($cdOrcamento);
+    $vendaModel->setOrcamento($cdOrcamento);
     $vendaModel->setVendedor($vendedor);
+    $vendaModel->setValorTotal($vlTotal);
+    $vendaModel->setDataVenda($dataPedido);
+    $vendaModel->salvar();
+    header('Location: ../../front/view/Orcamentos.php');
+exit;
+    }
+    catch (Exception $e) {
+
+        echo "Erro ao salvar: " . $e->getMessage();
+
+    }
+    
 
 }
 function atualizar($orcamentoModel, $pagamentoModel)
@@ -85,35 +104,50 @@ function atualizar($orcamentoModel, $pagamentoModel)
     // dados do form:
     $idOrcamento = $_POST['idOrcamento'];
     $status = $_POST['status'];
-    $vlTotal = $_POST['valorTotal'];
-    $dtPagamentoEntrada = $_POST['dtPagamentoEntrada'];
-    $vlEntrada = $_POST['valorEntrada'];
     $dtPagamentoSaida = $_POST['dtPagamentoSaida'];
     $vlSaida = $_POST['valorSaida'];
-
+try{
     // Atualizar orçamento
     $orcamentoModel->setStatus($status);
-    $orcamentoModel->setVlTotal($vlTotal);
     $orcamentoModel->atualizar($idOrcamento);
     // Atualizar pagamento
-    $pagamentoModel->setDtPagamentoEntrada($dtPagamentoEntrada);
-    $pagamentoModel->setVlEntrada($vlEntrada);
-    $pagamentoModel->setDtPagamentoSaida($dtPagamentoSaida);
-    $pagamentoModel->setVlSaida($vlSaida);
-    $pagamentoModel->atualizarPorOrcamento($idOrcamento);
+    $pagamentoModel->setOrcamento($idOrcamento);
+    $pagamentoModel->setSaida($vlSaida,$dtPagamentoSaida);
+    $pagamentoModel->atualizar($idOrcamento);
+    header('Location: ../../front/view/Orcamentos.php');
+exit;
+    }
+catch (Exception $e) {
+
+        echo "Erro ao atualizar: " . $e->getMessage();
+
+    }
 
 }
-function deletar($orcamentoModel, $clienteModel)
+function deletar($orcamentoModel, $vendaModel, $pagamentoModel)
 {
-    $idOrcamento = $_POST['idOrcamento'];
-    $cdCliente = $_POST['cdCliente'];
+    try{
+    $idOrcamento = $_GET['idOrcamento'];
     $orcamentoModel->deletar($idOrcamento);
-    $clienteModel->deletar($cdCliente);
+    header('Location: ../../front/view/Orcamentos.php');
+exit;
+    
+    }catch (Exception $e) {
+
+        echo "Erro ao deletar: " . $e->getMessage();
+
+    }
+
 }
-function buscar($orcamentoModel, $clienteModel)
-{
-    $cdCliente = $_GET['cdCliente'];
-    $orcamentos = $clienteModel->buscarOrcamentos($cdCliente);
-    // Retornar ou exibir os orçamentos encontrados
-    return $orcamentos;
+function buscarPorNome($orcamentoModel){
+    $busca = $_GET['busca'] ?? '';
+    if (!empty($busca)) {
+
+    $orcamentos = $orcamentoModel->buscarPorNome($busca);
+
+} else {
+
+    $orcamentos = $orcamentoModel->listarOrcamentoModal();
+}
+ return $orcamentos;
 }

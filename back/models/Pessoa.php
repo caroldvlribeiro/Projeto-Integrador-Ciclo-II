@@ -10,6 +10,7 @@ abstract class Pessoa extends Model
     protected $nome;
     protected $telefone;
     protected $senha;
+    protected $email;
 
     public function __construct(PDO $PDO, $table)
     {
@@ -45,6 +46,13 @@ abstract class Pessoa extends Model
     {
         $this->senha = $this->hashSenha($senha);
     }
+    public function getEmail()
+    {
+        return $this->email;
+    }
+    public function setEmail($email){
+        $this->email = $email;
+    }
 
     /**
      * Gera o hash da senha para armazenamento seguro.
@@ -59,7 +67,7 @@ abstract class Pessoa extends Model
     }
 
     // Método para retornar uma string de identificação do perfil
-    abstract public function getPerfil(): string;
+    abstract public function getPerfil($id): string;
 }
 
 ?>

@@ -27,7 +27,7 @@ class Cliente extends Pessoa
     }
 
     // Retorna resumo do cliente
-    public function getPerfil(): string
+    public function getPerfil($id= null): string
     {
         return "Cliente: {$this->nome} | 
         Tel: {$this->telefone} | 
@@ -37,7 +37,8 @@ class Cliente extends Pessoa
     //pegar o cd do cliente a partir do nome
     public function getCd_Cliente($cd_telefone)
     {
-        $sql = "SELECT cd_cliente FROM cliente WHERE cd_telefone = :cd_telefone";
+        $sql = "SELECT cd_cliente FROM cliente 
+                WHERE cd_telefone = :cd_telefone";
         $stmt = $this->_PDO->prepare($sql);
         $stmt->execute(['cd_telefone' => $cd_telefone]);
         return $stmt->fetchColumn();

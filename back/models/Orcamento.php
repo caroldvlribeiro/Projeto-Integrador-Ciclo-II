@@ -118,7 +118,7 @@ class Orcamento extends Model implements IRelatorio
 
 
     public function getCd_Orcamento($cd_Cliente){
-       $sql = "SELECT id_orcamento FROM orcamento WHERE cd_cliente = :cd_cliente LIMIT 1";
+        $sql = "SELECT id_orcamento FROM orcamento WHERE cd_cliente = :cd_cliente ORDER BY id_orcamento DESC LIMIT 1"; 
         $stmt = $this->_PDO->prepare($sql);
         $stmt->execute(['cd_cliente' => $cd_Cliente]);
         return $stmt->fetchColumn();
@@ -127,11 +127,7 @@ class Orcamento extends Model implements IRelatorio
     // Cria um novo orçamento (padrão: Aberto)
     public function salvar(): bool
     {
-        $sql = "INSERT INTO orcamento 
-        (cd_cliente, dt_pedido, vl_total, ds_descricao, acabamento, id_pedra, nm_cuba, vista, saia, dt_entrega, st_orcamento)
-        VALUES (:cd_cliente, :dt_pedido, :vl_total, :ds_descricao, :acabamento, :id_pedra, :nm_cuba, :vista, :saia, :dt_entrega, :st_orcamento)";
-    
-        return $this->executar($sql, [
+        $dados = [
             'cd_cliente' => $this->cd_cliente,
             'dt_pedido' => $this->dt_pedido ?? date('Y-m-d'),
             'vl_total' => $this->vl_total,
@@ -143,46 +139,60 @@ class Orcamento extends Model implements IRelatorio
             'saia' => $this->saia,
             'dt_entrega' => $this->dt_entrega,
             'st_orcamento' => $this->st_orcamento ?? 'Aberto'
-        ]);
+        ];
+        if($this->validar($dados)){
+            $sql = "INSERT INTO orcamento 
+            (cd_cliente, dt_pedido, vl_total, ds_descricao, acabamento, id_pedra, nm_cuba, vista, saia, dt_entrega, st_orcamento)
+            VALUES (:cd_cliente, :dt_pedido, :vl_total, :ds_descricao, :acabamento, :id_pedra, :nm_cuba, :vista, :saia, :dt_entrega, :st_orcamento)";
+        
+            return $this->executar($sql, $dados);
+        }return false;
     }
 
     // Atualiza status ou valor do orçamento
     public function atualizar(int $id): bool
 {
-    $sql = "UPDATE {$this->_table} 
-            SET 
-                vl_total = :vl_total,
-                st_orcamento = :st_orcamento,
-                ds_descricao = :ds_descricao
-            WHERE id_orcamento = :id";
-
     $dados = [
         'id' => $id,
-        'vl_total' => $this->vl_total,
-        'st_orcamento' => $this->st_orcamento,
-        'ds_descricao' => $this->ds_descricao
+        'st_orcamento' => $this->st_orcamento
     ];
-
-    $stmt = $this->_PDO->prepare($sql);
-    $stmt->execute($dados);
-
-    return $stmt->rowCount() > 0;
-    }
+    if($this->validar($dados)){
+        $sql = "UPDATE {$this->_table} 
+                SET
+                st_orcamento = :st_orcamento
+                WHERE id_orcamento = :id";
+        return $this->executar($sql, $dados);
+    }return false;
+}
 
     // --- IMPLEMENTAÇÃO DA INTERFACE IRelatorio ---
 
-    public function gerarRelatorio(): array
-    {
-        return $this->listarTodos();
+    public function gerarRelatorio($dataInicio = null, $dataFim = null, $status = null): array
+{
+    $sql = "SELECT o.id_orcamento, c.nm_cliente, c.cd_telefone, c.nm_endereco, o.dt_pedido, o.ds_descricao, o.vl_total, o.st_orcamento, v.id_venda,  v.dt_venda, p.vl_pagamento_entrada, p.vl_pagamento_saida, vd.nm_vendedor FROM orcamento o JOIN cliente c USING(cd_cliente) JOIN venda v USING(id_orcamento) JOIN pagamento p USING(id_orcamento) JOIN vendedor vd  USING(id_vendedor)  WHERE 1=1";
+    $params = [];
+
+    if ($dataInicio && $dataFim) {
+        $sql .= " AND o.dt_pedido BETWEEN :inicio AND :fim";
+
+        $params['inicio'] = $dataInicio;
+        $params['fim'] = $dataFim;
     }
 
-    public function filtrarPorPeriodo(string $ini, string $fim): array
-    {
-        $sql = "SELECT * FROM {$this->_table} WHERE dt_pedido BETWEEN :ini AND :fim";
-        $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['ini' => $ini, 'fim' => $fim]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if ($status) {
+        $sql .= " AND o.st_orcamento = :status";
+
+        $params['status'] = $status;
     }
+
+    $sql .= " ORDER BY o.dt_pedido DESC";
+
+    $stmt = $this->_PDO->prepare($sql);
+
+    $stmt->execute($params);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
     public function exportar(string $formato): string
     {
@@ -196,21 +206,25 @@ class Orcamento extends Model implements IRelatorio
 
         $this->_PDO->beginTransaction();
 
-        $sql = "DELETE FROM venda WHERE cd_orcamento = :id_orcamento";
-        $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['id_orcamento' => $id_orcamento]);
+        $sql = "DELETE FROM venda WHERE id_orcamento = :id_orcamento";
+        $this->executar($sql, [
+            'id_orcamento' => $id_orcamento
+        ]);
 
-        $sql = "DELETE FROM agendamento WHERE cd_orcamento = :id_orcamento";
-        $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['id_orcamento' => $id_orcamento]);
+        $sql = "DELETE FROM agenda WHERE id_orcamento = :id_orcamento";
+        $this->executar($sql, [
+            'id_orcamento' => $id_orcamento
+        ]);
 
-        $sql = "DELETE FROM pagamento WHERE cd_orcamento = :id_orcamento";
-        $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['id_orcamento' => $id_orcamento]);
+        $sql = "DELETE FROM pagamento WHERE id_orcamento = :id_orcamento";
+        $this->executar($sql, [
+            'id_orcamento' => $id_orcamento
+        ]);
 
         $sql = "DELETE FROM orcamento WHERE id_orcamento = :id_orcamento";
-        $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['id_orcamento' => $id_orcamento]);
+        $this->executar($sql, [
+            'id_orcamento' => $id_orcamento
+        ]);
 
         $this->_PDO->commit();
 
@@ -225,6 +239,33 @@ class Orcamento extends Model implements IRelatorio
         return false;
     }
 }
+public function listarOrcamentoModal(){
+    $select = $this->_PDO->prepare("SELECT id_orcamento, cd_cliente, nm_cliente, dt_pedido, vl_total, dt_entrega, st_orcamento From orcamento join cliente Using(cd_cliente) order by dt_pedido");
+        $select->execute();
+        return $select->fetchAll(PDO::FETCH_ASSOC);
+}
+public function buscarPorNome(string $nm)
+{
+    $sql = "SELECT o.id_orcamento, o.cd_cliente, c.nm_cliente, o.dt_pedido, o.vl_total, o.dt_entrega, o.st_orcamento
+            FROM orcamento o
+            JOIN cliente c USING(cd_cliente)
+            WHERE c.nm_cliente LIKE :nome
+            ORDER BY c.nm_cliente ";
+    $select = $this->_PDO->prepare($sql);
+    $select->bindValue(':nome', "%{$nm}%");
+    $select->execute();
+
+    return $select->fetchAll(PDO::FETCH_ASSOC);
+}
+ public function filtrarPorPeriodo(string $ini, string $fim): array
+    {
+        $sql = "SELECT o.id_orcamento, o.cd_cliente, c.nm_cliente, o.dt_pedido, o.vl_total, o.dt_entrega, o.st_orcamento
+                FROM orcamento o 
+                JOIN cliente c USING(cd_cliente) WHERE dt_pedido BETWEEN :ini AND :fim";
+        $stmt = $this->_PDO->prepare($sql);
+        $stmt->execute(['ini' => $ini, 'fim' => $fim]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 
 

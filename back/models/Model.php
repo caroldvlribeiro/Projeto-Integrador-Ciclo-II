@@ -29,9 +29,9 @@ abstract class Model implements ICrud
     protected function getPrimaryKeyName()
     {
         $pks = [
-            'clientes' => 'cd_cliente',
-            'usuarios' => 'id_usuario',
-            'vendedores' => 'id_vendedor',
+            'cliente'  => 'cd_cliente',
+            'usuario'  => 'id_usuario',
+            'vendedor' => 'id_vendedor',
             'pedras' => 'id_pedra',
             'produtos' => 'id_produto',
             'orcamentos' => 'id_orcamento',
@@ -76,7 +76,7 @@ abstract class Model implements ICrud
     protected function validar(array $dados): bool
     {
         foreach ($dados as $key => $valor) {
-            if ($valor === null || $valor === '') {
+            if ($valor === '') {//tem que deixar add null
                 $this->_error = "O campo {$key} deve ser preenchido!";
                 return false;
             }

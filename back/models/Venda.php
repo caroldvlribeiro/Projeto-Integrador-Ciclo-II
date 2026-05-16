@@ -65,7 +65,7 @@ class Venda extends RegistroFinanceiro
         ];
 
         if ($this->validar($dados)) {
-            $sql = "INSERT INTO {$this->_table} 
+            $sql = "INSERT INTO venda
                     (id_orcamento, id_vendedor, dt_venda, vl_total) 
                     VALUES (:id_orcamento, :id_vendedor, :dt_venda, :vl_total)";
             return $this->executar($sql, $dados);
@@ -83,6 +83,15 @@ class Venda extends RegistroFinanceiro
         $sql = "UPDATE {$this->_table} SET vl_total = :vl_total WHERE id_venda = :id";
         return $this->executar($sql, $dados);
     }
+    public function deletar($id): bool
+    {
+        $sql = "DELETE FROM {$this->_table}
+                WHERE id_venda = :id";
+
+        $stmt = $this->_PDO->prepare($sql);
+
+        return $stmt->execute(['id' => $id]);
+}
 }
 
 ?>

@@ -23,10 +23,39 @@ class Usuario extends Pessoa implements IAutenticavel
     {
         return $this->tp_usuario;
     }
-
-    public function getPerfil(): string
+    //gera uma tabela com os dados do usuario
+    public function getPerfil($idUsuario): string
     {
-        return "Usuário: {$this->nome} | Tipo: {$this->tp_usuario}";
+
+        $sql = "SELECT u.email_usuario, v.nm_vendedor, u.tp_usuario FROM usuario u Join vendedor v on v.id_vendedor=u.id_usuario WHERE id_usuario = :id";
+
+        $stmt = $this->_PDO->prepare($sql);
+        $stmt->bindValue(':id', $idUsuario);
+        $stmt->execute();
+
+        $dados = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($dados) {
+            $this->email = $dados['email_usuario'];
+            $this->nome = $dados['nm_vendedor'];
+            $this->tp_usuario = $dados['tp_usuario'];
+            return "
+                <tr>
+                    <th>Nome:</th>
+                    <td>{$this->nome}</td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td>{$this->email}</td>
+                </tr>
+                <tr>
+                    <th>Tipo de Usuario:</th>
+                    <td>{$this->tp_usuario}</td>
+                </tr>
+            ";
+        }
+
+        return "<tr><td colspan='2'>Usuário não encontrado</td></tr>";
     }
 
     // Verifica se o usuário tem privilégios de administrador
@@ -39,13 +68,13 @@ class Usuario extends Pessoa implements IAutenticavel
     public function salvar(): bool
     {
         $dados = [
-            'nm_usuario' => $this->nome,
+            'email_usuario' => $this->nome,
             'cd_senha' => $this->senha,
             'tp_usuario' => $this->tp_usuario
         ];
 
         if ($this->validar($dados)) {
-            $sql = "INSERT INTO {$this->_table} (nm_usuario, cd_senha, tp_usuario) 
+            $sql = "INSERT INTO {$this->_table} (email_usuario, cd_senha, tp_usuario) 
                     VALUES (:nm_usuario, :cd_senha, :tp_usuario)";
             return $this->executar($sql, $dados);
         }
@@ -57,12 +86,12 @@ class Usuario extends Pessoa implements IAutenticavel
     {
         $dados = [
             'id' => $id,
-            'nm_usuario' => $this->nome,
+            'email_usuario' => $this->nome,
             'tp_usuario' => $this->tp_usuario
         ];
 
         if ($this->validar($dados)) {
-            $sql = "UPDATE {$this->_table} SET nm_usuario = :nm_usuario, tp_usuario = :tp_usuario";
+            $sql = "UPDATE {$this->_table} SET email_usuario = :email_usuario, tp_usuario = :tp_usuario";
             if ($this->senha) {
                 $sql .= ", cd_senha = :cd_senha";
                 $dados['cd_senha'] = $this->senha;
@@ -76,7 +105,7 @@ class Usuario extends Pessoa implements IAutenticavel
     // Busca o usuário no banco e verifica a senha com hash
     public function autenticar(string $usuario, string $senha): bool
     {
-        $sql = "SELECT * FROM {$this->_table} WHERE nm_usuario = :nome";
+        $sql = "SELECT * FROM {$this->_table} WHERE email_usuario = :nome";
         $stmt = $this->_PDO->prepare($sql);
         $stmt->execute(['nome' => $usuario]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -100,11 +129,14 @@ class Usuario extends Pessoa implements IAutenticavel
     {
         return $this->isAdmin();
     }
-    public function deletar($id): bool
-    {
-        $pk = $this->getPrimaryKeyName();
-        $sql = "DELETE FROM {$this->_table} WHERE {$pk} = :id";
-        return $this->executar($sql, ['id' => $id]);
+    public function deletar($id): bool{
+        try{
+            $sql = "DELETE FROM usuario WHERE id_usuario = :id";
+            $stmt= $this->_PDO->prepare($sql);
+            return $stmt->execute(['id'=> $id]);
+        }catch (PDOException $e){
+            return false;
+        }
     }
 }
 
