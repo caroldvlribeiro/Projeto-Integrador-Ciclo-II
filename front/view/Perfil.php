@@ -7,14 +7,14 @@ include './includes/usuario.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
-        <link rel="stylesheet" href="../public/css/stylePerfil.css">
+    <link rel="stylesheet" href="../public/css/stylePerfil.css">
 </head>
 <body>
     <div class="page">
         <header>
                 <div class="logo">🪨</div>
                 <div>
-                    <h1 id="lista-orcamentos">Orçamentos</h1>
+                    <h1 id="Perfil">Perfil</h1>
                 </div>
                 <div class="user">
                 <a href="Perfil.php">🙍<p>Vendedor</p>
@@ -27,12 +27,11 @@ include './includes/usuario.php';
             </nav>
         </header>
         <main>
-            <h3>Perfil</h3>
             <div class="card-info"> 
                 <!--tras a tabela do metodo getPerfil-->
                 <table>
                     <thead>
-                        <?=$usuario?>
+                        <?=$usuario?> 
                     </thead>
                 </table>
             </div>
