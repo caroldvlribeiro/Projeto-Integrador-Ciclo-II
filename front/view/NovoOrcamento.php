@@ -3,25 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/norc.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
     <title>Novo Orcamento</title>
 </head>
 <body>
-    <header>
-        <div class="logo">🪨</div>
-
-        <div class="user">
-            <a href="Perfil.php">
-                🙍
-                <p>Vendedor</p>
-            </a>         
+    <nav>
+        <div class="nav-logo">
+            <div class="isotipo">
+                <svg width="40" height="40" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="2" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+                <rect x="12" y="12" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+                <rect x="22" y="22" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+                <rect x="46" y="46" width="14" height="14" fill="#EFF2F4"/>
+                </svg>
+            </div>
+            <div class="nav-brand">Nova Canaã<small>Marmoraria</small></div>
         </div>
-        <nav>
-            <a href="index.php">home</a>
-            <a href="Orcamentos.php">Orcamentos</a>
-            <a href="Estoque.php">Estoque</a>
-        </nav>
-    </header>
+        <ul class="nav-links">
+            <li><a href="#hero" class="active">Orçamentos</a></li>
+            <li><a href="#sobre">Estoque</a></li>
+            <li><a href="#pedras">Agenda</a></li>
+            <li><a href="#pedras">Produtos</a></li>
+            <li><a href="#avaliacoes">Clientes</a></li>
+            <li>
+                <div>
+                    SVG - User
+                </div>
+            </li>
+        </ul>
+    </nav>
     <main>
         <h1>Novo Orçamento</h1>
         <div class="form-novoOrcamento">
@@ -89,9 +100,9 @@
                         <option value="2">Fernanda Lima</option>
                         <option value="3">Bruno Almeida</option>
                     </select>
+                   
                 </div>
                 <button type="submit">Salvar Orçamento</button>
-
             </form>
         </div>
     </main>

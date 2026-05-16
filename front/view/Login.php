@@ -9,7 +9,6 @@
 </head>
 <body>
 <div class="login-page">
-
   <div class="login-left">
     <svg class="marble-lines" viewBox="0 0 340 520" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 90 Q80 65 160 105 Q240 140 340 95" stroke="#AFC1F8" stroke-width="1.5" fill="none"/>
@@ -74,7 +73,7 @@
         </div>
       </div>
 
-      <div class="forgot"><a href="#">Esqueci minha senha</a></div>
+     
 
       <button class="btn-primary" id="btnEntrar" type="submit">
         Entrar
@@ -83,16 +82,6 @@
     </form>
 
     <div id="statusMsg" class="status-msg"></div>
-
-    <div class="divider">
-      <div class="divider-line"></div>
-      <span class="divider-text">ou</span>
-      <div class="divider-line"></div>
-    </div>
-
-    <div class="login-footer">
-      Não tem conta? <span onclick="sendPrompt('Como solicitar acesso ao sistema da Nova Canaã?')">Solicitar acesso ↗</span>
-    </div>
   </div>
 </div>
 
