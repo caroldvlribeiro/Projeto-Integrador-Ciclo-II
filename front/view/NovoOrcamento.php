@@ -21,14 +21,19 @@
             <div class="nav-brand">Nova Canaã<small>Marmoraria</small></div>
         </div>
         <ul class="nav-links">
-            <li><a href="#hero" class="active">Orçamentos</a></li>
-            <li><a href="#sobre">Estoque</a></li>
+            <li><a href="Orcamentos.php" class="active">Orçamentos</a></li>
+            <li><a href="">Estoque</a></li>
             <li><a href="#pedras">Agenda</a></li>
             <li><a href="#pedras">Produtos</a></li>
             <li><a href="#avaliacoes">Clientes</a></li>
             <li>
                 <div>
-                    SVG - User
+                    <svg width="40" height="40" viewBox="-44 -44 88 88" xmlns="http://www.w3.org/2000/svg">
+                    <clipPath id="cp-dark"><circle r="44"/></clipPath>
+                    <circle r="44" fill="#161F39" stroke="#AFC1F8" stroke-width="2"/>
+                    <circle cy="-6" r="16" fill="#5C93AA"/>
+                    <path d="M-28 38 Q-28 14 0 14 Q28 14 28 38" fill="#5C93AA" clip-path="url(#cp-dark)"/>
+                    </svg>
                 </div>
             </li>
         </ul>
