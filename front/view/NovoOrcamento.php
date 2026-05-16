@@ -41,7 +41,7 @@
     <main>
         <h1>Novo Orçamento</h1>
         <div class="form-novoOrcamento">
-            <form action="#" method="POST">
+            <form action="../../back/controller/OrcamentoController.php?acao=criar"  method="POST">
                 <div class="infoCliente">
                     <h4>Informações do Cliente</h4>
                     <label>Nome do Cliente:</label>
