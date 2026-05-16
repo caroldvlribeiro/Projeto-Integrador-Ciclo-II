@@ -172,14 +172,6 @@ class Orcamento extends Model implements IRelatorio
         return $this->listarTodos();
     }
 
-    public function filtrarPorPeriodo(string $ini, string $fim): array
-    {
-        $sql = "SELECT * FROM {$this->_table} WHERE dt_pedido BETWEEN :ini AND :fim";
-        $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['ini' => $ini, 'fim' => $fim]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
     public function exportar(string $formato): string
     {
         return "Relatório de Orçamentos exportado em formato: $formato";
@@ -230,6 +222,26 @@ public function listarOrcamentoModal(){
         $select->execute();
         return $select->fetchAll(PDO::FETCH_ASSOC);
 }
+public function buscarPorNome(string $nm)
+{
+    $sql = "SELECT o.id_orcamento, o.cd_cliente, c.nm_cliente, o.dt_pedido, o.vl_total, o.dt_entrega, o.st_orcamento
+            FROM orcamento o
+            JOIN cliente c USING(cd_cliente)
+            WHERE c.nm_cliente LIKE :nome
+            ORDER BY c.nm_cliente ";
+    $select = $this->_PDO->prepare($sql);
+    $select->bindValue(':nome', "%{$nm}%");
+    $select->execute();
+
+    return $select->fetchAll(PDO::FETCH_ASSOC);
+}
+ public function filtrarPorPeriodo(string $ini, string $fim): array
+    {
+        $sql = "SELECT * FROM {$this->_table} WHERE dt_pedido BETWEEN :ini AND :fim";
+        $stmt = $this->_PDO->prepare($sql);
+        $stmt->execute(['ini' => $ini, 'fim' => $fim]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 
 

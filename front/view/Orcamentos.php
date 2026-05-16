@@ -1,14 +1,6 @@
 <?php
-
-require_once '../../back/config/database.php';
-require_once '../../back/models/Orcamento.php';
-
-$model = new Orcamento($pdo);
-
-$orcamentos = $model->listarOrcamentoModal();
-
+include './includes/filtrosOrcamento.php';
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -39,7 +31,18 @@ $orcamentos = $model->listarOrcamentoModal();
         <main>
             <a href="NovoOrcamento.php">
             <h3>Novo Orçamento</h3>
-        </a>
+            </a>
+            <!--filtro por cliente-->
+            <form method="GET">
+                <input type="text" name="busca" placeholder="Buscar cliente..." value="<?= $_GET['busca'] ?? '' ?>">
+                <button type="submit">Buscar</button>
+            </form>
+            <!--filtro por periodo-->
+            <form method="GET">
+                <input type="date" name="dataInicio" value="<?= $_GET['dataInicio'] ?? '' ?>">
+                <input type="date" name="dataFim" value="<?= $_GET['dataFim'] ?? '' ?>">        
+                <button type="submit">Filtrar</button>
+            </form>
             <div class="card">
                 <table>
                     <!-- tabela que lista todos os orçamentos -->
@@ -71,7 +74,6 @@ $orcamentos = $model->listarOrcamentoModal();
                                 <td data-label="Status">
                                     <!-- badge do status do orçamento -->
                                     <span class="badge<?= match($orcamento['st_orcamento']) {
-
                                                     'Aberto'     => 'badge-aberto',
                                                     'Aprovado'   => 'badge-aprovado',
                                                     'Cancelado'  => 'badge-cancelado',
@@ -134,5 +136,4 @@ $orcamentos = $model->listarOrcamentoModal();
         <?php endforeach; ?>
 </main>
 </body>
-
 </html>

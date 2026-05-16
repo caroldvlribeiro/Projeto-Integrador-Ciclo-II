@@ -1,5 +1,4 @@
 <?php
-header('Content-Type: application/json');
 require_once '../config/database.php';
 require_once '../models/Orcamento.php';
 require_once '../models/Cliente.php';
@@ -25,6 +24,7 @@ switch ($acao) {
     case 'deletar':
         deletar($orcamentoModel, $vendaModel, $pagamentoModel);
         break;
+    
 }
 
 // Função para criar um novo orçamento
@@ -128,8 +128,6 @@ function deletar($orcamentoModel, $vendaModel, $pagamentoModel)
 {
     try{
     $idOrcamento = $_GET['idOrcamento'];
-    $vendaModel->deletar($idOrcamento);
-    $pagamentoModel->deletar($idOrcamento);
     $orcamentoModel->deletar($idOrcamento);
     header('Location: ../../front/view/Orcamentos.php');
 exit;
@@ -139,4 +137,17 @@ exit;
         echo "Erro ao deletar: " . $e->getMessage();
 
     }
+
+}
+function buscarPorNome($orcamentoModel){
+    $busca = $_GET['busca'] ?? '';
+    if (!empty($busca)) {
+
+    $orcamentos = $orcamentoModel->buscarPorNome($busca);
+
+} else {
+
+    $orcamentos = $orcamentoModel->listarOrcamentoModal();
+}
+ return $orcamentos;
 }
