@@ -104,6 +104,15 @@ class Usuario extends Pessoa implements IAutenticavel
     {
         return $this->isAdmin();
     }
+    public function deletar(int $id): bool{
+        try{
+            $sql = "DELETE FROM usuario WHERE id_usuario = :id";
+            $stmt= $this->_PDO->prepare($sql);
+            return $stmt->execute(['id'=> $id]);
+        }catch (PDOException $e){
+            return false;
+        }
+    }
 }
 
 ?>

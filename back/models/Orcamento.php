@@ -237,7 +237,9 @@ public function buscarPorNome(string $nm)
 }
  public function filtrarPorPeriodo(string $ini, string $fim): array
     {
-        $sql = "SELECT * FROM {$this->_table} WHERE dt_pedido BETWEEN :ini AND :fim";
+        $sql = "SELECT o.id_orcamento, o.cd_cliente, c.nm_cliente, o.dt_pedido, o.vl_total, o.dt_entrega, o.st_orcamento
+                FROM orcamento o 
+                JOIN cliente c USING(cd_cliente) WHERE dt_pedido BETWEEN :ini AND :fim";
         $stmt = $this->_PDO->prepare($sql);
         $stmt->execute(['ini' => $ini, 'fim' => $fim]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

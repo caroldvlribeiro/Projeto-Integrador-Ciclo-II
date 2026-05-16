@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Criar Orçamento</title>
+        <link rel="stylesheet" href="../public/css/styleNewOrcamento.css">
+
 </head>
 <body>
 
     <h2>Novo Orçamento</h2>
 
-    <form action="../back/controller/OrcamentoController.php?acao=criar" method="POST">
+    <form action="../../back/controller/OrcamentoController.php?acao=criar" method="POST">
         <!-- dados do cliente-->
         <label>Nome do Cliente:</label><br>
         <input type="text" name="nmCliente" required><br><br>
@@ -38,9 +40,10 @@
         <label>Saia</label><br>
         <input type="text" name="saia"><br><br>
 
-        <label>Cuba</label><br><input type="radio" name="cuba" value="Sim"> Sim<br>
-        <input type="radio" name="cuba" value="Não"> Não<br><br>
-        <input type="text" name="modeloCuba" placeholder="Modelo da Cuba"><br><br>
+        <label>Cuba</label><br>
+        <input type="radio" value="Sim"> Sim<br>
+        <input type="radio" value="Não"> Não<br><br>
+        <input type="text" name="Cuba" placeholder="Modelo da Cuba"><br><br>
         
         <label>Pedra</label><br>
         <select name="idPedra">

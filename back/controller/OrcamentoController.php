@@ -35,12 +35,12 @@ function criar($orcamentoModel, $clienteModel, $pagamentoModel, $vendaModel)
     $Nmcliente = $_POST['nmCliente'];    
     $telefone = $_POST['nrTelefone'];
     $endereco = $_POST['endereco'];
-    $dataPedido = $_POST['dtPedido'];
+    $dataPedido = $_POST['dtPagamentoEntrada'];
     $descricao = $_POST['descricao'];
     $acabamento = $_POST['idAcabamento'];
     $saia = $_POST['saia'] ?: null;
     $vista = $_POST['vista'] ?: null;
-    $cuba = $_POST['cuba'];
+    $cuba = $_POST['cuba'] ?: null;
     $pedra = $_POST['idPedra'];
     $dtEntrega = $_POST['dtEntrega'];
     $status = $_POST['status'];

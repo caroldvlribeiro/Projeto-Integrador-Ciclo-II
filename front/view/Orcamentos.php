@@ -17,9 +17,7 @@ include './includes/filtrosOrcamento.php';
                 <h1 id="lista-orcamentos">Orçamentos</h1>
             </div>
             <div class="user">
-            <a href="Perfil.php">
-                🙍
-                <p>Vendedor</p>
+            <a href="Perfil.php">🙍<p>Vendedor</p>
             </a>         
         </div>
         <nav>
