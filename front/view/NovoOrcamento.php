@@ -1,90 +1,115 @@
-
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="PT-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Criar Orçamento</title>
-        <link rel="stylesheet" href="../public/css/styleNewOrcamento.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/norc.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <title>Novo Orcamento</title>
 </head>
 <body>
-
-    <h2>Novo Orçamento</h2>
-
-    <form action="../../back/controller/OrcamentoController.php?acao=criar" method="POST">
-        <!-- dados do cliente-->
-        <label>Nome do Cliente:</label><br>
-        <input type="text" name="nmCliente" required><br><br>
-
-        <label>Telefone:</label><br>
-        <input type="number" name="nrTelefone"><br><br>
-
-        <label>Endereço:</label><br>
-        <input type="text" name="endereco"><br><br>
-        <!--dados do orcamento-->
-        <label>Data do Pedido:</label><br>
-        <input type="date" name="dtPedido"><br><br>
-
-        <label>Descrição:</label><br>
-        <textarea name="descricao" placeholder="Descrição do orcamento"></textarea><br><br>
-
-        <label>Acabamento:</label><br>
-        <select name="idAcabamento">
-            <option value="Polido">Polido</option>
-            <option value="Escovado">Escovado</option>
-        </select><br><br>
-
-        <label>Vista</label>
-        <input type="text" name="vista"><br><br>
-
-        <label>Saia</label><br>
-        <input type="text" name="saia"><br><br>
-
-        <label>Cuba</label><br>
-        <input type="radio" value="Sim"> Sim<br>
-        <input type="radio" value="Não"> Não<br><br>
-        <input type="text" name="Cuba" placeholder="Modelo da Cuba"><br><br>
-        
-        <label>Pedra</label><br>
-        <select name="idPedra">
-            <option value="1">Granito</option>
-            <option value="2">Mármore</option>
-            <option value="3">Quartzo</option>
-        </select><br><br>
-
-        <label>Data de entrega:</label>
-        <input type="date" name="dtEntrega"><br><br>
-
-        <label>Status:</label><br>
-        <select name="status">
-            <option value="Aprovado">Aprovado</option>
-            <option value="Cancelado">Cancelado</option>
-            <option value="Finalizado">Finalizado</option>
-        </select><br><br>
-        <!--dados do pagamento-->
-        <label>Valor Total:</label><br>
-        <input type="number" step="0.01" name="valorTotal" required><br><br>
-
-        <label>Data de Pagamento da Entrada:</label>
-        <input type="date" name="dtPagamentoEntrada"><br><br>
-
-        <label>Valor da Entrada:</label><br>
-        <input type="number" step="0.01" name="valorEntrada"><br><br>
-
-        <label>Data de Pagamento de Saida:</label>
-        <input type="date" name="dtPagamentoSaida"><br><br>
-
-        <label>Valor de Saida:</label><br>
-        <input type="number" step="0.01" name="valorSaida"><br><br>
-        
-        <!--dados do vendedor-->
-        <label>Vendedor</label><br>
-        <select name="vendedor">
-            <option value="1">Vendedor 1</option>
-            <option value="2">Vendedor 2</option>
-            <option value="3">Vendedor 3</option>
-        </select><br><br>
-        <button type="submit">Criar Orçamento</button>
-    </form>
+    <nav>
+        <div class="nav-logo">
+            <div class="isotipo">
+                <svg width="40" height="40" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="2" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+                <rect x="12" y="12" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+                <rect x="22" y="22" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+                <rect x="46" y="46" width="14" height="14" fill="#EFF2F4"/>
+                </svg>
+            </div>
+            <div class="nav-brand">Nova Canaã<small>Marmoraria</small></div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="Orcamentos.php" class="active">Orçamentos</a></li>
+            <li><a href="">Estoque</a></li>
+            <li><a href="#pedras">Agenda</a></li>
+            <li><a href="#pedras">Produtos</a></li>
+            <li><a href="#avaliacoes">Clientes</a></li>
+            <li>
+                <div>
+                    <svg width="40" height="40" viewBox="-44 -44 88 88" xmlns="http://www.w3.org/2000/svg">
+                    <clipPath id="cp-dark"><circle r="44"/></clipPath>
+                    <circle r="44" fill="#161F39" stroke="#AFC1F8" stroke-width="2"/>
+                    <circle cy="-6" r="16" fill="#5C93AA"/>
+                    <path d="M-28 38 Q-28 14 0 14 Q28 14 28 38" fill="#5C93AA" clip-path="url(#cp-dark)"/>
+                    </svg>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <main>
+        <h1>Novo Orçamento</h1>
+        <div class="form-novoOrcamento">
+            <form action="../../back/controller/OrcamentoController.php?acao=criar"  method="POST">
+                <div class="infoCliente">
+                    <h4>Informações do Cliente</h4>
+                    <label>Nome do Cliente:</label>
+                    <input type="text" name="nm_cliente" required>
+                    <label>Telefone:</label>
+                    <input type="text" name="cd_telefone" required>
+                    <label>Endereco</label>
+                    <input type="text" name="nm_endereco" required>
+                </div>
+                <div class="infoOrcamento">
+                    <h4>Informações do Orçamento</h4>
+                    <label>Data do Orcamento: </label>
+                    <input type="date" name="dt_pedido" required>
+                    <label>Pedra:</label>
+                    <select name="id_pedra" required>
+                        <option value="">Selecione</option>
+                        <option value="1">Granito Verde Ubatuba</option>
+                        <option value="2">Granito Preto São Gabriel</option>
+                        <option value="3">Granito Branco Itaúnas</option>
+                    </select>
+                    <label>Descrição do Serviço: </label>
+                    <input type="text" name="ds_descricao" required>
+                    <label>acabamento: </label>
+                    <input type="text" name="acabamento" required>
+                    <label>Vista: </label>
+                    <input type="text" name="vista">
+                    <label>Saia:</label>
+                    <input type="text" name="saia">
+                    <label>Cuba:</label>    
+                    <input type="text" name="cuba" >
+                    <label>Data de Entrega:</label>
+                    <input type="date" name="dt_entrega">
+                    <label>Status:</label>
+                    <select name="status" required>
+                        <option value="">Selecione</option>
+                        <option value="Aberto">Aberto</option>
+                        <option value="Aprovado">Aprovado</option>
+                        <option value="Cancelado">Cancelado</option>
+                        <option value="Finalizado">Finalizado</option>
+                    </select>
+                </div>
+                <div class="infoPagamento">
+                    <h4>Informações de Pagamento</h4>
+                    <label>Valor Total:</label>
+                    <input type="number" name="vl_total" required>
+                    <label>Valor Entrada:</label>
+                    <input type="number" name="vl_entrada">
+                    <label>Data Pagamento Entrada:</label>
+                    <input type="date" name="dt_pagamento_entrada">
+                    <label>Valor Saída:</label>
+                    <input type="number" name="vl_saida">
+                    <label>Data Pagamento Saída:</label>
+                    <input type="date" name="dt_pagamento_saida">
+                </div>
+                <div class="infoVendedor">
+                    <h4>Informações do Vendedor</h4>
+                    <label>Vendedor:</label>
+                    <select name="vendedor" required>
+                        <option value="">Selecione</option>
+                        <option value="1">Ricardo Mendes</option>
+                        <option value="2">Fernanda Lima</option>
+                        <option value="3">Bruno Almeida</option>
+                    </select>
+                   
+                </div>
+                <button type="submit">Salvar Orçamento</button>
+            </form>
+        </div>
+    </main>
 </body>
 </html>
