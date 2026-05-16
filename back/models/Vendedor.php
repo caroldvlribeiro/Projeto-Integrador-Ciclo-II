@@ -129,12 +129,7 @@ class Vendedor extends Pessoa implements IAutenticavel
     {
         return true; // Vendedores possuem permissões operacionais padrão
     }
-    public function deletar($id): bool
-    {
-        $pk = $this->getPrimaryKeyName();
-        $sql = "DELETE FROM {$this->_table} WHERE {$pk} = :id";
-        return $this->executar($sql, ['id' => $id]);
-    }
+
 }
 
 ?>
