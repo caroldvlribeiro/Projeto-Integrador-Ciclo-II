@@ -1,0 +1,116 @@
+/* dashboard.css */
+body {
+  background-color: var(--color-bg-soft) !important;
+}
+
+main {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 44px 0 64px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-lg);
+}
+
+.welcome-text h1 {
+  color: var(--color-primary);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-xl);
+}
+
+.stat-card {
+  background: var(--color-bg);
+  padding: var(--space-xl);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  transition: 0.2s;
+  text-decoration: none;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-accent);
+}
+
+.stat-icon {
+  font-size: 24px;
+  width: 48px;
+  height: 48px;
+  background: var(--color-bg-soft);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-content h3 {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stat-content .value {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--color-primary);
+  font-family: var(--font-primary);
+}
+
+.quick-actions {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.btn-action {
+  flex: 1;
+  min-width: 200px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  text-decoration: none;
+  color: var(--color-primary);
+  font-weight: var(--font-bold);
+  transition: 0.2s;
+}
+
+.btn-action:hover {
+  background: var(--color-primary);
+  color: var(--color-text-light);
+}
+
+.logout-link {
+  margin-top: var(--space-2xl);
+  align-self: center;
+  color: var(--color-error);
+  text-decoration: none;
+  font-weight: var(--font-medium);
+  padding: var(--space-sm) var(--space-xl);
+  border-radius: var(--radius-md);
+  transition: background 0.2s;
+}
+
+.logout-link:hover {
+  background: #FCEBEB;
+}

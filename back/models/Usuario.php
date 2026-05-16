@@ -68,14 +68,14 @@ class Usuario extends Pessoa implements IAutenticavel
     public function salvar(): bool
     {
         $dados = [
-            'email_usuario' => $this->nome,
+            'email_usuario' => $this->email,
             'cd_senha' => $this->senha,
             'tp_usuario' => $this->tp_usuario
         ];
 
         if ($this->validar($dados)) {
             $sql = "INSERT INTO {$this->_table} (email_usuario, cd_senha, tp_usuario) 
-                    VALUES (:nm_usuario, :cd_senha, :tp_usuario)";
+                    VALUES (:email_usuario, :cd_senha, :tp_usuario)";
             return $this->executar($sql, $dados);
         }
         return false;
@@ -86,7 +86,7 @@ class Usuario extends Pessoa implements IAutenticavel
     {
         $dados = [
             'id' => $id,
-            'email_usuario' => $this->nome,
+            'email_usuario' => $this->email,
             'tp_usuario' => $this->tp_usuario
         ];
 
