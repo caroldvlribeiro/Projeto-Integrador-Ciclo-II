@@ -322,7 +322,7 @@ INSERT INTO `usuario` (`id_usuario`, `email_usuario`, `cd_senha`, `tp_usuario`) 
 (1, 'admin@marmoraria.com', '$2b$12$cM83kkOpEBTNc2ik8UlqfeddTOkMWq6Xx0Uo5nz0zdcI2BfJI4U7e', 'Administrador'),
 (2, 'ricardo.mendes@marmoraria.com', '$2b$12$WBchC/4iJZVmHq.a97plouAupoOWee7r0xBlAy0JkzWlzlcM/Ytp6', 'Vendedor'),
 (3, 'fernanda.lima@marmoraria.com', '$2b$12$YTH34d4BbQX9I0JmEgub5uIAFYsQ8nGd2xv9dXi3.cfwfRJB4k0uC', 'Vendedor'),
-(4, 'gerente@marmoraria.com', '$2y$10$5rTxnpeSbcf4EabOFdQzyOBpNKvVc.zQTPh7jU4DGOyH.TB5D9Ona', 'Administrador');
+(4, 'gerente@marmoraria.com', '$2b$12$Hq66trn.YJ8srn..JHSHc./0H/MaA9evOMqv8Oh5sQHnSl0Q2DY6.', 'Administrador');
 
 -- --------------------------------------------------------
 
