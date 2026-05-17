@@ -6,41 +6,57 @@ include './includes/filtrosOrcamento.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../public/css/styleOrcamento.css">
+    <link rel="stylesheet" href="../assets/css/orc.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
     <title>Orçamentos</title>
 </head>
 <body>
     <div class="page">
-        <header>
-            <div class="logo">🪨</div>
-            <div>
-                <h1 id="lista-orcamentos">Orçamentos</h1>
-            </div>
-            <div class="user">
-            <a href="Perfil.php">🙍<p>Vendedor</p>
-            </a>         
-        </div>
         <nav>
-            <a href="index.php">home</a>
-            <a href="Orcamentos.php">Orcamentos</a>
-            <a href="Estoque.php">Estoque</a>
+            <div class="nav-logo">
+                <div class="isotipo">
+                    <svg width="40" height="40" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="2" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+                    <rect x="12" y="12" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+                    <rect x="22" y="22" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+                    <rect x="46" y="46" width="14" height="14" fill="#EFF2F4"/>
+                    </svg>
+                </div>
+                <div class="nav-brand">Nova Canaã<small>Marmoraria</small></div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.php">Home</a></li>
+                <li><a class="active" href="Orcamentos.php">Orcamentos</a></li>
+                <li><a href="Estoque.php">Estoque</a></li>
+                <li>
+                    <div>
+                    <svg width="40" height="40" viewBox="-44 -44 88 88" xmlns="http://www.w3.org/2000/svg">
+                    <clipPath id="cp-dark"><circle r="44"/></clipPath>
+                    <circle r="44" fill="#161F39" stroke="#AFC1F8" stroke-width="2"/>
+                    <circle cy="-6" r="16" fill="#5C93AA"/>
+                    <path d="M-28 38 Q-28 14 0 14 Q28 14 28 38" fill="#5C93AA" clip-path="url(#cp-dark)"/>
+                    </svg>
+                </div>
+                </li>
+            </ul>
         </nav>
-        </header>
         <main>
-            <a href="NovoOrcamento.php">
-            <h3>Novo Orçamento</h3>
-            </a>
-            <!--filtro por cliente-->
-            <form method="GET">
-                <input type="text" name="busca" placeholder="Buscar cliente..." value="<?= $_GET['busca'] ?? '' ?>">
-                <button type="submit">Buscar</button>
-            </form>
-            <!--filtro por periodo-->
-            <form method="GET">
-                <input type="date" name="dataInicio" value="<?= $_GET['dataInicio'] ?? '' ?>">
-                <input type="date" name="dataFim" value="<?= $_GET['dataFim'] ?? '' ?>">        
-                <button type="submit">Filtrar</button>
-            </form>
+            <div class="bar-orcamentos">
+                <a href="NovoOrcamento.php">
+                    <h3>NOVO ORÇAMENTOS</h3>
+                </a>
+                <!--filtro por cliente-->
+                <form method="GET" id="clienteForm">
+                    <input type="text" name="busca" placeholder="Buscar cliente..." value="<?= $_GET['busca'] ?? '' ?>">
+                    <button type="submit">Buscar</button>
+                </form>
+                <!--filtro por periodo-->
+                <form method="GET" id="formPeriodo">
+                    <input type="date" name="dataInicio" value="<?= $_GET['dataInicio'] ?? '' ?>">
+                    <input type="date" name="dataFim" value="<?= $_GET['dataFim'] ?? '' ?>">        
+                    <button type="submit">Filtrar</button>
+                </form>
+            </div>
             <div class="card">
                 <table>
                     <!-- tabela que lista todos os orçamentos -->
