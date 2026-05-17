@@ -28,7 +28,7 @@ class Usuario extends Pessoa implements IAutenticavel
     {
 
         // Mudamos o JOIN para usar id_usuario e adicionamos u. no WHERE
-    $sql = "SELECT u.email_usuario, v.nm_vendedor, u.tp_usuario FROM usuario u JOIN vendedor v ON v.id_usuario = u.id_usuario WHERE u.id_usuario = :id";
+    $sql = "SELECT u.email_usuario, u.tp_usuario FROM usuario u WHERE u.id_usuario = :id";
 
         $stmt = $this->_PDO->prepare($sql);
         $stmt->bindValue(':id', $idUsuario);
@@ -38,13 +38,8 @@ class Usuario extends Pessoa implements IAutenticavel
 
         if ($dados) {
             $this->email = $dados['email_usuario'];
-            $this->nome = $dados['nm_vendedor'];
             $this->tp_usuario = $dados['tp_usuario'];
             return "
-                <tr>
-                    <th>Nome:</th>
-                    <td>{$this->nome}</td>
-                </tr>
                 <tr>
                     <th>Email:</th>
                     <td>{$this->email}</td>

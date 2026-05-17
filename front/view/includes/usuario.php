@@ -8,14 +8,14 @@ $modelU = new Usuario($pdo);
 $modelV = new Vendedor($pdo);
 $modelO = new Orcamento($pdo);
 
-$usuario = $modelU->getPerfil(1);
+$usuario = $modelU->getPerfil(4);
 $tipo = $modelU->getTipo();
 
 $relatorio = [];
 $vendas = [];
 
 if ($tipo === 'Administrador' || $tipo === 'Vendedor') {
-    $vendas = $modelV->listarVendas(1);
+    $vendas = $modelV->listarVendas(4);
 }
 if ($tipo === 'Administrador') {
     $inicio = $_GET['inicio'] ?? null;
