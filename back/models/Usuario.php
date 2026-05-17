@@ -27,7 +27,8 @@ class Usuario extends Pessoa implements IAutenticavel
     public function getPerfil($idUsuario): string
     {
 
-        $sql = "SELECT u.email_usuario, v.nm_vendedor, u.tp_usuario FROM usuario u Join vendedor v on v.id_vendedor=u.id_usuario WHERE id_usuario = :id";
+        // Mudamos o JOIN para usar id_usuario e adicionamos u. no WHERE
+    $sql = "SELECT u.email_usuario, v.nm_vendedor, u.tp_usuario FROM usuario u JOIN vendedor v ON v.id_usuario = u.id_usuario WHERE u.id_usuario = :id";
 
         $stmt = $this->_PDO->prepare($sql);
         $stmt->bindValue(':id', $idUsuario);

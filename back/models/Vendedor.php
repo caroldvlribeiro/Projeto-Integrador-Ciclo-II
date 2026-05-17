@@ -57,14 +57,15 @@ class Vendedor extends Pessoa implements IAutenticavel
     public function salvar(): bool
     {
         $dados = [
+            'id_usuario' => $this->id_usuario,
             'nm_vendedor' => $this->nome,
             'cd_senha' => $this->senha,
             'vl_comissao' => $this->vl_comissao
         ];
 
         if ($this->validar($dados)) {
-            $sql = "INSERT INTO {$this->_table} (nm_vendedor, cd_senha, vl_comissao) 
-                    VALUES (:nm_vendedor, :cd_senha, :vl_comissao)";
+            $sql = "INSERT INTO {$this->_table} (id_usuario, nm_vendedor, cd_senha, vl_comissao) 
+                VALUES (:id_usuario, :nm_vendedor, :cd_senha, :vl_comissao)";
             return $this->executar($sql, $dados);
         }
         return false;
