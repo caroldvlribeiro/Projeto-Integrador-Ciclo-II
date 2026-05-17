@@ -24,7 +24,7 @@ class Vendedor extends Pessoa implements IAutenticavel
         return $this->vl_comissao;
     }
 
-    public function getPerfil(): string
+    public function getPerfil($id): string
     {
         return "Vendedor: {$this->nome} | Comissão: {$this->vl_comissao}%";
     }
@@ -40,13 +40,18 @@ class Vendedor extends Pessoa implements IAutenticavel
     /**
      * Lista todas as vendas realizadas por este vendedor.
      */
-    public function listarVendas()
-    {
-        $sql = "SELECT * FROM venda WHERE id_vendedor = (SELECT id_vendedor FROM {$this->_table} WHERE nm_vendedor = :nome)";
-        $stmt = $this->_PDO->prepare($sql);
-        $stmt->execute(['nome' => $this->nome]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    public function listarVendas($id)
+{
+    $sql = "SELECT * FROM venda WHERE id_vendedor = :id";
+
+    $stmt = $this->_PDO->prepare($sql);
+
+    $stmt->execute([
+        'id' => $id
+    ]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
     // Salva um novo vendedor
     public function salvar(): bool

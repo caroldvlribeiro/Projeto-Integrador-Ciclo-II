@@ -27,7 +27,7 @@ class Cliente extends Pessoa
     }
 
     // Retorna resumo do cliente
-    public function getPerfil(): string
+    public function getPerfil($id= null): string
     {
         return "Cliente: {$this->nome} | 
         Tel: {$this->telefone} | 

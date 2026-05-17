@@ -167,10 +167,32 @@ class Orcamento extends Model implements IRelatorio
 
     // --- IMPLEMENTAÇÃO DA INTERFACE IRelatorio ---
 
-    public function gerarRelatorio(): array
-    {
-        return $this->listarTodos();
+    public function gerarRelatorio($dataInicio = null, $dataFim = null, $status = null): array
+{
+    $sql = "SELECT o.id_orcamento, c.nm_cliente, c.cd_telefone, c.nm_endereco, o.dt_pedido, o.ds_descricao, o.vl_total, o.st_orcamento, v.id_venda,  v.dt_venda, p.vl_pagamento_entrada, p.vl_pagamento_saida, vd.nm_vendedor FROM orcamento o JOIN cliente c USING(cd_cliente) JOIN venda v USING(id_orcamento) JOIN pagamento p USING(id_orcamento) JOIN vendedor vd  USING(id_vendedor)  WHERE 1=1";
+    $params = [];
+
+    if ($dataInicio && $dataFim) {
+        $sql .= " AND o.dt_pedido BETWEEN :inicio AND :fim";
+
+        $params['inicio'] = $dataInicio;
+        $params['fim'] = $dataFim;
     }
+
+    if ($status) {
+        $sql .= " AND o.st_orcamento = :status";
+
+        $params['status'] = $status;
+    }
+
+    $sql .= " ORDER BY o.dt_pedido DESC";
+
+    $stmt = $this->_PDO->prepare($sql);
+
+    $stmt->execute($params);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
     public function exportar(string $formato): string
     {
