@@ -319,9 +319,10 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `email_usuario`, `cd_senha`, `tp_usuario`) VALUES
-(1, 'admin', 'admin123', 'Administrador'),
-(2, 'vendedor1', 'vend123', 'Vendedor'),
-(5, 'Admin_79', '$2y$10$5rTxnpeSbcf4EabOFdQzyOBpNKvVc.zQTPh7jU4DGOyH.TB5D9Ona', 'Administrador');
+(1, 'admin@marmoraria.com', '$2b$12$cM83kkOpEBTNc2ik8UlqfeddTOkMWq6Xx0Uo5nz0zdcI2BfJI4U7e', 'Administrador'),
+(2, 'ricardo.mendes@marmoraria.com', '$2b$12$WBchC/4iJZVmHq.a97plouAupoOWee7r0xBlAy0JkzWlzlcM/Ytp6', 'Vendedor'),
+(3, 'fernanda.lima@marmoraria.com', '$2b$12$YTH34d4BbQX9I0JmEgub5uIAFYsQ8nGd2xv9dXi3.cfwfRJB4k0uC', 'Vendedor'),
+(4, 'gerente@marmoraria.com', '$2y$10$5rTxnpeSbcf4EabOFdQzyOBpNKvVc.zQTPh7jU4DGOyH.TB5D9Ona', 'Administrador');
 
 -- --------------------------------------------------------
 
@@ -356,6 +357,7 @@ INSERT INTO `venda` (`id_venda`, `id_orcamento`, `id_vendedor`, `dt_venda`, `vl_
 
 CREATE TABLE `vendedor` (
   `id_vendedor` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
   `nm_vendedor` varchar(255) NOT NULL,
   `vl_comissao` decimal(5,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -364,9 +366,9 @@ CREATE TABLE `vendedor` (
 -- Despejando dados para a tabela `vendedor`
 --
 
-INSERT INTO `vendedor` (`id_vendedor`, `nm_vendedor`, `vl_comissao`) VALUES
-(1, 'Ricardo Mendes', 5.00),
-(2, 'Fernanda Lima', 6.50);
+INSERT INTO `vendedor` (`id_vendedor`, `id_usuario`, `nm_vendedor`, `vl_comissao`) VALUES
+(1, 2, 'Ricardo Mendes', 5.00),
+(2, 3, 'Fernanda Lima', 6.50);
 
 -- --------------------------------------------------------
 
@@ -620,8 +622,7 @@ ALTER TABLE `venda`
 --
 -- AUTO_INCREMENT de tabela `vendedor`
 --
-ALTER TABLE `vendedor`
-  MODIFY `id_vendedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+ALTER TABLE `vendedor` MODIFY `id_vendedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restrições para tabelas despejadas
@@ -675,8 +676,7 @@ ALTER TABLE `venda`
 --
 -- Restrições para tabelas `vendedor`
 --
-ALTER TABLE `vendedor`
-  ADD CONSTRAINT `fk_vendedor_usuario` FOREIGN KEY (`id_vendedor`) REFERENCES `usuario` (`id_usuario`);
+ALTER TABLE `vendedor` ADD CONSTRAINT `fk_vendedor_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
