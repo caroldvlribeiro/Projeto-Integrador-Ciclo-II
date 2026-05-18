@@ -10,6 +10,9 @@
     --marmore: #F5F0E8;
     --branco: #ffffff;
 
+    --laranja: #ff6b35;
+    --laranja-claro: #ff8c42;
+
     --texto-forte: #161F39;
     --texto-normal: #2C3E5C;
     --texto-fraco: #4A5B6C;
@@ -255,22 +258,22 @@ body {
 }
 
 .btn-primary {
-    background: var(--noite);
+    background: var(--laranja);
     color: var(--branco);
 }
 
 .btn-primary:hover {
-    background: var(--oceano);
+    background: var(--laranja-claro);
 }
 
 .btn-secondary {
     background: var(--branco);
-    color: var(--noite);
-    border: 2px solid var(--noite);
+    color: var(--laranja);
+    border: 2px solid var(--laranja);
 }
 
 .btn-secondary:hover {
-    background: var(--noite);
+    background: var(--laranja);
     color: var(--branco);
 }
 
