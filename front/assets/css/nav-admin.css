@@ -1,0 +1,100 @@
+/* =========================
+   NAV-ADMIN.CSS
+   Depende de: base.css
+   Usar em: Orcamentos.php, NovoOrcamento.php,
+            Estoque.php, Agenda.php, Perfil.php
+            e qualquer página do sistema interno.
+   NÃO usar em: index.php (institucional)
+========================= */
+
+/* ── Estrutura geral ── */
+nav {
+  background: var(--color-primary);
+  height: 64px;
+  padding: 0 var(--space-2xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ── Logo ── */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.nav-brand {
+  font-family: var(--font-primary);
+  font-size: var(--text-md);
+  font-weight: var(--font-bold);
+  color: var(--color-text-light);
+  line-height: 1.1;
+}
+
+.nav-brand small {
+  display: block;
+  font-family: var(--font-secondary);
+  font-size: var(--text-xs);
+  font-weight: var(--font-light);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* ── Links ── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+  list-style: none;
+}
+
+.nav-links li {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links a {
+  font-family: var(--font-secondary);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(175, 193, 248, 0.65);
+  text-decoration: none;
+  padding: var(--space-xs) 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--color-text-light);
+}
+
+.nav-links a.active {
+  color: var(--color-text-light);
+  border-bottom: 2px solid var(--color-accent);
+}
+
+/* ── Avatar de usuário ── */
+.nav-links div {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.nav-links div svg {
+  border-radius: 50%;
+  transition: opacity 0.2s;
+}
+
+.nav-links div:hover svg {
+  opacity: 0.8;
+}

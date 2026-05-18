@@ -104,7 +104,12 @@ nav {
 .nav-links {display: flex; gap: var(--space-2xl); list-style: none; }
 .nav-links a { font-size: var(--text-sm); font-weight: var(--font-medium); letter-spacing: 1px; text-transform: uppercase; color: var(--color-text-light); text-decoration: none; opacity: 0.8; transition: opacity 0.2s; cursor: pointer; }
 .nav-links a:hover { opacity: 1; }
-.nav-links a.active { opacity: 1; color: var(--color-primary); background-color: var(--color-bg-soft);}
+.nav-links a.active {
+  color: var(--color-text-light);
+  border-bottom: 2px solid var(--color-accent);
+  opacity: 1;
+  background-color: transparent;
+}
 .nav-links a#login {padding: 5px; color: var(--color-primary); background-color: var(--color-bg-soft); border-radius: 10px;}
 .nav-links div {display: flex; color: var(--color-bg-soft);}
 /* =========================

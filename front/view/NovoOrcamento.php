@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/norc.css">
+    
     <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/nav-admin.css">
     <title>Novo Orcamento</title>
 </head>
 <body>
@@ -21,11 +23,11 @@
             <div class="nav-brand">Nova Canaã<small>Marmoraria</small></div>
         </div>
         <ul class="nav-links">
+            <li><a href="">Home</a></li>
             <li><a href="Orcamentos.php" class="active">Orçamentos</a></li>
             <li><a href="">Estoque</a></li>
             <li><a href="#pedras">Agenda</a></li>
             <li><a href="#pedras">Produtos</a></li>
-            <li><a href="#avaliacoes">Clientes</a></li>
             <li>
                 <div>
                     <svg width="40" height="40" viewBox="-44 -44 88 88" xmlns="http://www.w3.org/2000/svg">
