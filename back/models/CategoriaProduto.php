@@ -8,9 +8,9 @@ require_once 'Model.php';
  */
 class CategoriaProduto extends Model
 {
-    protected $id_categoria;
-    protected $nm_categoria;
-    protected $ds_categoria;
+    protected ?int $id_categoria = null;
+    protected ?string $nm_categoria = null;
+    protected ?string $ds_categoria = null;
 
     public function __construct(PDO $PDO)
     {
@@ -18,11 +18,11 @@ class CategoriaProduto extends Model
     }
 
     // Setters para facilitar o uso no Controller
-    public function setNome($nome)
+    public function setNome(string $nome): void
     {
         $this->nm_categoria = $nome;
     }
-    public function setDescricao($desc)
+    public function setDescricao(string $desc): void
     {
         $this->ds_categoria = $desc;
     }
@@ -64,13 +64,20 @@ class CategoriaProduto extends Model
         ];
 
         if ($this->validar($dados)) {
-            $sql = "UPDATE {$this->_table} SET 
-                    nm_categoria = :nm_categoria, 
-                    ds_categoria = :ds_categoria 
+            $sql = "UPDATE {$this->_table} SET
+                    nm_categoria = :nm_categoria,
+                    ds_categoria = :ds_categoria
                     WHERE id_categoria = :id";
             return $this->executar($sql, $dados);
         }
         return false;
+    }
+
+    // Deleta uma categoria existente
+    public function deletar(int $id): bool
+    {
+        $sql = "DELETE FROM {$this->_table} WHERE id_categoria = :id";
+        return $this->executar($sql, ['id' => $id]);
     }
 }
 

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(& \"C:\\\\xampp\\\\mysql\\\\bin\\\\mysql.exe\" -u root -h localhost -e \"DROP DATABASE IF EXISTS marmoraria_db; CREATE DATABASE marmoraria_db;\")",
+      "PowerShell(& \"C:\\\\xampp\\\\mysql\\\\bin\\\\mysql.exe\" -u root -h localhost marmoraria_db -e \"SHOW TABLES;\")",
+      "PowerShell(& \"C:\\\\xampp\\\\mysql\\\\bin\\\\mysql.exe\" -u root -h localhost marmoraria_db -e \"SHOW TRIGGERS;\")",
+      "PowerShell($response = Invoke-WebRequest -Uri \"http://localhost/Projeto-Integrador-Ciclo-II/pages/categoria_produto/index.php\" -ErrorAction SilentlyContinue; if \\($response\\) { if \\($response.Content -match \"\\(erro|Error|Fatal\\)\"\\) { \"❌ ERRO encontrado na página\"; $response.Content } else { \"✅ Página carregou sem erros PHP\"; $response.Content | Select-String -Pattern \"categoria\" -Context 0,1 | Select-Object -First 3 } } else { \"❌ Página não carregou - verifique se Apache tá rodando\" })",
+      "PowerShell(Start-Process \"http://localhost/Projeto-Integrador-Ciclo-II/pages/categoria_produto/index.php\")"
+    ]
+  }
+}

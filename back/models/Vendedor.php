@@ -53,13 +53,12 @@ class Vendedor extends Pessoa implements IAutenticavel
     {
         $dados = [
             'nm_vendedor' => $this->nome,
-            'cd_senha' => $this->senha,
             'vl_comissao' => $this->vl_comissao
         ];
 
         if ($this->validar($dados)) {
-            $sql = "INSERT INTO {$this->_table} (nm_vendedor, cd_senha, vl_comissao) 
-                    VALUES (:nm_vendedor, :cd_senha, :vl_comissao)";
+            $sql = "INSERT INTO {$this->_table} (nm_vendedor, vl_comissao)
+                    VALUES (:nm_vendedor, :vl_comissao)";
             return $this->executar($sql, $dados);
         }
         return false;
@@ -75,12 +74,7 @@ class Vendedor extends Pessoa implements IAutenticavel
         ];
 
         if ($this->validar($dados)) {
-            $sql = "UPDATE {$this->_table} SET nm_vendedor = :nm_vendedor, vl_comissao = :vl_comissao";
-            if ($this->senha) {
-                $sql .= ", cd_senha = :cd_senha";
-                $dados['cd_senha'] = $this->senha;
-            }
-            $sql .= " WHERE id_vendedor = :id";
+            $sql = "UPDATE {$this->_table} SET nm_vendedor = :nm_vendedor, vl_comissao = :vl_comissao WHERE id_vendedor = :id";
             return $this->executar($sql, $dados);
         }
         return false;

@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(& \"C:\\\\xampp\\\\php\\\\php.exe\" -l \"C:\\\\xampp\\\\htdocs\\\\Projeto-Integrador-Ciclo-II\\\\back\\\\controller\\\\MovimentacaoEstoqueController.php\")",
+      "Bash(php -l back/models/Usuario.php)",
+      "Bash(php -l back/models/Vendedor.php)",
+      "Bash(php -l pages/orcamento/index.php)",
+      "Bash(php -l pages/orcamento/form.php)",
+      "Bash(php -l pages/orcamento/form_processing.php)",
+      "Bash(php -r ' *)",
+      "Bash(php teste_clean.php)",
+      "PowerShell(cd 'c:\\\\xampp\\\\htdocs\\\\Projeto-Integrador-Ciclo-II'; C:\\\\xampp\\\\php\\\\php.exe -r \"require 'back/config/database.php'; \\\\$stmt = \\\\$conn->query\\('SHOW TRIGGERS'\\); \\\\$triggers = \\\\$stmt->fetchAll\\(PDO::FETCH_ASSOC\\); foreach\\(\\\\$triggers as \\\\$t\\) { echo \\\\$t['Trigger'] . ' ON ' . \\\\$t['Table'] . ' FOR ' . \\\\$t['Event'] . ' ' . \\\\$t['Timing'] . \\\\\"\\\\n\\\\\"; }\")",
+      "Bash(grep -E \"\\\\.php$\")"
+    ]
+  }
+}

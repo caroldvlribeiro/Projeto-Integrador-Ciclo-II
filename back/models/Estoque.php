@@ -1,5 +1,5 @@
 <?php
-require_once 'Model.php';
+require_once __DIR__ . '/Model.php';
 
 /**
  * Model Estoque
@@ -15,6 +15,21 @@ class Estoque extends Model
     public function __construct(PDO $PDO)
     {
         parent::__construct($PDO, 'estoque');
+    }
+
+    /**
+     * Lista todos os itens de estoque com o nome do produto (JOIN).
+     * Sobrescreve listarTodos() do Model base.
+     */
+    public function listarTodos(): array
+    {
+        $sql = "SELECT e.*, p.nm_produto
+                FROM {$this->_table} e
+                LEFT JOIN produto p ON p.id_produto = e.id_produto
+                ORDER BY e.id_estoque DESC";
+        $stmt = $this->_PDO->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // Setters para facilitar o uso

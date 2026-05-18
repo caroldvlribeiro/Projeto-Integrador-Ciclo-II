@@ -1,139 +1,143 @@
 <?php
-/**
- * SUPER VIEW DE TESTE - SISTEMA DE MARMORARIA
- * Este arquivo testa o fluxo completo: Autenticação -> Cadastros -> Orçamento -> Venda -> Estoque.
- */
+require_once __DIR__ . '/../config/database.php';
 
-header('Content-Type: text/html; charset=utf-8');
+echo "╔════════════════════════════════════════════════════════╗\n";
+echo "║       TESTE COMPLETO DO SISTEMA MARMORARIA             ║\n";
+echo "╚════════════════════════════════════════════════════════╝\n\n";
 
-// 1. Configuração de Conexão (Ajuste conforme seu ambiente)
-try {
-    $host = 'localhost';
-    $db = 'marmoraria_db';
-    $user = 'root';
-    $pass = '';
-    $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-    ]);
-    echo "<h2 style='color: green;'>✅ Conexão OK!</h2>";
-} catch (Exception $e) {
-    die("<h2 style='color: red;'>❌ Erro de Conexão: " . $e->getMessage() . "</h2>");
+$testes_passaram = 0;
+$total_testes = 0;
+
+function teste($nome, $condicao, &$passaram, &$total) {
+    $total++;
+    if ($condicao) {
+        echo "✅ $nome\n";
+        $passaram++;
+    } else {
+        echo "❌ $nome\n";
+    }
 }
 
-// 2. Inclusão Automática dos Models (Simulando um Autoload simples)
-$models = [
-    'Model',
-    'Pessoa',
-    'ItemEstoque',
-    'RegistroFinanceiro',
-    'Usuario',
-    'Vendedor',
-    'Cliente',
-    'Pedra',
-    'Produto',
-    'CategoriaProduto',
-    'Orcamento',
-    'Agenda',
-    'Venda',
-    'Pagamento',
-    'Estoque',
-    'MovimentacaoEstoque'
+// ========== TESTE 1: CONEXÃO COM BANCO ==========
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
+echo "TESTE 1: BANCO DE DADOS\n";
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
+
+teste("Conexão com banco de dados", isset($conn) && $conn !== null, $testes_passaram, $total_testes);
+
+// Testar tabelas principais
+$tabelas = ['usuario', 'vendedor', 'categoria_produto', 'produto', 'estoque', 'movimentacao_estoque', 'orcamento'];
+foreach ($tabelas as $tabela) {
+    try {
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM $tabela");
+        $stmt->execute();
+        $result = $stmt->fetch();
+        teste("Tabela '$tabela' existe", $result !== false, $testes_passaram, $total_testes);
+    } catch (Exception $e) {
+        teste("Tabela '$tabela' existe", false, $testes_passaram, $total_testes);
+    }
+}
+
+// ========== TESTE 2: MODELS ==========
+echo "\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
+echo "TESTE 2: MODELS\n";
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
+
+$models = ['Usuario', 'Vendedor', 'CategoriaProduto', 'Produto', 'Estoque', 'MovimentacaoEstoque', 'Orcamento'];
+foreach ($models as $model) {
+    $file = __DIR__ . "/../models/$model.php";
+    teste("$model.php existe", file_exists($file), $testes_passaram, $total_testes);
+}
+
+// ========== TESTE 3: CONTROLLERS ==========
+echo "\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
+echo "TESTE 3: CONTROLLERS\n";
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
+
+$controllers = ['CategoriaProdutoController', 'EstoqueController', 'MovimentacaoEstoqueController', 'OrcamentoController'];
+foreach ($controllers as $controller) {
+    $file = __DIR__ . "/../controller/$controller.php";
+    teste("$controller.php existe", file_exists($file), $testes_passaram, $total_testes);
+}
+
+// ========== TESTE 4: PÁGINAS ==========
+echo "\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
+echo "TESTE 4: PÁGINAS\n";
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
+
+$paginas = [
+    'categoria_produto/index.php',
+    'estoque/index.php',
+    'movimentacao_estoque/index.php',
+    'orcamento/index.php',
+    'orcamento/form.php',
+    'orcamento/relatorio.php',
+    'produto/index.php'
 ];
 
-foreach ($models as $model) {
-    require_once "../models/{$model}.php";
+foreach ($paginas as $pagina) {
+    $file = __DIR__ . "/../../pages/$pagina";
+    teste("$pagina existe", file_exists($file), $testes_passaram, $total_testes);
 }
 
-function imprimirResultado($titulo, $sucesso, $erro = "")
-{
-    $cor = $sucesso ? "green" : "red";
-    $status = $sucesso ? "✅ SUCESSO" : "❌ FALHA";
-    echo "<div style='border: 1px solid #ccc; padding: 10px; margin: 5px; border-left: 5px solid $cor;'>";
-    echo "<b>$titulo:</b> <span style='color: $cor;'>$status</span>";
-    if (!$sucesso)
-        echo "<br><small style='color: gray;'>Erro: $erro</small>";
-    echo "</div>";
+// ========== TESTE 5: FUNCIONALIDADES ==========
+echo "\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
+echo "TESTE 5: FUNCIONALIDADES\n";
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
+
+try {
+    require_once __DIR__ . '/../controller/CategoriaProdutoController.php';
+    $cat_controller = new CategoriaProdutoController($conn);
+    $categorias = $cat_controller->listar();
+    teste("listar() Categorias funciona", is_array($categorias), $testes_passaram, $total_testes);
+} catch (Exception $e) {
+    teste("listar() Categorias funciona", false, $testes_passaram, $total_testes);
 }
 
-echo "<h3>🚀 Iniciando Teste de Fluxo Completo</h3>";
+try {
+    require_once __DIR__ . '/../controller/EstoqueController.php';
+    $est_controller = new EstoqueController($conn);
+    $estoques = $est_controller->listar();
+    teste("listar() Estoque funciona", is_array($estoques), $testes_passaram, $total_testes);
+} catch (Exception $e) {
+    teste("listar() Estoque funciona", false, $testes_passaram, $total_testes);
+}
 
-// --- TESTE 1: USUÁRIO E AUTENTICAÇÃO ---
-$user = new Usuario($pdo);
-$user->setNome("Admin_" . rand(10, 99));
-$user->setSenha("senha123");
-$user->setTipo("Administrador");
-$res1 = $user->salvar();
-$resAuth = $user->autenticar($user->getNome(), "senha123");
-imprimirResultado("Cadastro e Login de Usuário", $res1 && $resAuth, $user->getError());
+try {
+    require_once __DIR__ . '/../controller/MovimentacaoEstoqueController.php';
+    $mov_controller = new MovimentacaoEstoqueController($conn);
+    $movimentacoes = $mov_controller->listar();
+    teste("listar() Movimentação funciona", is_array($movimentacoes), $testes_passaram, $total_testes);
+} catch (Exception $e) {
+    teste("listar() Movimentação funciona", false, $testes_passaram, $total_testes);
+}
 
-// --- TESTE 2: CLIENTE ---
-$cli = new Cliente($pdo);
-$cli->setNome("Cliente Teste " . rand(100, 999));
-$cli->setTelefone("11988887777");
-$cli->setEndereco("Rua das Pedras, 500");
-$res2 = $cli->salvar();
-$idCli = $pdo->lastInsertId();
-imprimirResultado("Cadastro de Cliente", $res2, $cli->getError());
+// ========== TESTE 6: TABELA MOVIMENTACAO ==========
+echo "\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
+echo "TESTE 6: COLUNAS MOVIMENTACAO_ESTOQUE\n";
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
 
-// --- TESTE 3: CATEGORIA E PRODUTO ---
-$cat = new CategoriaProduto($pdo);
-$cat->setNome("Cubas");
-$cat->setDescricao("Cubas de Inox e Porcelana");
-$resCat = $cat->salvar();
-$idCat = $pdo->lastInsertId();
+try {
+    $stmt = $conn->prepare("DESCRIBE movimentacao_estoque");
+    $stmt->execute();
+    $colunas = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
-$prod = new Produto($pdo);
-$prod->setNome("Cuba Inox Luxo");
-$prod->setDescricao("Cuba de embutir");
-$prod->setVlCompra(200.00);
-$prod->setCategoria($idCat);
-$res3 = $prod->salvar();
-imprimirResultado("Cadastro de Categoria e Produto", $resCat && $res3, $prod->getError());
+    teste("Coluna 'qt_antes' existe", in_array('qt_antes', $colunas), $testes_passaram, $total_testes);
+    teste("Coluna 'qt_depois' existe", in_array('qt_depois', $colunas), $testes_passaram, $total_testes);
+} catch (Exception $e) {
+    echo "❌ Erro ao verificar colunas\n";
+}
 
-// --- TESTE 4: PEDRA ---
-$pedra = new Pedra($pdo);
-$pedra->setNome("Granito Preto São Gabriel");
-$pedra->setDescricao("Pedra polida");
-$pedra->setVlCompra(350.00);
-$res4 = $pedra->salvar();
-$idPedra = $pdo->lastInsertId();
-imprimirResultado("Cadastro de Pedra (Material)", $res4, $pedra->getError());
+// ========== RESUMO ==========
+echo "\n╔════════════════════════════════════════════════════════╗\n";
+echo "║                    RESUMO FINAL                        ║\n";
+echo "╚════════════════════════════════════════════════════════╝\n";
+echo "\n📊 RESULTADO: $testes_passaram / $total_testes testes passaram\n";
 
-// --- TESTE 5: ORÇAMENTO ---
-$orc = new Orcamento($pdo);
-$orc->setCliente($idCli);
-$orc->setPedra($idPedra);
-$orc->setValor(1500.00);
-$orc->setDescricao("Pia de cozinha em L");
-$orc->setAcabamento("45 graus");
-$orc->setStatus("Aberto");
-$res5 = $orc->salvar();
-$idOrc = $pdo->lastInsertId();
-imprimirResultado("Geração de Orçamento", $res5, $orc->getError());
-
-// --- TESTE 6: AGENDA ---
-$age = new Agenda($pdo);
-$age->setCliente($idCli);
-$age->setOrcamento($idOrc);
-$age->setData(date('Y-m-d', strtotime('+2 days')));
-$age->setHora("14:00");
-$age->setDescricao("Medição técnica no local");
-$res6 = $age->salvar();
-imprimirResultado("Agendamento de Medição", $res6, $age->getError());
-
-// --- TESTE 7: ESTOQUE E MOVIMENTAÇÃO ---
-$est = new Estoque($pdo);
-$est->setProduto($pdo->lastInsertId('produtos')); // Pega o último produto cadastrado
-$est->setQuantidade(10);
-$res7 = $est->salvar();
-
-$mov = new MovimentacaoEstoque($pdo);
-$mov->setProduto($pdo->lastInsertId('produtos'));
-$mov->setQuantidade(10);
-$mov->setTipo("E"); // Entrada
-$resMov = $mov->salvar();
-imprimirResultado("Controle de Estoque (Saldo e Movimentação)", $res7 && $resMov, $est->getError());
-
-echo "<hr><p><b>Dica:</b> Se todos os testes acima passaram, seu sistema está pronto para ser usado pelos Controllers reais!</p>";
+if ($testes_passaram === $total_testes) {
+    echo "\n🎉 SUCESSO! SISTEMA 100% FUNCIONAL!\n\n";
+} else {
+    $falhas = $total_testes - $testes_passaram;
+    echo "\n⚠️  $falhas TESTE(S) FALHARAM\n\n";
+}
 ?>

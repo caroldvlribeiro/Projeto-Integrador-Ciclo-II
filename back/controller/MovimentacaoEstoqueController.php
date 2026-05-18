@@ -26,20 +26,34 @@ class MovimentacaoEstoqueController
         return $this->model->listarPorProduto($idProduto);
     }
 
-    public function registrarEntrada(int $idProduto, int|float $quantidade): bool
+    /**
+     * Método único que a view usa: registra uma movimentação
+     * recebendo o tipo como parâmetro ('Entrada' ou 'Saída').
+     */
+    public function registrar(int $idProduto, string $tipo, int|float $quantidade): bool
     {
+        $tipo = trim($tipo);
+        if ($tipo === 'E') $tipo = 'Entrada';
+        if ($tipo === 'S') $tipo = 'Saída';
+
+        if (!in_array($tipo, ['Entrada', 'Saída'], true)) {
+            return false;
+        }
+
         $this->model->setProduto($idProduto);
         $this->model->setQuantidade($quantidade);
-        $this->model->setTipo('Entrada');
+        $this->model->setTipo($tipo);
         return $this->model->salvar();
+    }
+
+    public function registrarEntrada(int $idProduto, int|float $quantidade): bool
+    {
+        return $this->registrar($idProduto, 'Entrada', $quantidade);
     }
 
     public function registrarSaida(int $idProduto, int|float $quantidade): bool
     {
-        $this->model->setProduto($idProduto);
-        $this->model->setQuantidade($quantidade);
-        $this->model->setTipo('Saída');
-        return $this->model->salvar();
+        return $this->registrar($idProduto, 'Saída', $quantidade);
     }
 
     public function getErro(): ?string

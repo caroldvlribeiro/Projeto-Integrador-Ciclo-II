@@ -39,14 +39,14 @@ class Usuario extends Pessoa implements IAutenticavel
     public function salvar(): bool
     {
         $dados = [
-            'nm_usuario' => $this->nome,
+            'email_usuario' => $this->nome,
             'cd_senha' => $this->senha,
             'tp_usuario' => $this->tp_usuario
         ];
 
         if ($this->validar($dados)) {
-            $sql = "INSERT INTO {$this->_table} (nm_usuario, cd_senha, tp_usuario) 
-                    VALUES (:nm_usuario, :cd_senha, :tp_usuario)";
+            $sql = "INSERT INTO {$this->_table} (email_usuario, cd_senha, tp_usuario)
+                    VALUES (:email_usuario, :cd_senha, :tp_usuario)";
             return $this->executar($sql, $dados);
         }
         return false;
@@ -57,12 +57,12 @@ class Usuario extends Pessoa implements IAutenticavel
     {
         $dados = [
             'id' => $id,
-            'nm_usuario' => $this->nome,
+            'email_usuario' => $this->nome,
             'tp_usuario' => $this->tp_usuario
         ];
 
         if ($this->validar($dados)) {
-            $sql = "UPDATE {$this->_table} SET nm_usuario = :nm_usuario, tp_usuario = :tp_usuario";
+            $sql = "UPDATE {$this->_table} SET email_usuario = :email_usuario, tp_usuario = :tp_usuario";
             if ($this->senha) {
                 $sql .= ", cd_senha = :cd_senha";
                 $dados['cd_senha'] = $this->senha;
@@ -78,7 +78,7 @@ class Usuario extends Pessoa implements IAutenticavel
      */
     public function autenticar(string $usuario, string $senha): bool
     {
-        $sql = "SELECT * FROM {$this->_table} WHERE nm_usuario = :nome";
+        $sql = "SELECT * FROM {$this->_table} WHERE email_usuario = :nome";
         $stmt = $this->_PDO->prepare($sql);
         $stmt->execute(['nome' => $usuario]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);

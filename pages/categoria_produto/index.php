@@ -66,13 +66,13 @@ $categorias = $controller->listar();
     <aside class="sidebar">
         <div class="nav-label">Cadastros</div>
         <a href="index.php" class="nav-item active">Categorias</a>
-        <a href="#" class="nav-item">Produtos</a>
-        <a href="#" class="nav-item">Clientes</a>
+        <a href="../produto/index.php" class="nav-item">Produtos</a>
+        <a href="../clientes/index.php" class="nav-item">Clientes</a>
 
         <div class="nav-label" style="margin-top:20px;">Operação</div>
-        <a href="#" class="nav-item">Estoque</a>
-        <a href="#" class="nav-item">Movimentação</a>
-        <a href="#" class="nav-item">Orçamentos</a>
+        <a href="../estoque/index.php" class="nav-item">Estoque</a>
+        <a href="../movimentacao_estoque/index.php" class="nav-item">Movimentação</a>
+        <a href="../orcamento/index.php" class="nav-item">Orçamentos</a>
     </aside>
 
     <main class="main">
@@ -108,7 +108,7 @@ $categorias = $controller->listar();
                     <tbody>
                         <?php foreach ($categorias as $cat): ?>
                             <tr>
-                                <td class="col-id">#<?= htmlspecialchars($cat['id_categoria']) ?></td>
+                                <td class="col-id"><?= htmlspecialchars($cat['id_categoria']) ?></td>
                                 <td><strong><?= htmlspecialchars($cat['nm_categoria']) ?></strong></td>
                                 <td><?= htmlspecialchars($cat['ds_categoria']) ?></td>
                                 <td>
