@@ -18,7 +18,9 @@
       "Bash(git push *)",
       "Bash(git restore *)",
       "Bash(cd c:/xampp/htdocs/Projeto-Integrador-Ciclo-II && rm -f check_*.php debug_*.php fix_*.php test_*.php teste_*.php show_*.php add_*.php && git status)",
-      "Bash(git commit -m 'Remove arquivos de debug, teste e fix temporários *)"
+      "Bash(git commit -m 'Remove arquivos de debug, teste e fix temporários *)",
+      "Bash(rm -f cleanup_bad_records.php pages/clientes/cadastrar.php pages/clientes/editar.php)",
+      "Bash(git commit -m 'Remove arquivos vazios desnecessários *)"
     ],
     "additionalDirectories": [
       "c:\\xampp\\htdocs\\Projeto-Integrador-Ciclo-II"
