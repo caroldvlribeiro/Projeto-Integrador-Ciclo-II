@@ -43,7 +43,7 @@ $tipo = $logado['tp_usuario']; // 'Administrador' ou 'Vendedor'
             <li><a href="Orcamentos.php">Orçamentos</a></li>
             <li><a href="Estoque.php">Estoque</a></li>
             <li>
-                <div class="user-avatar">
+                <a href="Perfil.php" class="user-avatar" title="Meu Perfil" style="display:flex;text-decoration:none;">
                     <svg width="32" height="32" viewBox="-44 -44 88 88" xmlns="http://www.w3.org/2000/svg">
                         <clipPath id="cp-dark">
                             <circle r="44" />
@@ -52,7 +52,7 @@ $tipo = $logado['tp_usuario']; // 'Administrador' ou 'Vendedor'
                         <circle cy="-6" r="16" fill="#5C93AA" />
                         <path d="M-28 38 Q-28 14 0 14 Q28 14 28 38" fill="#5C93AA" clip-path="url(#cp-dark)" />
                     </svg>
-                </div>
+                </a>
             </li>
         </ul>
     </nav>
