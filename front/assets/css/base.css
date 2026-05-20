@@ -201,6 +201,12 @@ p {
   display: flex;
   align-items: center;
   gap: var(--space-md);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.header .logo:hover {
+  opacity: 0.8;
 }
 
 .header .logo .title-header {
@@ -256,6 +262,17 @@ p {
   text-transform: uppercase;
   cursor: default;
   user-select: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  transition: background 0.2s, border-color 0.2s;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.header .user:hover {
+  background: rgba(175, 193, 248, 0.2);
+  border-color: rgba(175, 193, 248, 0.4);
 }
 
 /* =========================

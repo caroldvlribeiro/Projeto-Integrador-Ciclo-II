@@ -5,8 +5,14 @@ require_once __DIR__ . '/../../../back/models/Usuario.php';
 require_once __DIR__ . '/../../../back/models/Vendedor.php';
 require_once __DIR__ . '/../../../back/models/Orcamento.php';
 
-// Garante que sessão está ativa e usuário está logado
 $auth = new AuthController();
+
+// Logout para limpar sessão e redirecionar para login usado nas telas Dashboard e de Perfil 
+if (isset($_GET['acao']) && $_GET['acao'] === 'logout') {
+    $auth->logout();
+}
+
+// Garante que sessão está ativa e usuário está logado
 $auth->verificarSessao();
 
 $logado = $_SESSION['usuario'];
