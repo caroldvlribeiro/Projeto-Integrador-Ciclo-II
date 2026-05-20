@@ -16,7 +16,7 @@ $filtro_data_fim = $_GET['dt_fim'] ?? '';
 
 // Buscar orçamentos
 $sql = "SELECT o.*, c.nm_cliente FROM orcamento o
-        LEFT JOIN cliente c ON o.id_cliente = c.id_cliente WHERE 1=1";
+        LEFT JOIN cliente c ON o.cd_cliente = c.cd_cliente WHERE 1=1";
 $params = [];
 
 if ($filtro_cliente) {
@@ -128,7 +128,7 @@ $orcamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?= htmlspecialchars($orcamento['nm_cliente'] ?? 'N/A') ?></td>
                                 <td><?= htmlspecialchars($orcamento['dt_pedido'] ?? '') ?></td>
                                 <td style="text-align:right;"><strong>R$ <?= number_format($orcamento['vl_total'] ?? 0, 2, ',', '.') ?></strong></td>
-                                <td><span style="background:#e3f2fd; color:#1976d2; padding:4px 8px; border-radius:4px; font-size:12px;"><?= htmlspecialchars($orcamento['st_status'] ?? 'Aberto') ?></span></td>
+                                <td><span style="background:#e3f2fd; color:#1976d2; padding:4px 8px; border-radius:4px; font-size:12px;"><?= htmlspecialchars($orcamento['st_orcamento'] ?? 'Aberto') ?></span></td>
                                 <td style="text-align:right;">
                                     <a href="form.php?id=<?= $orcamento['id_orcamento'] ?>" class="btn btn-secondary btn-icon" style="padding:4px 8px; font-size:12px;">✎ Editar</a>
                                 </td>

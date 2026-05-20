@@ -4,14 +4,13 @@ require_once __DIR__ . '/../../back/models/Orcamento.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'] ?? null;
-    $id_cliente = $_POST['id_cliente'] ?? null;
+    $cd_cliente = $_POST['cd_cliente'] ?? null;
     $dt_pedido = $_POST['dt_pedido'] ?? null;
-    $nr_orcamento = $_POST['nr_orcamento'] ?? null;
     $vl_total = $_POST['vl_total'] ?? null;
     $id_pedra = $_POST['id_pedra'] ?? null;
-    $ds_acabamento = $_POST['ds_acabamento'] ?? null;
+    $acabamento = $_POST['acabamento'] ?? null;
     $ds_descricao = $_POST['ds_descricao'] ?? null;
-    $st_status = $_POST['st_status'] ?? 'Aberto';
+    $st_orcamento = $_POST['st_orcamento'] ?? 'Aberto';
 
     $orcamento = new Orcamento($conn);
 
@@ -19,8 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Atualizar
         $orcamento->setValor($vl_total);
         $orcamento->setDescricao($ds_descricao);
-        $orcamento->setAcabamento($ds_acabamento);
-        $orcamento->setStatus($st_status);
+        $orcamento->setAcabamento($acabamento);
+        $orcamento->setStatus($st_orcamento);
 
         if ($orcamento->atualizar($id)) {
             $_SESSION['mensagem'] = 'Orçamento atualizado com sucesso!';
@@ -31,20 +30,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } else {
         // Criar novo
-        if (!$id_cliente || !$vl_total) {
+        if (!$cd_cliente || !$vl_total) {
             $_SESSION['mensagem'] = 'Cliente e Valor Total são obrigatórios!';
             $_SESSION['tipo_mensagem'] = 'error';
             header('Location: form.php');
             exit;
         }
 
-        $orcamento->setCliente($id_cliente);
+        $orcamento->setCliente($cd_cliente);
         $orcamento->setDtPedido($dt_pedido);
         $orcamento->setValor($vl_total);
         $orcamento->setDescricao($ds_descricao);
-        $orcamento->setAcabamento($ds_acabamento);
+        $orcamento->setAcabamento($acabamento);
         $orcamento->setPedra($id_pedra);
-        $orcamento->setStatus($st_status);
+        $orcamento->setStatus($st_orcamento);
 
         if ($orcamento->salvar()) {
             $_SESSION['mensagem'] = 'Orçamento criado com sucesso!';

@@ -8,7 +8,7 @@ $filtro_data_fim = $_GET['dt_fim'] ?? date('Y-m-d'); // Hoje
 
 // Buscar orçamentos com filtros
 $sql = "SELECT o.*, c.nm_cliente FROM orcamento o
-        LEFT JOIN cliente c ON o.id_cliente = c.id_cliente WHERE 1=1";
+        LEFT JOIN cliente c ON o.cd_cliente = c.cd_cliente WHERE 1=1";
 $params = [];
 
 if ($filtro_cliente) {
@@ -136,7 +136,7 @@ $valor_medio = $total_orcamentos > 0 ? $valor_total / $total_orcamentos : 0;
                                 <td><?= htmlspecialchars($orcamento['nm_cliente'] ?? 'N/A') ?></td>
                                 <td><?= htmlspecialchars($orcamento['dt_pedido'] ?? '') ?></td>
                                 <td style="text-align:right;"><strong>R$ <?= number_format($orcamento['vl_total'] ?? 0, 2, ',', '.') ?></strong></td>
-                                <td><span style="background:#e3f2fd; color:#1976d2; padding:4px 8px; border-radius:4px; font-size:12px;"><?= htmlspecialchars($orcamento['st_status'] ?? 'Aberto') ?></span></td>
+                                <td><span style="background:#e3f2fd; color:#1976d2; padding:4px 8px; border-radius:4px; font-size:12px;"><?= htmlspecialchars($orcamento['st_orcamento'] ?? 'Aberto') ?></span></td>
                                 <td><?= htmlspecialchars(substr($orcamento['ds_descricao'] ?? '', 0, 40)) ?></td>
                             </tr>
                         <?php endforeach; ?>

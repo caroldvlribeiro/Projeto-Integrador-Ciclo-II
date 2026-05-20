@@ -16,7 +16,7 @@ if (isset($_GET['id'])) {
 }
 
 // Buscar clientes para dropdown
-$stmt = $conn->prepare("SELECT id_cliente, nm_cliente FROM cliente ORDER BY nm_cliente");
+$stmt = $conn->prepare("SELECT cd_cliente, nm_cliente FROM cliente ORDER BY nm_cliente");
 $stmt->execute();
 $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -71,11 +71,11 @@ $pedras = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <input type="hidden" name="id" id="id" value="<?= $orcamento['id_orcamento'] ?? '' ?>">
 
                 <div class="form-group">
-                    <label class="form-label" for="id_cliente">Cliente *</label>
-                    <select class="form-input" id="id_cliente" name="id_cliente" required>
+                    <label class="form-label" for="cd_cliente">Cliente *</label>
+                    <select class="form-input" id="cd_cliente" name="cd_cliente" required>
                         <option value="">Selecione um cliente</option>
                         <?php foreach ($clientes as $cliente): ?>
-                            <option value="<?= $cliente['id_cliente'] ?>" <?= ($orcamento && $orcamento['id_cliente'] == $cliente['id_cliente']) ? 'selected' : '' ?>>
+                            <option value="<?= $cliente['cd_cliente'] ?>" <?= ($orcamento && $orcamento['cd_cliente'] == $cliente['cd_cliente']) ? 'selected' : '' ?>>
                                 <?= htmlspecialchars($cliente['nm_cliente']) ?>
                             </option>
                         <?php endforeach; ?>
@@ -85,11 +85,6 @@ $pedras = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="form-group">
                     <label class="form-label" for="dt_pedido">Data do Pedido</label>
                     <input class="form-input" type="date" id="dt_pedido" name="dt_pedido" value="<?= $orcamento['dt_pedido'] ?? date('Y-m-d') ?>">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="nr_orcamento">Número do Orçamento</label>
-                    <input class="form-input" type="text" id="nr_orcamento" name="nr_orcamento" maxlength="50" value="<?= htmlspecialchars($orcamento['nr_orcamento'] ?? '') ?>" placeholder="Ex: ORC-2026-001">
                 </div>
 
                 <div class="form-group">
@@ -110,8 +105,8 @@ $pedras = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="ds_acabamento">Acabamento</label>
-                    <input class="form-input" type="text" id="ds_acabamento" name="ds_acabamento" maxlength="200" value="<?= htmlspecialchars($orcamento['ds_acabamento'] ?? '') ?>" placeholder="Ex: Polido, Espelhado, Jato de Areia">
+                    <label class="form-label" for="acabamento">Acabamento</label>
+                    <input class="form-input" type="text" id="acabamento" name="acabamento" maxlength="200" value="<?= htmlspecialchars($orcamento['acabamento'] ?? '') ?>" placeholder="Ex: Polido, Espelhado, Jato de Areia">
                 </div>
 
                 <div class="form-group">
@@ -120,11 +115,12 @@ $pedras = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="st_status">Status</label>
-                    <select class="form-input" id="st_status" name="st_status">
-                        <option value="Aberto" <?= ($orcamento && $orcamento['st_status'] === 'Aberto') ? 'selected' : '' ?>>Aberto</option>
-                        <option value="Fechado" <?= ($orcamento && $orcamento['st_status'] === 'Fechado') ? 'selected' : '' ?>>Fechado</option>
-                        <option value="Cancelado" <?= ($orcamento && $orcamento['st_status'] === 'Cancelado') ? 'selected' : '' ?>>Cancelado</option>
+                    <label class="form-label" for="st_orcamento">Status</label>
+                    <select class="form-input" id="st_orcamento" name="st_orcamento">
+                        <option value="Aberto" <?= ($orcamento && $orcamento['st_orcamento'] === 'Aberto') ? 'selected' : '' ?>>Aberto</option>
+                        <option value="Aprovado" <?= ($orcamento && $orcamento['st_orcamento'] === 'Aprovado') ? 'selected' : '' ?>>Aprovado</option>
+                        <option value="Cancelado" <?= ($orcamento && $orcamento['st_orcamento'] === 'Cancelado') ? 'selected' : '' ?>>Cancelado</option>
+                        <option value="Finalizado" <?= ($orcamento && $orcamento['st_orcamento'] === 'Finalizado') ? 'selected' : '' ?>>Finalizado</option>
                     </select>
                 </div>
 
