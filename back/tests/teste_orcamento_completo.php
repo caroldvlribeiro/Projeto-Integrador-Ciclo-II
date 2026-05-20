@@ -33,12 +33,12 @@ try {
     $orcamentoModel = new Orcamento($conn);
 
     // Primeiro, vamos verificar se existe um cliente
-    $stmt = $conn->prepare("SELECT id_cliente FROM cliente LIMIT 1");
+    $stmt = $conn->prepare("SELECT cd_cliente FROM cliente LIMIT 1");
     $stmt->execute();
     $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($cliente) {
-        $orcamentoModel->setCliente($cliente['id_cliente']);
+        $orcamentoModel->setCliente($cliente['cd_cliente']);
         $orcamentoModel->setDtPedido(date('Y-m-d'));
         $orcamentoModel->setValor(1500.00);
         $orcamentoModel->setDescricao('Teste de orçamento automático');
@@ -48,7 +48,8 @@ try {
             echo "✅ PASSOU: Orçamento criado com sucesso\n\n";
             $testes_passaram++;
         } else {
-            echo "❌ FALHOU: Erro ao criar orçamento\n\n";
+            $erro = $orcamentoModel->getError() ?? 'Erro desconhecido';
+            echo "❌ FALHOU: $erro\n\n";
         }
     } else {
         echo "⚠️  PULADO: Nenhum cliente disponível para teste\n\n";
@@ -123,8 +124,8 @@ try {
     echo "❌ FALHOU: " . $e->getMessage() . "\n\n";
 }
 
-// TESTE 6: Validação - ID cliente obrigatório
-echo "[TESTE 6] Validação - id_cliente obrigatório...\n";
+// TESTE 6: Validação - CD cliente obrigatório
+echo "[TESTE 6] Validação - cd_cliente obrigatório...\n";
 try {
     $orcamentoModel = new Orcamento($conn);
     // Tenta salvar sem cliente
@@ -135,7 +136,7 @@ try {
     $resultado = $orcamentoModel->salvar();
 
     if (!$resultado) {
-        echo "✅ PASSOU: Validação funcionou - id_cliente é obrigatório\n\n";
+        echo "✅ PASSOU: Validação funcionou - cd_cliente é obrigatório\n\n";
         $testes_passaram++;
     } else {
         echo "❌ FALHOU: Deveria ter rejeitado orçamento sem cliente\n\n";
@@ -148,14 +149,14 @@ try {
 echo "[TESTE 7] Deletar orçamento...\n";
 try {
     // Cria um orçamento temporário para deletar
-    $stmt = $conn->prepare("SELECT id_cliente FROM cliente LIMIT 1");
+    $stmt = $conn->prepare("SELECT cd_cliente FROM cliente LIMIT 1");
     $stmt->execute();
     $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($cliente) {
         // Criar orçamento temporário
         $orcamentoModel = new Orcamento($conn);
-        $orcamentoModel->setCliente($cliente['id_cliente']);
+        $orcamentoModel->setCliente($cliente['cd_cliente']);
         $orcamentoModel->setDtPedido(date('Y-m-d'));
         $orcamentoModel->setValor(999.99);
         $orcamentoModel->setDescricao('Para deletar no teste');
@@ -174,7 +175,8 @@ try {
                 echo "❌ FALHOU: Erro ao deletar orçamento\n\n";
             }
         } else {
-            echo "⚠️  PULADO: Não foi possível criar orçamento para deletar\n\n";
+            $erro = $orcamentoModel->getError() ?? 'Erro desconhecido';
+            echo "⚠️  PULADO: Não foi possível criar orçamento para deletar ($erro)\n\n";
         }
     } else {
         echo "⚠️  PULADO: Nenhum cliente disponível\n\n";
