@@ -48,4 +48,3 @@ abstract class RegistroFinanceiro extends Model
     abstract public function calcularValor(): float;
 }
 
-?>

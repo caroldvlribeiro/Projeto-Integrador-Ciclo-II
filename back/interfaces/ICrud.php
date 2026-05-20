@@ -7,4 +7,3 @@ interface ICrud
     public function buscarPorId(int $id): mixed;
     public function listarTodos(): array;
 }
-?>

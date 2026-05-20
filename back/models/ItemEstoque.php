@@ -69,4 +69,3 @@ abstract class ItemEstoque extends Model
     abstract public function calcularVlVenda();
 }
 
-?>

@@ -15,42 +15,46 @@ include './includes/usuario.php';
         rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/base.css">
     <link rel="stylesheet" href="../assets/css/perfil.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 </head>
 
 <body>
-
-    <!-- NAV igual ao Dashboard/Orcamentos -->
-    <nav>
-        <div class="nav-logo">
-            <div class="isotipo">
-                <svg width="40" height="40" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="2" y="2" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5" />
-                    <rect x="12" y="12" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5" />
-                    <rect x="22" y="22" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5" />
-                    <rect x="46" y="46" width="14" height="14" fill="#EFF2F4" />
+    <div class="app">
+        <header class="header">
+            <div class="logo">
+                <svg width="36" height="36" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2"  y="2"  width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+                    <rect x="12" y="12" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+                    <rect x="22" y="22" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+                    <rect x="46" y="46" width="14" height="14" fill="#EFF2F4"/>
                 </svg>
+                <div class="title-header">
+                    Nova Canaã
+                    <small>Marmoraria</small>
+                </div>
             </div>
-            <div class="nav-brand">Nova Canaã<small>Marmoraria</small></div>
-        </div>
-        <ul class="nav-links">
-            <li><a href="Dashboard.php">Home</a></li>
-            <li><a href="Orcamentos.php">Orçamentos</a></li>
-            <li><a href="Estoque.php">Estoque</a></li>
-            <li>
-                <a href="Perfil.php" class="nav-avatar-link active">
-                    <svg width="32" height="32" viewBox="-44 -44 88 88" xmlns="http://www.w3.org/2000/svg">
-                        <clipPath id="cp-dark">
-                            <circle r="44" />
-                        </clipPath>
-                        <circle r="44" fill="#161F39" stroke="#AFC1F8" stroke-width="2" />
-                        <circle cy="-6" r="16" fill="#5C93AA" />
-                        <path d="M-28 38 Q-28 14 0 14 Q28 14 28 38" fill="#5C93AA" clip-path="url(#cp-dark)" />
-                    </svg>
-                    Perfil
-                </a>
-            </li>
-        </ul>
-    </nav>
+
+            <ul class="nav-links">
+                <li><a href="Dashboard.php">Dashboard</a></li>
+                <li><a href="Orcamentos.php">Orçamentos</a></li>
+                <li><a href="Estoque.php">Estoque</a></li>
+                <li><a href="Agenda.php">Agenda</a></li>
+                <li><a href="Produtos.php">Produtos</a></li>
+            </ul>
+            <div class="user">
+                <?= $_SESSION['nm_usuario'] ?>
+            </div>
+        </header>
+
+        <aside class="sidebar">
+            <div class="nav-label">Menu</div>
+            <a href="Dashboard.php" class="nav-item"><i class="ti ti-layout-dashboard"></i> Dashboard</a>
+            <a href="Orcamentos.php" class="nav-item"><i class="ti ti-file-text"></i> Orçamentos</a>
+            <a href="NovoOrcamento.php" class="nav-item"><i class="ti ti-plus"></i> Novo Orçamento</a>
+            <a href="Estoque.php" class="nav-item"><i class="ti ti-stack"></i> Estoque</a>
+            <a href="Agenda.php" class="nav-item"><i class="ti ti-calendar"></i> Agenda</a>
+            <a href="Perfil.php" class="nav-item active"><i class="ti ti-user"></i> Perfil</a>
+        </aside>
 
     <main>
 

@@ -69,4 +69,3 @@ class Produto extends ItemEstoque
     }
 }
 
-?>

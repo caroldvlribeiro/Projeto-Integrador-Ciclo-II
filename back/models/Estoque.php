@@ -76,4 +76,3 @@ class Estoque extends Model
     }
 }
 
-?>

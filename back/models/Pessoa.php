@@ -69,5 +69,3 @@ abstract class Pessoa extends Model
     // Método para retornar uma string de identificação do perfil
     abstract public function getPerfil($id): string;
 }
-
-?>

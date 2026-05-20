@@ -16,4 +16,3 @@ else if (!empty($dataInicio) || !empty($dataFim)) {
 } else {
     $orcamentos = $model->listarOrcamentoModal();
 }
-?>

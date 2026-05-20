@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
-$usuario = "root";
-$senha = "";
+$usuario = "danilo";
+$senha = "Dani4520*";
 $banco = "marmoraria_db";
 try{
     $pdo = new PDO("mysql:host=$host;dbname=$banco", $usuario, $senha);
@@ -11,4 +11,3 @@ try{
 catch(PDOException $e) {
     echo "Erro de conexão: " . $e->getMessage();
 }
-?>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/norc.css">
     <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     <title>Novo Orcamento</title>
 </head>
 <body>
@@ -24,8 +25,8 @@
             </div>
 
             <ul class="nav-links">
-                <li><a href="home.php" class="active">Home</a></li>
-                <li><a href="Orcamentos.php">Orçamentos</a></li>
+                <li><a href="Dashboard.php">Dashboard</a></li>
+                <li><a href="Orcamentos.php" class="active">Orçamentos</a></li>
                 <li><a href="Estoque.php">Estoque</a></li>
                 <li><a href="Agenda.php">Agenda</a></li>
                 <li><a href="Produtos.php">Produtos</a></li>
@@ -38,9 +39,9 @@
 
         <aside class="sidebar">
             <div class="nav-label">Menu</div>
-            <a href="home.php"        class="nav-item active"><i class="ti ti-layout-dashboard"></i> Dashboard</a>
+            <a href="Dashboard.php"        class="nav-item"><i class="ti ti-layout-dashboard"></i> Dashboard</a>
             <a href="Orcamentos.php"  class="nav-item"><i class="ti ti-file-text"></i> Orçamentos</a>
-            <a href="NovoOrcamento.php" class="nav-item"><i class="ti ti-plus"></i> Novo Orçamento</a>
+            <a href="NovoOrcamento.php" class="nav-item active"><i class="ti ti-plus"></i> Novo Orçamento</a>
             <a href="Estoque.php"     class="nav-item"><i class="ti ti-stack"></i> Estoque</a>
             <a href="Agenda.php"      class="nav-item"><i class="ti ti-calendar"></i> Agenda</a>
             <a href="Produtos.php"    class="nav-item"><i class="ti ti-package"></i> Produtos</a>

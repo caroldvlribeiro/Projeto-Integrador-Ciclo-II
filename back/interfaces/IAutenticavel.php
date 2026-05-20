@@ -7,4 +7,3 @@ interface IAutenticavel
     public function temPermissao(string $acao): bool;
 }
 
-?>

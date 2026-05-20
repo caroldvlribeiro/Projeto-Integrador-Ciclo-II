@@ -74,4 +74,3 @@ class CategoriaProduto extends Model
     }
 }
 
-?>

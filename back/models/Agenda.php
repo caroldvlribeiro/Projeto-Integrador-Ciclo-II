@@ -124,4 +124,3 @@ class Agenda extends Model
     
 }
 
-?>

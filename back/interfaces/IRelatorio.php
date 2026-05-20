@@ -6,4 +6,3 @@ interface IRelatorio
     public function exportar(string $formato) : string;
 }
 
-?>

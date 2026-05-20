@@ -135,5 +135,3 @@ class Usuario extends Pessoa implements IAutenticavel
         }
     }
 }
-
-?>

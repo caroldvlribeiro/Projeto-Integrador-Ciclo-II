@@ -6,4 +6,3 @@ interface INotificavel
     public function enviarAlerta(string $tipo): bool;
 }
 
-?>

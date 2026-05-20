@@ -103,4 +103,3 @@ abstract class Model implements ICrud
     abstract public function atualizar(int $id): bool;
 }
 
-?>
