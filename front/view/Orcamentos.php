@@ -6,43 +6,49 @@ include './includes/filtrosOrcamento.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/orc.css">
     <link rel="stylesheet" href="../assets/css/base.css">
-    <link rel="stylesheet" href="../assets/css/nav-admin.css">
+    <link rel="stylesheet" href="../assets/css/orc.css">
+
     <title>Orçamentos</title>
 </head>
 <body>
-    <div class="page">
-        <nav>
-            <div class="nav-logo">
-                <div class="isotipo">
-                    <svg width="40" height="40" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="2" y="2" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+    <div class="app">
+        <header class="header">
+            <div class="logo">
+                <svg width="36" height="36" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2"  y="2"  width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
                     <rect x="12" y="12" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
                     <rect x="22" y="22" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
                     <rect x="46" y="46" width="14" height="14" fill="#EFF2F4"/>
-                    </svg>
+                </svg>
+                <div class="title-header">
+                     Nova Canaã
+                    <small>Marmoraria</small>
                 </div>
-                <div class="nav-brand">Nova Canaã<small>Marmoraria</small></div>
             </div>
+
             <ul class="nav-links">
-                <li><a href="">Home</a></li>
+                <li><a href="home.php">Home</a></li>
                 <li><a href="Orcamentos.php" class="active">Orçamentos</a></li>
-                <li><a href="">Estoque</a></li>
-                <li><a href="#pedras">Agenda</a></li>
-                <li><a href="#pedras">Produtos</a></li>
-                <li>
-                    <div>
-                        <svg width="40" height="40" viewBox="-44 -44 88 88" xmlns="http://www.w3.org/2000/svg">
-                        <clipPath id="cp-dark"><circle r="44"/></clipPath>
-                        <circle r="44" fill="#161F39" stroke="#AFC1F8" stroke-width="2"/>
-                        <circle cy="-6" r="16" fill="#5C93AA"/>
-                        <path d="M-28 38 Q-28 14 0 14 Q28 14 28 38" fill="#5C93AA" clip-path="url(#cp-dark)"/>
-                        </svg>
-                    </div>
-                </li>
+                <li><a href="Estoque.php">Estoque</a></li>
+                <li><a href="Agenda.php">Agenda</a></li>
+                <li><a href="Produtos.php">Produtos</a></li>
             </ul>
-        </nav>
+
+            <div class="user">
+                <?= $_SESSION['nm_usuario'] ?>
+            </div>
+        </header>
+
+        <aside class="sidebar">
+            <div class="nav-label">Menu</div>
+            <a href="home.php"        class="nav-item active"><i class="ti ti-layout-dashboard"></i> Dashboard</a>
+            <a href="Orcamentos.php"  class="nav-item"><i class="ti ti-file-text"></i> Orçamentos</a>
+            <a href="NovoOrcamento.php" class="nav-item"><i class="ti ti-plus"></i> Novo Orçamento</a>
+            <a href="Estoque.php"     class="nav-item"><i class="ti ti-stack"></i> Estoque</a>
+            <a href="Agenda.php"      class="nav-item"><i class="ti ti-calendar"></i> Agenda</a>
+            <a href="Produtos.php"    class="nav-item"><i class="ti ti-package"></i> Produtos</a>
+        </aside>    
         <main>
             <div class="bar-orcamentos">
                 <a href="NovoOrcamento.php">
@@ -111,7 +117,7 @@ include './includes/filtrosOrcamento.php';
                     </tbody>
                 </table>
             </div>
-        </div>
+        
         <!-- modais de edição -->
         <?php foreach($orcamentos as $orcamento): ?>
 
@@ -151,6 +157,7 @@ include './includes/filtrosOrcamento.php';
                 </div>
             </div>
         <?php endforeach; ?>
-</main>
+    </main>
+    </div>
 </body>
 </html>
