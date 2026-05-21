@@ -49,6 +49,7 @@ if ($tipo !== 'Administrador') {
             </ul>
 
             <div class="user">
+                <?= $_SESSION['nm_usuario'] ?>
             </div>
         </header>
 

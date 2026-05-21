@@ -42,7 +42,7 @@ include './includes/usuario.php';
                 <li><a href="Produtos.php">Produtos</a></li>
             </ul>
             <div class="user">
-                <?= $_SESSION['nm_usuario'] ?>
+                <?= $_SESSION['email'] ?>
             </div>
         </header>
 

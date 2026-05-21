@@ -1,4 +1,6 @@
-
+<?php
+    include './includes/usuario.php';
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -35,6 +37,7 @@
             </ul>
 
             <div class="user">
+                <?= $_SESSION['email'] ?>
             </div>
         </header>
 
