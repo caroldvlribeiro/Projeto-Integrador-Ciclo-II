@@ -16,7 +16,7 @@ usort($estoques, function($a, $b) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estoque · Nova Canaã</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/rubia.css">
 </head>
 <body>
 <div class="app">
