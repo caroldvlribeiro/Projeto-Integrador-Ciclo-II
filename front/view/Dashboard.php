@@ -41,7 +41,10 @@ $tipo = $logado['tp_usuario']; // 'Administrador' ou 'Vendedor'
         <ul class="nav-links">
             <li><a class="active" href="Dashboard.php">Home</a></li>
             <li><a href="Orcamentos.php">Orçamentos</a></li>
+            <li><a href="Categorias.php">Categorias</a></li>
+            <li><a href="Produtos.php">Produtos</a></li>
             <li><a href="Estoque.php">Estoque</a></li>
+            <li><a href="MovimentacoesEstoque.php">Movimentações</a></li>
             <li>
                 <a href="Perfil.php" class="user-avatar" title="Meu Perfil" style="display:flex;text-decoration:none;">
                     <svg width="32" height="32" viewBox="-44 -44 88 88" xmlns="http://www.w3.org/2000/svg">
@@ -73,11 +76,32 @@ $tipo = $logado['tp_usuario']; // 'Administrador' ou 'Vendedor'
                     <div class="value">Gerenciar</div>
                 </div>
             </a>
+            <a href="Categorias.php" class="stat-card">
+                <div class="stat-icon">🏷️</div>
+                <div class="stat-content">
+                    <h3>Categorias</h3>
+                    <div class="value">Organizar</div>
+                </div>
+            </a>
+            <a href="Produtos.php" class="stat-card">
+                <div class="stat-icon">🛍️</div>
+                <div class="stat-content">
+                    <h3>Produtos</h3>
+                    <div class="value">Cadastrar</div>
+                </div>
+            </a>
             <a href="Estoque.php" class="stat-card">
                 <div class="stat-icon">📦</div>
                 <div class="stat-content">
                     <h3>Estoque</h3>
                     <div class="value">Consultar</div>
+                </div>
+            </a>
+            <a href="MovimentacoesEstoque.php" class="stat-card">
+                <div class="stat-icon">🔄</div>
+                <div class="stat-content">
+                    <h3>Movimentações</h3>
+                    <div class="value">Registrar</div>
                 </div>
             </a>
         </div>
