@@ -264,6 +264,12 @@ CREATE TRIGGER `calcular_venda_pedra` BEFORE INSERT ON `pedra` FOR EACH ROW set 
 $$
 DELIMITER ;
 
+DELIMITER $$
+CREATE TRIGGER `calcular_venda_pedra_update` BEFORE UPDATE ON `pedra` FOR EACH ROW
+    SET NEW.vl_venda_pedra = NEW.vl_compra_pedra * 5
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
