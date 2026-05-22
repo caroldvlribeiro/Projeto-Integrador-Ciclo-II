@@ -52,6 +52,7 @@ main {
     cursor: pointer;
     transition: background 0.2s, transform 0.2s;
     white-space: nowrap;
+
 }
 
 .btn-pdf:hover {
@@ -144,6 +145,7 @@ main {
     cursor: pointer;
     transition: background 0.2s, transform 0.2s;
     align-self: end;
+    margin-bottom: var(--space-xl);
 }
 
 .btn-filtrar:hover {

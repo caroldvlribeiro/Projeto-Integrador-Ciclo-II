@@ -1,20 +1,30 @@
 <?php
+
 $paginaAtiva = 'dashboard';
 $tituloPagina = 'Dashboard - Marmoraria';
 $cssExtra = '../assets/css/dashboard.css';
 include './includes/usuario.php';
 include './includes/layout.php';
+
+
+    if (isset($_GET['acao']) && $_GET['acao'] === 'logout') {
+        session_destroy();
+
+        header('Location: Login.php');
+        exit;
+    }
 ?>
 
-<header class="dashboard-header">
-    <div class="welcome-text">
-        <h1>Painel de Controle</h1>
-        <p>Bem-vindo!</p>
-    </div>
-    <a href="Dashboard.php?acao=logout" class="logout-link">
-        <span>🚪 Sair do Sistema</span>
-    </a>
-</header>
+        <main>
+            <header class="dashboard-header">
+                <div class="welcome-text">
+                    <h1>Painel de Controle</h1>
+                    <p>Bem-vindo!</p>
+                </div>
+                <a href="Dashboard.php?acao=logout" class="logout-link">
+                    <span>🚪 Sair do Sistema</span>
+                </a>
+            </header>
 
 <div class="kpi-grid">
     <div class="kpi">
@@ -30,7 +40,7 @@ include './includes/layout.php';
             <div class="kpi-icon green"><i class="ti ti-currency-dollar" aria-hidden="true"></i></div>
             <span class="kpi-trend up"><i class="ti ti-trending-up" aria-hidden="true"></i> +12%</span>
         </div>
-        <div class="kpi-val">R$ 9.000</div>
+        <div class="kpi-val"></div>
         <div class="kpi-label">Faturamento do mês</div>
     </div>
     <div class="kpi">
@@ -157,171 +167,149 @@ include './includes/layout.php';
 
 <div class="sec-label">Orçamentos</div>
 
-<div class="grid-2">
-    <div class="panel">
-        <div class="panel-head">
-            <div class="panel-title"><i class="ti ti-file-text" aria-hidden="true"></i> Orçamentos recentes
-            </div>
-        </div>
-        <div class="orc-list">
-            <div class="orc-row">
-                <div class="orc-info">
-                    <div class="orc-cliente">João Silva</div>
-                    <div class="orc-pedra">Granito Verde Ubatuba · Bancada</div>
-                </div>
-                <div class="orc-right">
-                    <div class="orc-val">R$ 1.800</div>
-                    <span class="badge aprovado">Aprovado</span>
-                </div>
-            </div>
-            <div class="orc-row">
-                <div class="orc-info">
-                    <div class="orc-cliente">Maria Oliveira</div>
-                    <div class="orc-pedra">Granito Preto São Gabriel · Bancada</div>
-                </div>
-                <div class="orc-right">
-                    <div class="orc-val">R$ 2.500</div>
-                    <span class="badge aberto">Aberto</span>
-                </div>
-            </div>
-            <div class="orc-row">
-                <div class="orc-info">
-                    <div class="orc-cliente">Carlos Souza</div>
-                    <div class="orc-pedra">Granito Branco Itaúnas · Ilha</div>
-                </div>
-                <div class="orc-right">
-                    <div class="orc-val">R$ 3.200</div>
-                    <span class="badge aprovado">Aprovado</span>
-                </div>
-            </div>
-            <div class="orc-row">
-                <div class="orc-info">
-                    <div class="orc-cliente">Ana Costa</div>
-                    <div class="orc-pedra">Granito Verde Ubatuba · Pia</div>
-                </div>
-                <div class="orc-right">
-                    <div class="orc-val">R$ 1.500</div>
-                    <span class="badge cancelado">Cancelado</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:var(--md);">
-        <div class="panel">
-            <div class="panel-head">
-                <div class="panel-title"><i class="ti ti-users" aria-hidden="true"></i> Vendedores</div>
-            </div>
-            <div class="vend-list">
-                <div class="vend-row">
-                    <div class="vend-av" style="background:var(--cpd);">RM</div>
-                    <div class="vend-info">
-                        <div class="vend-nome">Ricardo Mendes</div>
-                        <div class="vend-com">Comissão 5%</div>
+            <div class="grid-2">
+                <div class="panel">
+                    <div class="panel-head">
+                        <div class="panel-title"><i class="ti ti-file-text" aria-hidden="true"></i> Orçamentos recentes</div>
                     </div>
-                    <div class="vend-val">R$ 90</div>
-                </div>
-                <div class="vend-row">
-                    <div class="vend-av" style="background:var(--ca);">FL</div>
-                    <div class="vend-info">
-                        <div class="vend-nome">Fernanda Lima</div>
-                        <div class="vend-com">Comissão 6,5%</div>
+                    <div class="orc-list">
                     </div>
-                    <div class="vend-val">R$ 208</div>
                 </div>
-                <div class="vend-row">
-                    <div class="vend-av" style="background:#3C3489;">BA</div>
-                    <div class="vend-info">
-                        <div class="vend-nome">Bruno Almeida</div>
-                        <div class="vend-com">Comissão 4,75%</div>
+                <div style="display:flex;flex-direction:column;gap:var(--md);">
+                    <div class="panel">
+                        <div class="panel-head">
+                            <div class="panel-title"><i class="ti ti-users" aria-hidden="true"></i> Vendedores</div>
+                        </div>
+                        <div class="vend-list">
+                        </div>
                     </div>
-                    <div class="vend-val">R$ 152</div>
                 </div>
             </div>
-        </div>
-    </div>
+
+            <a href="Dashboard.php?acao=logout" class="logout-link">
+                <span>🚪 Sair do Sistema</span>
+            </a>
+
+
+    
 </div>
 </main>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-
+<?php if ($acao !== 'logout'): ?>
 <script>
-    // Fetch dados do backend
-    fetch('../api/getDashboardData.php')
-        .then(r => r.json())
-        .then(dados => {
-            const kpi = dados.kpis;
+// Fetch dados do backend
+fetch('../api/getDashboardData.php')
+  .then(r => {
+    if (!r.ok) throw new Error(`HTTP error! status: ${r.status}`);
+    return r.json();
+  })
+  .then(dados => {
+    if (!dados || !dados.kpis) throw new Error('Dados inválidos recebidos');
+    
+    const kpi = dados.kpis;
 
-            // 0. ATUALIZAR KPI CARDS
-            // KPI 1 - Orçamentos ativos
-            document.querySelectorAll('.kpi')[0].querySelector('.kpi-val').textContent = kpi.orcamentos_ativos;
-            document.querySelectorAll('.kpi')[0].querySelector('.kpi-trend').innerHTML = `<i class="ti ti-trending-up" aria-hidden="true"></i> ${kpi.crescimento_orc > 0 ? '+' : ''}${kpi.crescimento_orc}%`;
+    // 0. ATUALIZAR KPI CARDS
+    // KPI 1 - Orçamentos ativos
+    document.querySelectorAll('.kpi')[0].querySelector('.kpi-val').textContent = kpi.orcamentos_ativos;
+    document.querySelectorAll('.kpi')[0].querySelector('.kpi-trend').innerHTML = `<i class="ti ti-trending-up" aria-hidden="true"></i> ${kpi.crescimento_orc > 0 ? '+' : ''}${kpi.crescimento_orc}%`;
+    
+    // KPI 2 - Faturamento do mês
+    document.querySelectorAll('.kpi')[1].querySelector('.kpi-val').textContent = 'R$ ' + kpi.faturamento_mes.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    
+    // KPI 3 - Produtos em estoque
+    const trendEl = document.querySelectorAll('.kpi')[2].querySelector('.kpi-trend');
+    trendEl.className = `kpi-trend ${kpi.produtos_baixo > 0 ? 'warn' : 'up'}`;
+    trendEl.innerHTML = kpi.produtos_baixo > 0
+    ? `<i class="ti ti-alert-triangle" aria-hidden="true"></i> ${kpi.produtos_baixo} baixo`
+    : `<i class="ti ti-check" aria-hidden="true"></i> OK`;
 
-            // KPI 2 - Faturamento do mês
-            document.querySelectorAll('.kpi')[1].querySelector('.kpi-val').textContent = 'R$ ' + kpi.faturamento_mes.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const trendProdutos = kpi.produtos_baixo > 0 ? `<i class="ti ti-alert-triangle" aria-hidden="true"></i> ${kpi.produtos_baixo} baixo` : 'OK';
+    document.querySelectorAll('.kpi')[2].querySelector('.kpi-trend').innerHTML = trendProdutos;
+    
+    // KPI 4 - Compromissos hoje
+    document.querySelectorAll('.kpi')[3].querySelector('.kpi-val').textContent = kpi.compromissos_hoje;
 
-            // KPI 3 - Produtos em estoque
-            document.querySelectorAll('.kpi')[2].querySelector('.kpi-val').textContent = kpi.produtos_estoque;
-            const trendProdutos = kpi.produtos_baixo > 0 ? `<i class="ti ti-alert-triangle" aria-hidden="true"></i> ${kpi.produtos_baixo} baixo` : 'OK';
-            document.querySelectorAll('.kpi')[2].querySelector('.kpi-trend').innerHTML = trendProdutos;
+    // 1. FATURAMENTO POR MÊS
+    const meses = [...dados.faturamento.meses];
+    const vals = [...dados.faturamento.vals];
 
-            // KPI 4 - Compromissos hoje
-            document.querySelectorAll('.kpi')[3].querySelector('.kpi-val').textContent = kpi.compromissos_hoje;
+    while (meses.length < 6) meses.unshift('—');
+    while (vals.length  < 6) vals.unshift(0);
 
-            // 1. FATURAMENTO POR MÊS
-            const meses = dados.faturamento.meses;
-            const vals = dados.faturamento.vals;
-            const max = Math.max(...vals);
-            document.getElementById('chart').innerHTML = vals.map((v, i) => {
-                const h = Math.round((v / max) * 130);
-                return `<div class="bar-g"><div class="bar ${i % 2 === 0 ? 'blue' : 'teal'}" style="height:${h}px"><span class="bar-top">R$${(v / 1000).toFixed(1)}k</span></div><span class="bar-lbl">${meses[i]}</span></div>`;
-            }).join('');
+    const max = Math.max(...vals) || 1;
+    document.getElementById('chart').innerHTML = vals.map((v, i) => {
+        const h = Math.round((v / max) * 130);
+        return `
+            <div class="bar-g">
+            <div class="bar ${i % 2 === 0 ? 'blue' : 'teal'}" style="height:${h}px">
+                <span class="bar-top">R$${(v / 1000).toFixed(1)}k</span>
+            </div>
+            <span class="bar-lbl">${meses[i]}</span>
+            </div>
+        `;
+        }).join('');
 
-            // 2. PEDRAS MAIS VENDIDAS
-            const pedrasHTML = dados.pedras.map(p => `
-      <div class="pedra-row">
-        <div class="pedra-swatch" style="background:${p.cor};"></div>
+    // 2. PEDRAS MAIS VENDIDAS
+    const coresPedra = {
+    'Granito Verde Ubatuba':     '#2a2c2a',
+    'Granito Preto São Gabriel': '#1a1c1a',
+    'Granito Branco Itaúnas':    '#ddd8d0',
+    };
+
+    const pedrasHTML = dados.pedras.map(p => `
+    <div class="pedra-row">
+        <div class="pedra-swatch" style="background:${coresPedra[p.nome] || '#D9D9D9'};"></div>
         <div class="pedra-info">
-          <div class="pedra-nome">${p.nome}</div>
-          <div class="pedra-bar-wrap"><div class="pedra-bar-fill" style="width:${p.pct}%"></div></div>
+        <div class="pedra-nome">${p.nome}</div>
+        <div class="pedra-bar-wrap">
+            <div class="pedra-bar-fill" style="width:${p.pct}%"></div>
+        </div>
         </div>
         <div class="pedra-pct">${p.pct}%</div>
-      </div>
+    </div>
     `).join('');
             document.querySelectorAll('.panel .pedra-list')[0].innerHTML = pedrasHTML;
 
-            // 3. ORÇAMENTOS RECENTES
-            const orcHTML = dados.orcamentos.map(o => `
-      <div class="orc-row">
-        <div class="orc-info">
-          <div class="orc-cliente">${o.cliente}</div>
-          <div class="orc-pedra">${o.pedra}</div>
-        </div>
-        <div class="orc-right">
-          <div class="orc-val">${o.valor}</div>
-          <span class="badge ${o.status.toLowerCase()}">${o.status}</span>
-        </div>
-      </div>
-    `).join('');
-            document.querySelector('.orc-list').innerHTML = orcHTML;
-
-            // 4. VENDEDORES
-            const vendHTML = dados.vendedores.map((v, i) => {
-                const cores = ['var(--cpd)', 'var(--ca)', '#3C3489'];
-                return `
-        <div class="vend-row">
-          <div class="vend-av" style="background:${cores[i] || 'var(--ca)'};">${v.nome.substring(0, 2).toUpperCase()}</div>
-          <div class="vend-info">
-            <div class="vend-nome">${v.nome}</div>
-            <div class="vend-com">Comissão ${v.comissao}</div>
+    // 3. ORÇAMENTOS RECENTES
+    if (dados.orcamentos && dados.orcamentos.length > 0) {
+      const orcHTML = dados.orcamentos.map(o => `
+        <div class="orc-row">
+          <div class="orc-info">
+            <div class="orc-cliente">${o.cliente}</div>
+            <div class="orc-pedra">${o.pedra}</div>
           </div>
-          <div class="vend-val">${v.valor}</div>
+          <div class="orc-right">
+            <div class="orc-val">${o.valor}</div>
+            <span class="badge ${o.status.toLowerCase()}">${o.status}</span>
+          </div>
         </div>
-      `;
-            }).join('');
-            document.querySelector('.vend-list').innerHTML = vendHTML;
+      `).join('');
+      document.querySelector('.orc-list').innerHTML = orcHTML;
+    }
 
-        })
-        .catch(e => console.error('Erro ao carregar dados:', e));
+    // 4. VENDEDORES
+    if (dados.vendedores && dados.vendedores.length > 0) {
+      const vendHTML = dados.vendedores.map((v,i) => {
+        const cores = ['var(--cpd)', 'var(--ca)', '#3C3489'];
+        return `
+          <div class="vend-row">
+            <div class="vend-av" style="background:${cores[i] || 'var(--ca)'};">${v.nome.substring(0,2).toUpperCase()}</div>
+            <div class="vend-info">
+              <div class="vend-nome">${v.nome}</div>
+              <div class="vend-com">Comissão ${v.comissao}</div>
+            </div>
+            <div class="vend-val">${v.valor}</div>
+          </div>
+        `;
+      }).join('');
+      document.querySelector('.vend-list').innerHTML = vendHTML;
+    }
+
+  })
+  .catch(e => {
+    console.error('Erro ao carregar dados:', e);
+  });
 
     const estoque = [
         { nome: 'Disco de Corte', cat: 'Ferramentas', qt: 9 },
@@ -377,8 +365,9 @@ include './includes/layout.php';
     document.getElementById('prod-ferr').innerHTML = renderProd(produtos);
     document.getElementById('prod-insu').innerHTML = renderProd(insumos);
 </script>
-</main>
-</div>
+<?php endif; ?>
+        </main>
+    </div>
 </body>
 
 </html>

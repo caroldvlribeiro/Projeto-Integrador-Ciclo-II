@@ -1,174 +1,130 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
-
 require_once '../../back/config/database.php';
 
 try {
     $data = [];
 
-    // 0. KPI CARDS
-    // - Orçamentos ativos (status = 'Aberto' ou 'Aprovado')
-    $query = "SELECT COUNT(*) as total FROM orcamentos WHERE st_orcamento IN ('Aberto', 'Aprovado')";
-    $stmt = $pdo->query($query);
+    // KPIs
+    $stmt = $pdo->query("SELECT COUNT(*) as total FROM orcamento WHERE st_orcamento IN ('Aberto', 'Aprovado')");
     $orcamentosAtivos = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
-    
-    // - Faturamento do mês (mês atual)
-    $query = "
-        SELECT SUM(vl_total) as total 
-        FROM orcamentos 
-        WHERE MONTH(dt_orcamento) = MONTH(NOW()) 
-        AND YEAR(dt_orcamento) = YEAR(NOW())
-    ";
-    $stmt = $pdo->query($query);
+
+    $stmt = $pdo->query("SELECT SUM(vl_total) as total FROM orcamento WHERE MONTH(dt_pedido) = MONTH(NOW()) AND YEAR(dt_pedido) = YEAR(NOW())");
     $faturamentoMes = $stmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
-    
-    // - Produtos em estoque (total de itens)
-    $query = "SELECT COUNT(*) as total FROM produtos WHERE status = 'Ativo'";
-    $stmt = $pdo->query($query);
+
+    $stmt = $pdo->query("SELECT COUNT(*) as total FROM produto");
     $produtosEstoque = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
-    
-    // - Produtos com estoque baixo (quantidade < 5)
-    $query = "SELECT COUNT(*) as total FROM produtos WHERE quantidade < 5 AND status = 'Ativo'";
-    $stmt = $pdo->query($query);
+
+    $stmt = $pdo->query("SELECT COUNT(*) as total FROM vw_estoque_baixo");
     $produtosBaixo = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
-    
-    // - Agendas/Compromissos de hoje
-    $query = "
-        SELECT COUNT(*) as total 
-        FROM agenda 
-        WHERE DATE(dt_agenda) = CURDATE()
-    ";
-    $stmt = $pdo->query($query);
+
+    $stmt = $pdo->query("SELECT COUNT(*) as total FROM agenda WHERE DATE(dt_compromisso) = CURDATE()");
     $compromissosHoje = $stmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
-    
-    // - Crescimento de orçamentos (comparar com mês anterior)
-    $query = "
-        SELECT 
-            (SELECT COUNT(*) FROM orcamentos WHERE MONTH(dt_orcamento) = MONTH(NOW()) AND YEAR(dt_orcamento) = YEAR(NOW())) as mes_atual,
-            (SELECT COUNT(*) FROM orcamentos WHERE MONTH(dt_orcamento) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH)) AND YEAR(dt_orcamento) = YEAR(NOW())) as mes_anterior
-    ";
-    $stmt = $pdo->query($query);
+
+    $stmt = $pdo->query("
+        SELECT
+            (SELECT COUNT(*) FROM orcamento WHERE MONTH(dt_pedido) = MONTH(NOW()) AND YEAR(dt_pedido) = YEAR(NOW())) as mes_atual,
+            (SELECT COUNT(*) FROM orcamento WHERE MONTH(dt_pedido) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH)) AND YEAR(dt_pedido) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH))) as mes_anterior
+    ");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $crescimentoOrc = $result['mes_anterior'] > 0 ? round((($result['mes_atual'] - $result['mes_anterior']) / $result['mes_anterior']) * 100) : 0;
-    
+    $crescimentoOrc = $result['mes_anterior'] > 0
+        ? round((($result['mes_atual'] - $result['mes_anterior']) / $result['mes_anterior']) * 100)
+        : 0;
+
     $data['kpis'] = [
-        'orcamentos_ativos' => (int)$orcamentosAtivos,
-        'crescimento_orc' => $crescimentoOrc,
-        'faturamento_mes' => (float)$faturamentoMes,
-        'produtos_estoque' => (int)$produtosEstoque,
-        'produtos_baixo' => (int)$produtosBaixo,
-        'compromissos_hoje' => (int)$compromissosHoje
+        'orcamentos_ativos'  => (int)$orcamentosAtivos,
+        'crescimento_orc'    => $crescimentoOrc,
+        'faturamento_mes'    => (float)$faturamentoMes,
+        'produtos_estoque'   => (int)$produtosEstoque,
+        'produtos_baixo'     => (int)$produtosBaixo,
+        'compromissos_hoje'  => (int)$compromissosHoje
     ];
 
-    // 1. FATURAMENTO POR MÊS (últimos 6 meses)
-    $query = "
-        SELECT DATE_FORMAT(o.dt_orcamento, '%m') as mes, 
-               SUM(o.vl_total) as total
-        FROM orcamentos o
-        WHERE o.dt_orcamento >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
-        GROUP BY DATE_FORMAT(o.dt_orcamento, '%Y%m')
-        ORDER BY o.dt_orcamento ASC
-    ";
-    $stmt = $pdo->query($query);
+    // Faturamento por mês
+    $stmt = $pdo->query("
+        SELECT DATE_FORMAT(dt_pedido, '%m') as mes, SUM(vl_total) as total
+        FROM orcamento
+        WHERE dt_pedido >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
+        GROUP BY DATE_FORMAT(dt_pedido, '%Y%m')
+        ORDER BY dt_pedido ASC
+    ");
     $faturamento = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    $meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-    $vals = [];
+
+    // monta mapa mesNum => total
+    $mapFaturamento = [];
     foreach ($faturamento as $item) {
-        $vals[] = (float)$item['total'];
+        $mapFaturamento[(int)$item['mes']] = (float)$item['total'];
     }
-    // Preencher meses faltantes com 0
-    while (count($vals) < 6) {
-        array_unshift($vals, 0);
+
+    $mesesNomes   = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+    $ultimos6Meses = [];
+    $vals          = [];
+
+    for ($i = 5; $i >= 0; $i--) {
+        $mesNum          = (int)date('n', strtotime("-$i months"));
+        $ultimos6Meses[] = $mesesNomes[$mesNum - 1];
+        $vals[]          = $mapFaturamento[$mesNum] ?? 0;
     }
+
     $data['faturamento'] = [
-        'meses' => array_slice($meses, -6),
-        'vals' => array_slice($vals, -6)
+        'meses' => $ultimos6Meses, // 6 nomes de mês
+        'vals'  => $vals           // 6 valores, 0 onde não há dados
     ];
 
-    // 2. PEDRAS MAIS VENDIDAS
-    $query = "
-        SELECT p.nome_pedra as nome, 
-               COUNT(op.id_pedra) as qtd,
-               HEX(p.cor_hex) as cor
-        FROM pedras p
-        LEFT JOIN orcamento_pedra op ON p.id_pedra = op.id_pedra
+    // Pedras mais vendidas
+    $stmt = $pdo->query("
+        SELECT p.nm_pedra as nome, COUNT(o.id_orcamento) as qtd
+        FROM pedra p
+        LEFT JOIN orcamento o ON p.id_pedra = o.id_pedra
         GROUP BY p.id_pedra
         ORDER BY qtd DESC
         LIMIT 3
-    ";
-    $stmt = $pdo->query($query);
+    ");
     $pedras = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    $pedrasFormatadas = [];
     $totalPedras = array_sum(array_column($pedras, 'qtd'));
-    foreach ($pedras as $pedra) {
-        $pct = $totalPedras > 0 ? round(($pedra['qtd'] / $totalPedras) * 100) : 0;
-        $pedrasFormatadas[] = [
-            'nome' => $pedra['nome'],
-            'pct' => $pct,
-            'cor' => '#' . $pedra['cor']
-        ];
-    }
-    $data['pedras'] = $pedrasFormatadas;
+    $data['pedras'] = array_map(fn($p) => [
+        'nome' => $p['nome'],
+        'pct'  => $totalPedras > 0 ? round(($p['qtd'] / $totalPedras) * 100) : 0
+    ], $pedras);
 
-    // 3. ORÇAMENTOS RECENTES
-    $query = "
-        SELECT o.id_orcamento, 
-               c.nome_cliente as cliente,
-               p.nome_pedra as pedra,
-               o.vl_total as valor,
+    // Orçamentos recentes
+    $stmt = $pdo->query("
+        SELECT o.id_orcamento, c.nm_cliente as cliente,
+               p.nm_pedra as pedra, o.vl_total as valor,
                o.st_orcamento as status
-        FROM orcamentos o
+        FROM orcamento o
         JOIN cliente c ON o.cd_cliente = c.cd_cliente
-        JOIN orcamento_pedra op ON o.id_orcamento = op.id_orcamento
-        JOIN pedras p ON op.id_pedra = p.id_pedra
-        ORDER BY o.dt_orcamento DESC
+        JOIN pedra p ON o.id_pedra = p.id_pedra
+        ORDER BY o.dt_pedido DESC
         LIMIT 4
-    ";
-    $stmt = $pdo->query($query);
-    $orcamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    $orcamentosFormatados = [];
-    foreach ($orcamentos as $orc) {
-        $orcamentosFormatados[] = [
-            'cliente' => $orc['cliente'],
-            'pedra' => $orc['pedra'],
-            'valor' => 'R$ ' . number_format($orc['valor'], 2, ',', '.'),
-            'status' => $orc['status']
-        ];
-    }
-    $data['orcamentos'] = $orcamentosFormatados;
+    ");
+    $data['orcamentos'] = array_map(fn($o) => [
+        'cliente' => $o['cliente'],
+        'pedra'   => $o['pedra'],
+        'valor'   => 'R$ ' . number_format($o['valor'], 2, ',', '.'),
+        'status'  => $o['status']
+    ], $stmt->fetchAll(PDO::FETCH_ASSOC));
 
-    // 4. VENDEDORES (comissões)
-    $query = "
-        SELECT v.id_vendedor,
-               v.nome_vendedor as nome,
-               v.comissao,
-               SUM(o.vl_total) as total_vendas
+    // Vendedores e comissões
+    $stmt = $pdo->query("
+        SELECT v.nm_vendedor as nome, v.vl_comissao as comissao,
+               COALESCE(SUM(o.vl_total), 0) as total_vendas
         FROM vendedor v
-        LEFT JOIN orcamentos o ON v.id_vendedor = o.id_vendedor
+        LEFT JOIN venda vd ON v.id_vendedor = vd.id_vendedor
+        LEFT JOIN orcamento o ON vd.id_orcamento = o.id_orcamento
         GROUP BY v.id_vendedor
         ORDER BY total_vendas DESC
         LIMIT 3
-    ";
-    $stmt = $pdo->query($query);
-    $vendedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    $vendedoresFormatados = [];
-    foreach ($vendedores as $vend) {
-        $comissao = ($vend['total_vendas'] * $vend['comissao']) / 100;
-        $vendedoresFormatados[] = [
-            'nome' => $vend['nome'],
-            'comissao' => $vend['comissao'] . '%',
-            'valor' => 'R$ ' . number_format($comissao, 2, ',', '.')
-        ];
-    }
-    $data['vendedores'] = $vendedoresFormatados;
+    ");
+    $data['vendedores'] = array_map(fn($v) => [
+        'nome'     => $v['nome'],
+        'comissao' => $v['comissao'] . '%',
+        'valor'    => 'R$ ' . number_format(($v['total_vendas'] * $v['comissao']) / 100, 2, ',', '.')
+    ], $stmt->fetchAll(PDO::FETCH_ASSOC));
 
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
 
 } catch (Exception $e) {
-    echo json_encode(['erro' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
     http_response_code(500);
+    echo json_encode(['erro' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
 }

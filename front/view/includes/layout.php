@@ -35,19 +35,6 @@
                 </div>
             </a>
 
-            <ul class="nav-links">
-                <li><a href="Dashboard.php" <?= $paginaAtiva === 'dashboard' ? 'class="active"' : '' ?>>Dashboard</a></li>
-                <li><a href="Orcamentos.php" <?= $paginaAtiva === 'orcamentos' ? 'class="active"' : '' ?>>Orçamentos</a>
-                </li>
-                <li><a href="Estoque.php" <?= $paginaAtiva === 'estoque' ? 'class="active"' : '' ?>>Estoque</a></li>
-                <li><a href="Agenda.php" <?= $paginaAtiva === 'agenda' ? 'class="active"' : '' ?>>Agenda</a></li>
-                <li><a href="Produtos.php" <?= $paginaAtiva === 'produtos' ? 'class="active"' : '' ?>>Produtos</a></li>
-                <?php if ($tipo === 'Administrador'): ?>
-                    <li><a href="Relatorio.php" <?= $paginaAtiva === 'relatorio' ? 'class="active"' : '' ?>>Relatório</a></li>
-                <?php endif; ?>
-                <li><a href="Perfil.php" <?= $paginaAtiva === 'perfil' ? 'class="active"' : '' ?>>Perfil</a></li>
-            </ul>
-
             <a href="Perfil.php" class="user">
                 <i class="ti ti-user-circle" style="font-size:16px;"></i>
                 <?= $logado['email_usuario'] ?>
