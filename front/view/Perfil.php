@@ -68,7 +68,7 @@ include './includes/usuario.php';
             </div>
             <div class="perfil-info">
                 <h1>Meu Perfil</h1>
-                <p class="perfil-email"><?= htmlspecialchars($logado['email_usuario']) ?></p>
+                <p class="perfil-email"><?= htmlspecialchars($logado['nm_usuario']) ?></p>
                 <span class="perfil-badge <?= $tipo === 'Administrador' ? 'admin' : 'vendedor' ?>">
                     <?= htmlspecialchars($tipo) ?>
                 </span>

@@ -12,7 +12,7 @@ if (isset($_GET['acao']) && $_GET['acao'] === 'logout') {
 $auth->verificarSessao();
 
 $logado = $_SESSION['usuario'];
-$email = $logado['email_usuario'];
+$email = $logado['nm_usuario'];
 $tipo = $logado['tp_usuario']; // 'Administrador' ou 'Vendedor'
 ?>
 <!DOCTYPE html>
