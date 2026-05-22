@@ -31,14 +31,13 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <aside class="sidebar">
         <div class="nav-label">Cadastros</div>
-        <a href="../categoria_produto/index.php" class="nav-item">Categorias</a>
+        <a href="Categorias.php" class="nav-item">Categorias</a>
         <a href="index.php" class="nav-item active">Produtos</a>
-        <a href="../clientes/index.php" class="nav-item">Clientes</a>
 
         <div class="nav-label" style="margin-top:20px;">Operação</div>
-        <a href="../estoque/index.php" class="nav-item">Estoque</a>
-        <a href="../movimentacao_estoque/index.php" class="nav-item">Movimentação</a>
-        <a href="../orcamento/index.php" class="nav-item">Orçamentos</a>
+        <a href="Estoque.php" class="nav-item">Estoque</a>
+        <a href="MovimentacoesEstoque.php" class="nav-item">Movimentação</a>
+        <a href="Orcamentos.php" class="nav-item">Orçamentos</a>
     </aside>
 
     <main class="main">
