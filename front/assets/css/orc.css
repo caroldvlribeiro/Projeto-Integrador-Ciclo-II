@@ -54,8 +54,20 @@ main {
   flex-shrink: 0;
 }
 
+.bar-orcamentos > a::before {
+  content: '+';
+  font-size: 18px;
+  font-weight: var(--font-light);
+  line-height: 1;
+  margin-right: 10px;
+}
+
 .bar-orcamentos > a:hover {
   background-color: var(--color-primary-dark);
+}
+
+.bar-orcamentos > a > h3 {
+  color: var(--color-text-light) !important;
 }
 
 /* formulários dentro da barra */
@@ -94,7 +106,7 @@ main {
 .bar-orcamentos button {
   height: 38px;
   padding: 0 var(--space-lg);
-  background-color: var(--color-accent);
+  background-color: var(--color-primary);
   color: var(--color-text-light);
   font-family: var(--font-secondary);
   font-size: var(--text-xs);
@@ -255,6 +267,7 @@ main {
   inset: 0;
   background: rgba(22, 31, 57, 0.5);
   z-index: 200;
+  max-width: 100% !important;
   align-items: center;
   justify-content: center;
 }

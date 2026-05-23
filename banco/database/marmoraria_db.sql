@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 -- Estrutura para tabela `agenda`
 --
 
+
 CREATE TABLE `agenda` (
   `id_agenda` int(11) NOT NULL,
   `id_orcamento` int(11) DEFAULT NULL,
@@ -261,12 +262,6 @@ INSERT INTO `pedra` (`id_pedra`, `nm_pedra`, `ds_pedra`, `vl_compra_pedra`, `vl_
 --
 DELIMITER $$
 CREATE TRIGGER `calcular_venda_pedra` BEFORE INSERT ON `pedra` FOR EACH ROW set new.vl_venda_pedra = new.vl_compra_pedra * 5
-$$
-DELIMITER ;
-
-DELIMITER $$
-CREATE TRIGGER `calcular_venda_pedra_update` BEFORE UPDATE ON `pedra` FOR EACH ROW
-    SET NEW.vl_venda_pedra = NEW.vl_compra_pedra * 5
 $$
 DELIMITER ;
 
