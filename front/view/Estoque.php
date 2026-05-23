@@ -1,44 +1,19 @@
 <?php
-require_once __DIR__ . '/../../back/controller/AuthController.php';
-require_once __DIR__ . '/../../back/config/database.php';
-require_once __DIR__ . '/../../back/controller/EstoqueController.php';
+$paginaAtiva = 'estoque';
+$tituloPagina = 'Estoque - Marmoraria';
+$cssExtra = '../assets/css/dashboard.css';
+include './includes/usuario.php';
+include './includes/layout.php';
+include './includes/Estoque.php';
 
-$controller = new EstoqueController($pdo);
-$estoques = $controller->listar();
 
-usort($estoques, function($a, $b) {
-    return $a['id_estoque'] <=> $b['id_estoque'];
-});
+    if (isset($_GET['acao']) && $_GET['acao'] === 'logout') {
+        session_destroy();
+
+        header('Location: Login.php');
+        exit;
+    }
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estoque · Nova Canaã</title>
-    <link rel="stylesheet" href="../assets/css/rubia.css">
-</head>
-<body>
-<div class="app">
-
-    <header class="header">
-        <div class="logo">
-            Nova Canaã
-            <small>Marmoraria</small>
-        </div>
-        <div class="user">&#9679; Sistema Interno</div>
-    </header>
-
-    <aside class="sidebar">
-        <div class="nav-label">Cadastros</div>
-        <a href="Categorias.php" class="nav-item">Categorias</a>
-        <a href="Produtos.php" class="nav-item">Produtos</a>
-
-        <div class="nav-label" style="margin-top:20px;">Operação</div>
-        <a href="index.php" class="nav-item active">Estoque</a>
-        <a href="MovimentacoesEstoque.php" class="nav-item">Movimentação</a>
-        <a href="Orcamentos.php" class="nav-item">Orçamentos</a>
-    </aside>
 
     <main class="main">
 
