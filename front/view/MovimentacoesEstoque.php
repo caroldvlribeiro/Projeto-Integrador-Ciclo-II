@@ -66,7 +66,7 @@ include './includes/MovimentacaoEstoque.php';
 
             <div class="form-group">
                 <label class="form-label" for="id_produto">Produto</label>
-                <select id="id_produto" name="id_produto" required>
+                <select class="form-input form-select" id="id_produto" name="id_produto" required>
                     <option value="1">Disco de Corte Diamantado</option>
                     <option value="2">Disco de Polimento</option>
                     <option value="3">Resina Epóxi</option>
