@@ -50,13 +50,11 @@
             <a href="NovoOrcamento.php" class="nav-item <?= $paginaAtiva === 'novoorcamento' ? 'active' : '' ?>"><i
                     class="ti ti-plus"></i> Novo Orçamento</a>
             <a href="Estoque.php" class="nav-item <?= $paginaAtiva === 'estoque' ? 'active' : '' ?>"><i
-                    class="ti ti-stack"></i> Estoque</a>
-            <a href="MovimentacoesEstoque.php" class="nav-item <?= $paginaAtiva === 'movimentacoes' ? 'active' : '' ?>"><i
+                    class="ti ti-stack"></i> Estoque</a>                  
+            <a href="MovimentacoesEstoque.php" class="nav-item <?= $paginaAtiva === 'movimentacoesestoque' ? 'active' : '' ?>"><i
                     class="ti ti-transfer"></i> Movimentações</a>
             <a href="Agenda.php" class="nav-item <?= $paginaAtiva === 'agenda' ? 'active' : '' ?>"><i
                     class="ti ti-calendar"></i> Agenda</a>
-            <a href="MovimentacoesEstoque.php" class="nav-item <?= $paginaAtiva === 'novoorcamento' ? 'active' : '' ?>"><i
-                    class="ti ti-plus"></i> Movimentação Estoque</a>
             <a href="Produtos.php" class="nav-item <?= $paginaAtiva === 'produtos' ? 'active' : '' ?>"><i
                     class="ti ti-package"></i> Produtos</a>
             <a href="Categorias.php" class="nav-item <?= $paginaAtiva === 'categorias' ? 'active' : '' ?>"><i
