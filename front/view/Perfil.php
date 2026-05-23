@@ -80,6 +80,15 @@ include './includes/layout.php';  // abre html, header, sidebar e <main>
                 Gerar Relatório
             </a>
         <?php endif; ?>
+
+        <a href="?acao=logout" class="btn-logout-perfil" style="margin-top:var(--space-xs);">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            Sair
+        </a> 
     </div>
 </div>
 
@@ -164,12 +173,6 @@ include './includes/layout.php';  // abre html, header, sidebar e <main>
         </table>
     </div>
 </div>
-
-<a href="Perfil.php?acao=logout" class="logout-link"
-    style="align-self:center;color:var(--color-error);text-decoration:none;font-size:var(--text-sm);font-weight:var(--font-medium);padding:var(--space-sm) var(--space-xl);border-radius:var(--radius-md);transition:background 0.2s;"
-    onmouseover="this.style.background='#FCEBEB'" onmouseout="this.style.background='transparent'">
-    🚪 Sair do Sistema
-</a>
 
 </main>
 </div>
@@ -586,6 +589,41 @@ include './includes/layout.php';  // abre html, header, sidebar e <main>
     .btn-salvar:hover {
         background: var(--color-primary-dark);
         transform: translateY(-1px);
+    }
+
+    /* ── Botão logout hero ── */
+    .btn-logout-perfil {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-family: var(--font-secondary);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: #F09595 !important;
+        background: rgba(163, 45, 45, 0.25) !important;
+        border: 1px solid rgba(240, 149, 149, 0.4) !important;
+        transition: background 0.2s, color 0.2s, border-color 0.2s;
+        white-space: nowrap;
+    }
+
+    .btn-logout-perfil:hover {
+        background: #A32D2D !important;
+        color: #fff !important;
+        border-color: #A32D2D !important;
+    }
+
+    .btn-logout-perfil svg {
+        transition: transform 0.2s;
+        flex-shrink: 0;
+    }
+
+    .btn-logout-perfil:hover svg {
+        transform: translateX(2px);
     }
 
     @media (max-width: 700px) {
