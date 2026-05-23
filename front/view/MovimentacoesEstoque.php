@@ -1,116 +1,72 @@
 <?php
-require_once __DIR__ . '/../../back/controller/AuthController.php';
-require_once __DIR__ . '/../../back/config/database.php';
-require_once __DIR__ . '/../../back/controller/MovimentacaoEstoqueController.php';
-
-$controller = new MovimentacaoEstoqueController($pdo);
-$mensagem = null;
-$tipoMensagem = null;
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $acao = $_POST['acao'] ?? '';
-
-    if ($acao === 'criar') {
-        $id_produto = (int)($_POST['id_produto'] ?? 0);
-        $tipo = trim($_POST['tipo'] ?? '');
-        $quantidade = (int)($_POST['quantidade'] ?? 0);
-
-        if ($controller->registrar($id_produto, $tipo, $quantidade)) {
-            $mensagem = 'Movimentação registrada com sucesso.';
-            $tipoMensagem = 'success';
-        } else {
-            $mensagem = $controller->getErro() ?? 'Erro ao registrar movimentação.';
-            $tipoMensagem = 'error';
-        }
-    }
-}
-
-$movimentacoes = $controller->listar();
+$paginaAtiva  = 'movimentacoes';
+$tituloPagina = 'Movimentações de Estoque - Marmoraria Nova Canaã';
+$cssExtra     = '../assets/css/dashboard.css';
+include './includes/usuario.php';
+include './includes/MovimentacoesEstoque.php';
+include './includes/layout.php';
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movimentação de Estoque · Nova Canaã</title>
-    <link rel="stylesheet" href="../assets/css/rubia.css">
-</head>
-<body>
-<div class="app">
 
-    <header class="header">
-        <div class="logo">
-            Nova Canaã
-            <small>Marmoraria</small>
-        </div>
-        <div class="user">&#9679; Sistema Interno</div>
-    </header>
+<?php if ($mensagem): ?>
+    <div class="alert alert-<?= $tipoMensagem ?>">
+        <?= htmlspecialchars($mensagem) ?>
+    </div>
+<?php endif; ?>
 
-    <aside class="sidebar">
-        <div class="nav-label">Cadastros</div>
-        <a href="Categorias.php" class="nav-item">Categorias</a>
-        <a href="Produtos.php" class="nav-item">Produtos</a>
-
-        <div class="nav-label" style="margin-top:20px;">Operação</div>
-        <a href="Estoque.php" class="nav-item">Estoque</a>
-        <a href="index.php" class="nav-item active">Movimentação</a>
-        <a href="Orcamentos.php" class="nav-item">Orçamentos</a>
-    </aside>
-
-    <main class="main">
-
-        <div class="page-header">
-            <div>
-                <div class="page-eyebrow">Operação</div>
-                <h1 class="page-title">Movimentação de Estoque</h1>
-                <p class="page-desc">Registre entradas e saídas de produtos</p>
-            </div>
-            <button class="btn btn-primary" onclick="abrirModalCriar()">＋ Nova movimentação</button>
-        </div>
-
-        <?php if ($mensagem): ?>
-            <div class="alert alert-<?= $tipoMensagem ?>">
-                <?= htmlspecialchars($mensagem) ?>
-            </div>
-        <?php endif; ?>
-
-        <div class="card">
-            <?php if (empty($movimentacoes)): ?>
-                <div class="empty">Nenhuma movimentação registrada ainda.</div>
-            <?php else: ?>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th style="width:60px;">ID</th>
-                            <th>Produto</th>
-                            <th>Antes</th>
-                            <th>Operação</th>
-                            <th>Qtd</th>
-                            <th>Depois</th>
-                            <th>Data</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($movimentacoes as $mov): ?>
-                            <tr>
-                                <td class="col-id"><?= htmlspecialchars($mov['id_movimentacao']) ?></td>
-                                <td><?= htmlspecialchars($mov['nm_produto'] ?? 'N/A') ?></td>
-                                <td><?= htmlspecialchars($mov['qt_antes']) ?></td>
-                                <td><?= htmlspecialchars($mov['tp_movimentacao']) ?></td>
-                                <td><?= htmlspecialchars($mov['qt_movimentacao']) ?></td>
-                                <td><?= htmlspecialchars($mov['qt_depois']) ?></td>
-                                <td><?= htmlspecialchars($mov['dt_movimentacao']) ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            <?php endif; ?>
-        </div>
-
-    </main>
+<div class="page-header">
+    <div>
+        <div class="page-eyebrow">Operação</div>
+        <h1 class="page-title">Movimentação de Estoque</h1>
+        <p class="page-desc">Registre entradas e saídas de produtos</p>
+    </div>
+    <button class="btn btn-primary" onclick="abrirModalCriar()">＋ Nova movimentação</button>
 </div>
 
-<div class="modal-overlay" id="modal">
+<div class="card">
+    <?php if (empty($movimentacoes)): ?>
+        <div class="empty">
+            <i class="ti ti-transfer"></i>
+            Nenhuma movimentação registrada ainda.
+        </div>
+    <?php else: ?>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="width:60px;">ID</th>
+                    <th>Produto</th>
+                    <th>Antes</th>
+                    <th>Operação</th>
+                    <th>Qtd</th>
+                    <th>Depois</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($movimentacoes as $mov): ?>
+                    <tr>
+                        <td class="col-id"><?= htmlspecialchars($mov['id_movimentacao']) ?></td>
+                        <td><strong><?= htmlspecialchars($mov['nm_produto'] ?? 'N/A') ?></strong></td>
+                        <td><?= htmlspecialchars($mov['qt_antes']) ?></td>
+                        <td>
+                            <span class="badge <?= $mov['tp_movimentacao'] === 'Entrada' ? 'badge-aprovado' : 'badge-cancelado' ?>">
+                                <?= htmlspecialchars($mov['tp_movimentacao']) ?>
+                            </span>
+                        </td>
+                        <td><?= htmlspecialchars($mov['qt_movimentacao']) ?></td>
+                        <td><?= htmlspecialchars($mov['qt_depois']) ?></td>
+                        <td><?= htmlspecialchars($mov['dt_movimentacao']) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+</div>
+
+</main>
+</div>
+
+<!-- Modal Nova Movimentação -->
+<div class="modal-overlay" id="modal" onclick="if(event.target.id==='modal') fecharModal()">
     <div class="modal">
         <div class="modal-header">
             <h2 class="modal-title">Nova Movimentação</h2>
@@ -120,13 +76,13 @@ $movimentacoes = $controller->listar();
             <input type="hidden" name="acao" value="criar">
 
             <div class="form-group">
-                <label class="form-label" for="id_produto">Produto</label>
-                <input class="form-input" type="number" id="id_produto" name="id_produto" required>
+                <label class="form-label" for="id_produto">Produto (ID)</label>
+                <input class="form-input" type="number" id="id_produto" name="id_produto" required placeholder="Ex: 1">
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="tipo">Tipo</label>
-                <select class="form-input" id="tipo" name="tipo" required>
+                <select class="form-input form-select" id="tipo" name="tipo" required>
                     <option value="">Selecione...</option>
                     <option value="Entrada">Entrada</option>
                     <option value="Saída">Saída</option>
@@ -135,7 +91,7 @@ $movimentacoes = $controller->listar();
 
             <div class="form-group">
                 <label class="form-label" for="quantidade">Quantidade</label>
-                <input class="form-input" type="number" id="quantidade" name="quantidade" required min="1">
+                <input class="form-input" type="number" id="quantidade" name="quantidade" required min="1" placeholder="Ex: 10">
             </div>
 
             <div class="modal-actions">
@@ -155,8 +111,8 @@ $movimentacoes = $controller->listar();
         document.getElementById('modal').classList.remove('open');
     }
 
-    document.getElementById('modal').addEventListener('click', (e) => {
-        if (e.target.id === 'modal') fecharModal();
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') fecharModal();
     });
 </script>
 
