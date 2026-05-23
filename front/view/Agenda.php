@@ -4,14 +4,6 @@ $tituloPagina = 'Agenda - Marmoraria';
 $cssExtra = '../assets/css/agenda.css';
 include './includes/usuario.php';
 include './includes/layout.php';
-
-
-    if (isset($_GET['acao']) && $_GET['acao'] === 'logout') {
-        session_destroy();
-
-        header('Location: Login.php');
-        exit;
-    }
 ?>
 
         <main class="dashboard">
