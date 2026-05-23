@@ -58,57 +58,85 @@ class MovimentacaoEstoque extends Model
     }
 
     // Registra uma nova movimentação (Entrada ou Saída)
-    public function salvar(): bool
-    {
-        $sqlVerifica = "SELECT qt_estoque FROM estoque WHERE id_produto = ?";
+public function salvar(): bool
+{
+    try {
+
+        // Busca estoque atual do produto
+        $sqlVerifica = "SELECT qt_estoque 
+                         FROM estoque 
+                         WHERE id_produto = ?";
+
         $stmtVerifica = $this->_PDO->prepare($sqlVerifica);
         $stmtVerifica->execute([$this->id_produto]);
+
         $estoque = $stmtVerifica->fetch(PDO::FETCH_ASSOC);
 
-        if (!$estoque) {
-            $this->_error = "Produto não encontrado no estoque.";
-            return false;
-        }
+        $estoqueAtual = $estoque
+            ? (int)$estoque['qt_estoque']
+            : 0;
 
-        $estoqueAtual = (int)$estoque['qt_estoque'];
-
+        // Validação da quantidade
         if ($this->qt_movimentacao <= 0) {
             $this->_error = "Quantidade deve ser maior que zero.";
             return false;
         }
 
-        if ($this->tp_movimentacao === 'Saída' && $estoqueAtual < $this->qt_movimentacao) {
-            $this->_error = "Quantidade insuficiente em estoque. Disponível: " . $estoqueAtual;
-            return false;
+        // Validações para saída
+        if ($this->tp_movimentacao === 'Saída') {
+
+            // Produto ainda não possui estoque
+            if (!$estoque) {
+                $this->_error = "Produto sem estoque cadastrado.";
+                return false;
+            }
+
+            // Quantidade insuficiente
+            if ($estoqueAtual < $this->qt_movimentacao) {
+                $this->_error = "Quantidade insuficiente em estoque. Disponível: " . $estoqueAtual;
+                return false;
+            }
         }
 
+        // Dados da movimentação
         $dados = [
-            'id_produto' => $this->id_produto,
+            'id_produto'      => $this->id_produto,
             'qt_movimentacao' => $this->qt_movimentacao,
             'dt_movimentacao' => date('Y-m-d'),
             'tp_movimentacao' => $this->tp_movimentacao
         ];
 
-        try {
-            $this->_PDO->beginTransaction();
+        // Insert da movimentação
+        $sql = "INSERT INTO {$this->_table}
+                (
+                    id_produto,
+                    qt_movimentacao,
+                    dt_movimentacao,
+                    tp_movimentacao
+                )
+                VALUES
+                (
+                    :id_produto,
+                    :qt_movimentacao,
+                    :dt_movimentacao,
+                    :tp_movimentacao
+                )";
 
-            $sql = "INSERT INTO {$this->_table} (id_produto, qt_movimentacao, dt_movimentacao, tp_movimentacao)
-                    VALUES (:id_produto, :qt_movimentacao, :dt_movimentacao, :tp_movimentacao)";
-            $stmt = $this->_PDO->prepare($sql);
-            if (!$stmt->execute($dados)) {
-                throw new Exception("Erro ao inserir movimentação");
-            }
+        $stmt = $this->_PDO->prepare($sql);
 
-            $this->_PDO->commit();
-            return true;
-        } catch (Exception $e) {
-            if ($this->_PDO->inTransaction()) {
-                $this->_PDO->rollBack();
-            }
-            $this->_error = $e->getMessage();
-            return false;
+        if (!$stmt->execute($dados)) {
+            throw new Exception("Erro ao inserir movimentação.");
         }
+
+        return true;
+
+    } catch (Exception $e) {
+
+        $this->_error = $e->getMessage();
+        return false;
     }
+}
+
 
     // Histórico de movimentação geralmente não é editado, mas o método é obrigatório pela interface
     public function atualizar(int $id): bool
