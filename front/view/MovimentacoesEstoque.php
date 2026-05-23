@@ -5,11 +5,8 @@ $cssExtra = '../assets/css/dashboard.css';
 include './includes/usuario.php';
 include './includes/layout.php';
 include './includes/MovimentacaoEstoque.php';
-
-
     if (isset($_GET['acao']) && $_GET['acao'] === 'logout') {
         session_destroy();
-
         header('Location: Login.php');
         exit;
     }
