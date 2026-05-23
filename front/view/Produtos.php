@@ -14,7 +14,6 @@ include './includes/Produtos.php';
         exit;
     }
 ?>
-    <main class="main">
 
         <div class="page-header">
             <div>

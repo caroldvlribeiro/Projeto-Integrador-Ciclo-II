@@ -15,8 +15,6 @@ include './includes/Estoque.php';
     }
 ?>
 
-    <main class="main">
-
         <div class="page-header">
             <div>
                 <div class="page-eyebrow">Operação</div>

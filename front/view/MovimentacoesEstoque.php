@@ -59,9 +59,11 @@ include './includes/MovimentacaoEstoque.php';
         </div>
 
 </main>
+</main>
 </div>
 
-<div class="modal-overlay" id="modal">
+<!-- Modal Nova Movimentação -->
+<div class="modal-overlay" id="modal" onclick="if(event.target.id==='modal') fecharModal()">
     <div class="modal">
         <div class="modal-header">
             <h2 class="modal-title">Nova Movimentação</h2>
@@ -95,7 +97,7 @@ include './includes/MovimentacaoEstoque.php';
 
             <div class="form-group">
                 <label class="form-label" for="tipo">Tipo</label>
-                <select class="form-input" id="tipo" name="tipo" required>
+                <select class="form-input form-select" id="tipo" name="tipo" required>
                     <option value="">Selecione...</option>
                     <option value="Entrada">Entrada</option>
                     <option value="Saída">Saída</option>
@@ -104,7 +106,7 @@ include './includes/MovimentacaoEstoque.php';
 
             <div class="form-group">
                 <label class="form-label" for="quantidade">Quantidade</label>
-                <input class="form-input" type="number" id="quantidade" name="quantidade" required min="1">
+                <input class="form-input" type="number" id="quantidade" name="quantidade" required min="1" placeholder="Ex: 10">
             </div>
 
             <div class="modal-actions">
@@ -124,8 +126,8 @@ include './includes/MovimentacaoEstoque.php';
         document.getElementById('modal').classList.remove('open');
     }
 
-    document.getElementById('modal').addEventListener('click', (e) => {
-        if (e.target.id === 'modal') fecharModal();
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') fecharModal();
     });
 </script>
 </body>
