@@ -5,17 +5,8 @@ $tituloPagina = 'Dashboard - Marmoraria';
 $cssExtra = '../assets/css/dashboard.css';
 include './includes/usuario.php';
 include './includes/layout.php';
-
-
-    if (isset($_GET['acao']) && $_GET['acao'] === 'logout') {
-        session_destroy();
-
-        header('Location: Login.php');
-        exit;
-    }
 ?>
 
-        <main>
             <header class="dashboard-header">
                 <div class="welcome-text">
                     <h1>Painel de Controle</h1>
