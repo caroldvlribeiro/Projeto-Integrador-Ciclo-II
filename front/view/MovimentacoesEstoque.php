@@ -1,64 +1,19 @@
 <?php
-require_once __DIR__ . '/../../back/controller/AuthController.php';
-require_once __DIR__ . '/../../back/config/database.php';
-require_once __DIR__ . '/../../back/controller/MovimentacaoEstoqueController.php';
+$paginaAtiva = 'movimentacaoestoque';
+$tituloPagina = 'Movimentaçao Estoque - Marmoraria';
+$cssExtra = '../assets/css/dashboard.css';
+include './includes/usuario.php';
+include './includes/layout.php';
+include './includes/MovimentacaoEstoque.php';
 
-$controller = new MovimentacaoEstoqueController($pdo);
-$mensagem = null;
-$tipoMensagem = null;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $acao = $_POST['acao'] ?? '';
+    if (isset($_GET['acao']) && $_GET['acao'] === 'logout') {
+        session_destroy();
 
-    if ($acao === 'criar') {
-        $id_produto = (int)($_POST['id_produto'] ?? 0);
-        $tipo = trim($_POST['tipo'] ?? '');
-        $quantidade = (int)($_POST['quantidade'] ?? 0);
-
-        if ($controller->registrar($id_produto, $tipo, $quantidade)) {
-            $mensagem = 'Movimentação registrada com sucesso.';
-            $tipoMensagem = 'success';
-        } else {
-            $mensagem = $controller->getErro() ?? 'Erro ao registrar movimentação.';
-            $tipoMensagem = 'error';
-        }
+        header('Location: Login.php');
+        exit;
     }
-}
-
-$movimentacoes = $controller->listar();
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movimentação de Estoque · Nova Canaã</title>
-    <link rel="stylesheet" href="../assets/css/rubia.css">
-</head>
-<body>
-<div class="app">
-
-    <header class="header">
-        <div class="logo">
-            Nova Canaã
-            <small>Marmoraria</small>
-        </div>
-        <div class="user">&#9679; Sistema Interno</div>
-    </header>
-
-    <aside class="sidebar">
-        <div class="nav-label">Cadastros</div>
-        <a href="Categorias.php" class="nav-item">Categorias</a>
-        <a href="Produtos.php" class="nav-item">Produtos</a>
-
-        <div class="nav-label" style="margin-top:20px;">Operação</div>
-        <a href="Estoque.php" class="nav-item">Estoque</a>
-        <a href="index.php" class="nav-item active">Movimentação</a>
-        <a href="Orcamentos.php" class="nav-item">Orçamentos</a>
-    </aside>
-
-    <main class="main">
-
         <div class="page-header">
             <div>
                 <div class="page-eyebrow">Operação</div>
@@ -83,10 +38,8 @@ $movimentacoes = $controller->listar();
                         <tr>
                             <th style="width:60px;">ID</th>
                             <th>Produto</th>
-                            <th>Antes</th>
                             <th>Operação</th>
                             <th>Qtd</th>
-                            <th>Depois</th>
                             <th>Data</th>
                         </tr>
                     </thead>
@@ -95,10 +48,8 @@ $movimentacoes = $controller->listar();
                             <tr>
                                 <td class="col-id"><?= htmlspecialchars($mov['id_movimentacao']) ?></td>
                                 <td><?= htmlspecialchars($mov['nm_produto'] ?? 'N/A') ?></td>
-                                <td><?= htmlspecialchars($mov['qt_antes']) ?></td>
                                 <td><?= htmlspecialchars($mov['tp_movimentacao']) ?></td>
                                 <td><?= htmlspecialchars($mov['qt_movimentacao']) ?></td>
-                                <td><?= htmlspecialchars($mov['qt_depois']) ?></td>
                                 <td><?= htmlspecialchars($mov['dt_movimentacao']) ?></td>
                             </tr>
                         <?php endforeach; ?>
@@ -107,7 +58,7 @@ $movimentacoes = $controller->listar();
             <?php endif; ?>
         </div>
 
-    </main>
+</main>
 </div>
 
 <div class="modal-overlay" id="modal">
@@ -121,7 +72,25 @@ $movimentacoes = $controller->listar();
 
             <div class="form-group">
                 <label class="form-label" for="id_produto">Produto</label>
-                <input class="form-input" type="number" id="id_produto" name="id_produto" required>
+                <select id="id_produto" name="id_produto" required>
+                    <option value="1">Disco de Corte Diamantado</option>
+                    <option value="2">Disco de Polimento</option>
+                    <option value="3">Resina Epóxi</option>
+                    <option value="4">Cera para Polimento</option>
+                    <option value="5">Silicone Incolor</option>
+                    <option value="6">Parafuso e Bucha</option>
+                    <option value="7">Lixa Diamantada</option>
+                    <option value="8">Pasta de Polimento</option>
+                    <option value="9">Disco de Corte Diamantado</option>
+                    <option value="10">Disco de Polimento</option>
+                    <option value="11">Resina Epóxi</option>
+                    <option value="12">Cera para Polimento</option>
+                    <option value="13">Silicone Incolor</option>
+                    <option value="14">Parafuso e Bucha</option>
+                    <option value="15">Lixa Diamantada</option>
+                    <option value="16">Pasta de Polimento</option>
+                    <option value="17">Cuba Inox Luxo</option>
+                </select>
             </div>
 
             <div class="form-group">
@@ -159,6 +128,5 @@ $movimentacoes = $controller->listar();
         if (e.target.id === 'modal') fecharModal();
     });
 </script>
-
 </body>
 </html>

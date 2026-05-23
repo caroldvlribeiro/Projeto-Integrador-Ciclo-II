@@ -53,6 +53,8 @@
                     class="ti ti-stack"></i> Estoque</a>
             <a href="Agenda.php" class="nav-item <?= $paginaAtiva === 'agenda' ? 'active' : '' ?>"><i
                     class="ti ti-calendar"></i> Agenda</a>
+            <a href="MovimentacoesEstoque.php" class="nav-item <?= $paginaAtiva === 'novoorcamento' ? 'active' : '' ?>"><i
+                    class="ti ti-plus"></i> Movimentação Estoque</a>
             <a href="Produtos.php" class="nav-item <?= $paginaAtiva === 'produtos' ? 'active' : '' ?>"><i
                     class="ti ti-package"></i> Produtos</a>
             <?php if ($tipo === 'Administrador'): ?>
