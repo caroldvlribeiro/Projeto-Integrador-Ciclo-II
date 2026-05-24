@@ -12,9 +12,6 @@ include './includes/layout.php';
                     <h1>Painel de Controle</h1>
                     <p>Bem-vindo!</p>
                 </div>
-                <a href="Dashboard.php?acao=logout" class="logout-link">
-                    <span>🚪 Sair do Sistema</span>
-                </a>
             </header>
 
 <div class="kpi-grid">
@@ -176,18 +173,9 @@ include './includes/layout.php';
                     </div>
                 </div>
             </div>
-
-            <a href="Dashboard.php?acao=logout" class="logout-link">
-                <span>🚪 Sair do Sistema</span>
-            </a>
-
-
-    
 </div>
 </main>
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<?php if ($acao !== 'logout'): ?>
 <script>
 // Fetch dados do backend
 fetch('../api/getDashboardData.php')
@@ -356,7 +344,6 @@ fetch('../api/getDashboardData.php')
     document.getElementById('prod-ferr').innerHTML = renderProd(produtos);
     document.getElementById('prod-insu').innerHTML = renderProd(insumos);
 </script>
-<?php endif; ?>
         </main>
     </div>
 </body>

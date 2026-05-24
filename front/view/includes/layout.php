@@ -24,6 +24,7 @@ if (isset($_GET['acao']) && $_GET['acao'] === 'logout') {
                 <link rel="stylesheet" href="<?= $cssExtra ?>">
         <?php endif; ?>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+        <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
 </head>
 
 <body>
