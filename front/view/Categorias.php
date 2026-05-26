@@ -46,7 +46,7 @@ include './includes/layout.php';
                         <td><?= htmlspecialchars($cat['ds_categoria']) ?></td>
                         <td>
                             <div class="actions">
-                                <button class="btn btn-secondary btn-icon"
+                                <button class="btn btn-ghost btn-icon"
                                         onclick="abrirModalEditar(<?= $cat['id_categoria'] ?>, '<?= htmlspecialchars($cat['nm_categoria'], ENT_QUOTES) ?>', '<?= htmlspecialchars($cat['ds_categoria'], ENT_QUOTES) ?>')">
                                     ✎ Editar
                                 </button>

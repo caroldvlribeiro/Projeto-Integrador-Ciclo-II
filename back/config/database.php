@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
-$usuario = "root";
-$senha = "";
+$usuario = "danilo";
+$senha = "Dani4520*";
 $banco = "marmoraria_db";
 try{
     $pdo = new PDO("mysql:host=$host;dbname=$banco;charset=utf8mb4", $usuario, $senha);

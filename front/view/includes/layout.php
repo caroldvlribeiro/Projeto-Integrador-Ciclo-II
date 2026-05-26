@@ -20,6 +20,7 @@ if (isset($_GET['acao']) && $_GET['acao'] === 'logout') {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?= $tituloPagina ?? 'Marmoraria Nova Canaã' ?></title>
         <link rel="stylesheet" href="../assets/css/base.css">
+        <link rel="stylesheet" href="../assets/css/rubia.css">
         <?php if (!empty($cssExtra)): ?>
                 <link rel="stylesheet" href="<?= $cssExtra ?>">
         <?php endif; ?>
