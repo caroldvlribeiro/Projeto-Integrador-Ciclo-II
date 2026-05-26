@@ -33,7 +33,7 @@ abstract class Model implements ICrud
             'usuario'  => 'id_usuario',
             'vendedor' => 'id_vendedor',
             'pedras' => 'id_pedra',
-            'produtos' => 'id_produto',
+            'produto' => 'id_produto',
             'orcamentos' => 'id_orcamento',
             'agenda' => 'id_agenda',
             'pagamentos' => 'id_pagamento',
