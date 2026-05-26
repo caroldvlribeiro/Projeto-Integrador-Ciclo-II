@@ -259,116 +259,239 @@ main {
 }
 
 /* =========================
-   MODAL DE EDIÇÃO
+   MODAL — extensões locais
+   O base.css já define .modal-overlay/.modal/.open
 ========================= */
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(22, 31, 57, 0.5);
-  z-index: 200;
-  max-width: 100% !important;
+
+/* linha da tabela clicável */
+.row-clicavel:hover {
+  background: var(--marmore) !important;
+  transition: background 0.15s;
+}
+
+/* =========================
+   MODAL DE DETALHES
+========================= */
+.modal-detalhe {
+  max-width: 600px;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Cabeçalho: segue o padrão .modal-header mas com badge */
+.md-header {
+  display: flex;
   align-items: center;
-  justify-content: center;
-}
-
-/* ativa quando o hash bate */
-.modal:target {
-  display: flex;
-}
-
-.modal-content {
-  background: var(--color-bg);
-  border-radius: var(--radius-lg);
-  border: 0.5px solid var(--color-border);
-  padding: var(--space-xl);
-  width: 100%;
-  max-width: 420px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   gap: var(--space-lg);
-  box-shadow: 0 8px 32px rgba(22, 31, 57, 0.18);
+  padding: var(--space-xl) var(--space-2xl);
+  border-bottom: 1px solid var(--granito);
 }
 
-.modal-content h2 {
-  font-family: var(--font-primary);
+.md-header-left { display: flex; flex-direction: column; gap: var(--space-xs); }
+
+.md-header-eyebrow {
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--pedra);
+}
+
+.md-header-title {
+  font-family: var(--serif);
   font-size: var(--text-xl);
   font-weight: var(--font-bold);
-  color: var(--color-primary);
+  color: var(--noite);
 }
 
-.modal-close {
-  position: absolute;
-  top: var(--space-md);
-  right: var(--space-lg);
-  font-size: 22px;
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  line-height: 1;
-  transition: color 0.2s;
+.md-header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-shrink: 0;
 }
 
-.modal-close:hover {
-  color: var(--color-primary);
+/* Bloco de valor — strip sutil */
+.md-valor-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+  padding: var(--space-lg) var(--space-2xl);
+  background: var(--bgs);
+  border-bottom: 1px solid var(--granito);
 }
 
-.modal-content form {
+.md-valor-principal {
   display: flex;
   flex-direction: column;
+  gap: 2px;
+}
+
+.md-valor-label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--texto-fraco);
+}
+
+.md-valor-num {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: var(--font-bold);
+  color: var(--noite);
+  line-height: 1.1;
+}
+
+.md-meta-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+.md-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.md-meta-label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--texto-fraco);
+}
+
+.md-meta-val {
+  font-size: var(--text-md);
+  font-weight: var(--font-medium);
+  color: var(--texto-normal);
+}
+
+/* Corpo scrollável */
+.md-body {
+  padding: var(--space-xl) var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  overflow-y: auto;
+  max-height: 320px;
+}
+
+/* Cabeçalho de seção — igual ao padrão de labels do sistema */
+.md-section-label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--pedra);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--granito);
+  margin-bottom: var(--space-md);
+}
+
+/* Grid de campos */
+.md-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg) var(--space-2xl);
+}
+
+.md-field { display: flex; flex-direction: column; gap: 3px; }
+
+.md-field-label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--texto-fraco);
+}
+
+.md-field-val {
+  font-size: var(--text-md);
+  color: var(--texto-normal);
+  font-weight: var(--font-medium);
+}
+
+/* Descrição */
+.md-descricao {
+  margin-top: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--bgs);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--granito);
+  border-left: 3px solid var(--pedra-claro);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.md-descricao-txt {
+  font-size: var(--text-sm);
+  color: var(--texto-fraco);
+  line-height: 1.7;
+}
+
+/* Pagamento — dois cards lado a lado */
+.md-pgto-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: var(--space-md);
 }
 
-.modal-content label {
-  font-size: var(--text-xs);
-  font-weight: var(--font-medium);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--color-primary-dark);
-}
-
-.modal-content input,
-.modal-content select {
-  width: 100%;
-  padding: var(--space-md);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-  background: var(--color-bg-soft);
-  font-family: var(--font-secondary);
-  font-size: var(--text-md);
-  color: var(--color-text);
-  outline: none;
-  transition: 0.2s;
-  appearance: none;
-  -webkit-appearance: none;
-}
-
-.modal-content input:focus,
-.modal-content select:focus {
-  border-color: var(--color-accent);
-  background: var(--color-bg);
-  box-shadow: var(--shadow-focus);
-}
-
-.modal-content button[type="submit"] {
-  width: 100%;
+.md-pgto-card {
   padding: var(--space-md) var(--space-lg);
-  background: var(--color-primary);
-  color: var(--color-text-light);
-  font-family: var(--font-secondary);
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  border: none;
   border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: background 0.2s;
-  margin-top: var(--space-sm);
+  border: 1px solid var(--granito);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
-.modal-content button[type="submit"]:hover {
-  background: var(--color-primary-dark);
+.md-pgto-entrada { background: #EAF3DE; border-color: #C0DD97; }
+.md-pgto-saida   { background: #EEEDFE; border-color: #AFA9EC; }
+
+.md-pgto-tipo {
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.md-pgto-entrada .md-pgto-tipo { color: #27500A; }
+.md-pgto-saida   .md-pgto-tipo { color: #3C3489; }
+
+.md-pgto-valor {
+  font-family: var(--serif);
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+}
+
+.md-pgto-entrada .md-pgto-valor { color: #3B6D11; }
+.md-pgto-saida   .md-pgto-valor { color: #534AB7; }
+
+.md-pgto-data {
+  font-size: var(--text-xs);
+  color: var(--texto-fraco);
+}
+
+/* Rodapé: usa o .modal-actions do base, sem padding extra */
+.modal-detalhe .modal-actions {
+  margin-top: 0;
+  padding: var(--space-lg) var(--space-2xl);
+}
+
+/* Responsivo */
+@media (max-width: 560px) {
+  .md-fields      { grid-template-columns: 1fr; }
+  .md-pgto-grid   { grid-template-columns: 1fr; }
+  .md-meta-row    { gap: var(--space-md); }
+  .md-valor-strip { flex-direction: column; align-items: flex-start; }
 }
 
 /* =========================

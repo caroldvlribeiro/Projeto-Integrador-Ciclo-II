@@ -269,9 +269,41 @@ public function buscarPorNome(string $nm)
 
     public function listarComFiltros(string $busca = '', string $dataInicio = '', string $dataFim = ''): array
     {
-        $sql = "SELECT o.id_orcamento, o.cd_cliente, c.nm_cliente, o.dt_pedido, o.vl_total, o.dt_entrega, o.st_orcamento
+        $sql = "SELECT
+                    o.id_orcamento,
+                    o.cd_cliente,
+                    c.nm_cliente,
+                    c.cd_telefone,
+                    c.nm_endereco,
+                    o.dt_pedido,
+                    o.vl_total,
+                    o.dt_entrega,
+                    o.st_orcamento,
+                    o.ds_descricao,
+                    o.acabamento,
+                    o.id_pedra,
+                    o.nm_cuba,
+                    o.vista,
+                    o.saia,
+                    p.vl_pagamento_entrada,
+                    p.dt_pagamento_entrada,
+                    p.vl_pagamento_saida,
+                    p.dt_pagamento_saida,
+                    v.nm_vendedor
                 FROM orcamento o
                 JOIN cliente c USING(cd_cliente)
+                LEFT JOIN pagamento pg ON pg.id_orcamento = o.id_orcamento
+                LEFT JOIN vendedor v ON v.id_vendedor = (
+                    SELECT id_vendedor FROM venda WHERE id_orcamento = o.id_orcamento LIMIT 1
+                )
+                LEFT JOIN (
+                    SELECT id_orcamento,
+                           vl_pagamento_entrada,
+                           dt_pagamento_entrada,
+                           vl_pagamento_saida,
+                           dt_pagamento_saida
+                    FROM pagamento
+                ) p ON p.id_orcamento = o.id_orcamento
                 WHERE 1=1";
         $params = [];
 
