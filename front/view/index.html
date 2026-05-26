@@ -3,569 +3,1155 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="../assets/css/base.css">
+  <title>Nova Canaã Marmoraria — Praia Grande, SP</title>
+  <meta name="description" content="Marmoraria Nova Canaã em Praia Grande, SP. Granitos, mármores e quartzitos com qualidade e entrega no prazo. Solicite seu orçamento!">
   <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --primary:       #161F39;
+      --primary-dark:  #0C3756;
+      --accent:        #5C93AA;
+      --accent-light:  #AFC1F8;
+      --bg:            #FFFFFF;
+      --bg-soft:       #EFF2F4;
+      --border:        #D9D9D9;
+      --text:          #161F39;
+      --text-sec:      #5C93AA;
+      --text-light:    #EFF2F4;
+      --success:       #3B6D11;
+      --error:         #A32D2D;
+      --whatsapp:      #25D366;
+      --whatsapp-dark: #128C7E;
+      --f-serif: 'Playfair Display', Georgia, serif;
+      --f-sans:  'Montserrat', sans-serif;
+      --xs:10px;--sm:12px;--md:14px;--lg:18px;--xl:24px;--disp:32px;
+      --fw-light:300;--fw-reg:400;--fw-med:500;--fw-bold:700;--fw-black:900;
+      --sp-xs:4px;--sp-sm:8px;--sp-md:12px;--sp-lg:16px;--sp-xl:24px;--sp-2xl:40px;--sp-3xl:64px;
+      --r-sm:4px;--r-md:8px;--r-lg:12px;--r-pill:20px;
+      --shadow-focus:0 0 0 3px rgba(92,147,170,.18);
+    }
+
+    body { font-family: var(--f-sans); color: var(--text); background: var(--bg); overflow-x: hidden; }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      background: var(--primary-dark); color: var(--accent-light);
+      font-size: var(--xs); letter-spacing: 1px;
+      padding: 6px var(--sp-2xl);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px;
+    }
+    .topbar-item { display: flex; align-items: center; gap: 6px; }
+    .topbar-item i { font-size: 13px; color: var(--accent); }
+    .topbar-right { display: flex; gap: var(--sp-xl); }
+    .topbar a { color: var(--accent-light); text-decoration: none; transition: color .2s; }
+    .topbar a:hover { color: #fff; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--primary);
+      padding: 0 var(--sp-2xl);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-xl);
+      box-shadow: 0 2px 12px rgba(0,0,0,.3);
+    }
+
+    .nav-logo,
+    .nav-logo:hover,
+    .nav-logo:focus,
+    .nav-logo:visited {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-md);
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      flex-shrink: 0;
+    }
+
+    .nav-logo svg { flex-shrink: 0; }
+
+    .nav-brand {
+      font-family: var(--f-serif);
+      font-size: var(--md);
+      font-weight: var(--fw-bold);
+      color: var(--text-light);
+      line-height: 1.1;
+      text-decoration: none;
+    }
+
+    .nav-brand small {
+      display: block;
+      font-family: var(--f-sans);
+      font-size: var(--xs);
+      font-weight: var(--fw-light);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: clamp(18px, 3vw, 40px);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: var(--sm);
+      font-weight: var(--fw-med);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      text-decoration: none;
+      opacity: .75;
+      transition: opacity .2s, color .2s, border-color .2s;
+      cursor: pointer;
+      padding-bottom: 4px;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a.active { opacity: 1; border-bottom-color: var(--accent); }
+
+    .nav-hamburger {
+      display: none;
+      width: 42px;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 0;
+      margin-left: auto;
+      border: 0;
+      background: transparent;
+      position: relative;
+      z-index: 400;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text-light);
+      border-radius: 2px;
+      transition: transform .25s ease, opacity .25s ease;
+    }
+
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: flex;
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 64px;
+      height: calc(100vh - 64px);
+      background: rgba(22,31,57,.98);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-2xl);
+      z-index: 180;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(-10px);
+      transition: opacity .25s ease, visibility .25s ease, transform .25s ease;
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .mobile-menu a {
+      font-size: var(--lg);
+      font-weight: var(--fw-med);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      text-decoration: none;
+      opacity: .85;
+      padding: var(--sp-sm) var(--sp-lg);
+    }
+
+    .mobile-menu a:hover { opacity: 1; color: var(--accent-light); }
+
+    /* ── HERO ── */
+    #home.hero { position: relative; min-height: 580px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--primary); }
+    .hero-marble { position: absolute; inset: 0; opacity: .12; pointer-events: none; }
+    .hero-content { position: relative; z-index: 2; text-align: center; padding: var(--sp-2xl); max-width: 700px; animation: fadeUp .8s ease both; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
+    .hero-eyebrow { font-size: var(--xs); letter-spacing: 5px; text-transform: uppercase; color: var(--accent); font-weight: var(--fw-med); margin-bottom: var(--sp-lg); }
+    .hero h1 { font-family: var(--f-serif); font-size: 52px; font-weight: var(--fw-black); color: var(--text-light); line-height: 1.05; margin-bottom: var(--sp-lg); }
+    .hero h1 em { font-style: italic; color: var(--accent-light); }
+    .hero p { font-size: var(--lg); font-weight: var(--fw-light); color: var(--accent-light); margin-bottom: var(--sp-2xl); line-height: 1.7; }
+    .hero-btns { display: flex; gap: var(--sp-md); justify-content: center; flex-wrap: wrap; }
+    .btn-primary { background: var(--text-light); color: var(--primary); padding: var(--sp-md) var(--sp-2xl); font-family: var(--f-sans); font-size: var(--sm); font-weight: var(--fw-bold); letter-spacing: 2px; text-transform: uppercase; border: none; border-radius: var(--r-md); cursor: pointer; transition: .2s; }
+    .btn-primary:hover { background: var(--bg-soft); transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: var(--text-light); padding: var(--sp-md) var(--sp-2xl); font-family: var(--f-sans); font-size: var(--sm); font-weight: var(--fw-med); letter-spacing: 2px; text-transform: uppercase; border: 1px solid rgba(255,255,255,.4); border-radius: var(--r-md); cursor: pointer; transition: .2s; }
+    .btn-outline:hover { border-color: var(--text-light); transform: translateY(-1px); }
+    .hero-stats { position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; display: grid; grid-template-columns: repeat(3,1fr); border-top: .5px solid rgba(255,255,255,.1); }
+    .hero-stat { padding: var(--sp-xl) var(--sp-lg); text-align: center; border-right: .5px solid rgba(255,255,255,.1); }
+    .hero-stat:last-child { border-right: none; }
+    .stat-num { font-family: var(--f-serif); font-size: var(--disp); font-weight: var(--fw-bold); color: var(--text-light); }
+    .stat-label { font-size: var(--xs); letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-top: var(--sp-xs); }
+
+    /* ── SOBRE ── */
+    #sobre.sobre { display: grid; grid-template-columns: 1fr 1fr; min-height: 420px; }
+    .sobre-text { background: var(--bg-soft); padding: var(--sp-3xl) var(--sp-2xl); display: flex; flex-direction: column; justify-content: center; }
+    .section-label { font-size: var(--xs); letter-spacing: 4px; text-transform: uppercase; color: var(--accent); font-weight: var(--fw-med); margin-bottom: var(--sp-md); }
+    .sobre-text h2 { font-family: var(--f-serif); font-size: 36px; font-weight: var(--fw-bold); color: var(--primary); line-height: 1.2; margin-bottom: var(--sp-xl); }
+    .sobre-text h2 em { font-style: italic; color: var(--accent); }
+    .sobre-text p { font-size: var(--md); color: var(--text-sec); line-height: 1.8; margin-bottom: var(--sp-lg); }
+    .sobre-values { display: flex; flex-direction: column; gap: var(--sp-md); margin-top: var(--sp-lg); }
+    .value-row { display: flex; align-items: center; gap: var(--sp-md); }
+    .value-text { font-size: var(--sm); font-weight: var(--fw-med); color: var(--primary); letter-spacing: 1px; text-transform: uppercase; }
+    .sobre-visual { background: var(--primary-dark); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+
+    /* ── COMO FUNCIONA ── */
+    #servicos.como-funciona { padding: 80px var(--sp-2xl); background: var(--bg); }
+    .steps-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: var(--sp-lg); margin-top: 48px; position: relative; }
+    .step-card { text-align: center; padding: var(--sp-xl) var(--sp-lg); position: relative; }
+    .step-card::after { content:''; position:absolute; top: 36px; right: -50%; width:100%; height:1px; background: var(--border); }
+    .step-card:last-child::after { display:none; }
+    .step-icon { width: 72px; height: 72px; border-radius: 50%; background: var(--bg-soft); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--sp-lg); position: relative; z-index: 1; }
+    .step-icon i { font-size: 28px; color: var(--accent); }
+    .step-num { position: absolute; top: -4px; right: -4px; width: 20px; height: 20px; border-radius: 50%; background: var(--primary); color: var(--text-light); font-size: 9px; font-weight: var(--fw-bold); display: flex; align-items: center; justify-content: center; }
+    .step-title { font-family: var(--f-serif); font-size: var(--lg); font-weight: var(--fw-bold); color: var(--primary); margin-bottom: var(--sp-sm); }
+    .step-desc { font-size: var(--sm); color: var(--text-sec); line-height: 1.6; }
+
+    /* ── PEDRAS ── */
+    #pedras.pedras { padding: 80px var(--sp-2xl); background: var(--bg-soft); }
+    .section-header { text-align: center; margin-bottom: 48px; }
+    .section-header h2 { font-family: var(--f-serif); font-size: 36px; font-weight: var(--fw-bold); color: var(--primary); margin-top: var(--sp-md); }
+    .pedras-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-lg); }
+    .pedra-card { border-radius: var(--r-lg); overflow: hidden; border: .5px solid var(--border); background: var(--bg); transition: transform .25s, box-shadow .25s; cursor: default; display: flex; flex-direction: column; }
+    .pedra-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(22,31,57,.12); }
+    .pedra-thumb { height: 180px; position: relative; overflow: hidden; flex-shrink: 0; }
+    .pedra-body { padding: var(--sp-lg); display: flex; flex-direction: column; flex: 1; }
+    .pedra-nome { font-family: var(--f-serif); font-size: var(--lg); font-weight: var(--fw-bold); color: var(--primary); margin: var(--sp-sm) 0; }
+    .pedra-desc { font-size: var(--sm); color: var(--text-sec); line-height: 1.6; margin-bottom: var(--sp-lg); flex: 1; }
+    .pedra-badge { display: inline-flex; align-items: center; gap: var(--sp-xs); font-size: var(--xs); font-weight: var(--fw-med); letter-spacing: 1px; text-transform: uppercase; color: var(--accent); background: var(--bg-soft); padding: var(--sp-xs) var(--sp-md); border-radius: var(--r-pill); }
+    .pedra-usos { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--sp-md); }
+    .uso-tag { font-size: 10px; padding: 3px 8px; background: var(--bg-soft); color: var(--text-sec); border-radius: var(--r-pill); border: .5px solid var(--border); }
+    .btn-whatsapp { width: 100%; margin-top: auto; display: flex; align-items: center; justify-content: center; gap: var(--sp-sm); background: var(--whatsapp); color: #fff; padding: var(--sp-md); font-family: var(--f-sans); font-size: var(--sm); font-weight: var(--fw-med); letter-spacing: 1.5px; text-transform: uppercase; border: none; border-radius: var(--r-md); cursor: pointer; transition: .2s; text-decoration: none; }
+    .btn-whatsapp:hover { background: var(--whatsapp-dark); transform: translateY(-1px); }
+    .btn-whatsapp i { font-size: 18px; }
+
+    /* ── AVALIAÇÕES ── */
+    #avaliacoes.avaliacoes { padding: 80px var(--sp-2xl); background: var(--bg); }
+    .av-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-lg); margin-top: 48px; }
+    .av-card { background: var(--bg-soft); border-radius: var(--r-lg); border: .5px solid var(--border); padding: var(--sp-xl); transition: box-shadow .2s; }
+    .av-card:hover { box-shadow: 0 8px 24px rgba(22,31,57,.08); }
+    .av-stars { display: flex; gap: 4px; margin-bottom: var(--sp-lg); }
+    .av-star { color: #F4A823; font-size: 16px; }
+    .av-text { font-size: var(--md); color: var(--primary); line-height: 1.7; font-style: italic; margin-bottom: var(--sp-lg); font-family: var(--f-serif); }
+    .av-author { display: flex; align-items: center; gap: var(--sp-md); }
+    .av-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: var(--xs); font-weight: var(--fw-bold); color: var(--text-light); flex-shrink: 0; }
+    .av-name { font-size: var(--sm); font-weight: var(--fw-med); color: var(--primary); }
+    .av-role { font-size: var(--xs); color: var(--text-sec); }
+
+    /* ── FAQ ── */
+    #faq.faq-section { padding: 80px var(--sp-2xl); background: var(--bg-soft); }
+    .faq-list { max-width: 720px; margin: 48px auto 0; display: flex; flex-direction: column; gap: var(--sp-sm); }
+    .faq-item { background: var(--bg); border: .5px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+    .faq-q { display: flex; align-items: center; justify-content: space-between; padding: var(--sp-lg) var(--sp-xl); cursor: pointer; font-size: var(--md); font-weight: var(--fw-med); color: var(--primary); gap: var(--sp-md); user-select: none; }
+    .faq-q:hover { background: var(--bg-soft); }
+    .faq-q i { font-size: 18px; color: var(--accent); flex-shrink: 0; transition: transform .25s; }
+    .faq-item.open .faq-q i { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 var(--sp-xl) var(--sp-lg); font-size: var(--sm); color: var(--text-sec); line-height: 1.8; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ── CONTATO ── */
+    #contato.contato { display: grid; grid-template-columns: 1fr 1fr; }
+    .contato-info { background: var(--primary); padding: var(--sp-3xl) var(--sp-2xl); }
+    .contato-info h2 { font-family: var(--f-serif); font-size: 36px; font-weight: var(--fw-bold); color: var(--text-light); margin-bottom: var(--sp-xl); }
+    .contato-info p { font-size: var(--md); color: var(--accent-light); line-height: 1.8; margin-bottom: var(--sp-2xl); }
+    .contact-items { display: flex; flex-direction: column; gap: var(--sp-lg); }
+    .contact-item { display: flex; align-items: center; gap: var(--sp-md); }
+    .contact-icon { width: 40px; height: 40px; border-radius: var(--r-md); background: rgba(92,147,170,.2); display: flex; align-items: center; justify-content: center; color: var(--accent-light); font-size: 18px; flex-shrink: 0; }
+    .contact-text .label { font-size: var(--xs); letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-weight: var(--fw-med); }
+    .contact-text .value { font-size: var(--sm); color: var(--text-light); margin-top: 2px; }
+    .contact-text a { color: var(--text-light); text-decoration: none; }
+    .contact-text a:hover { color: var(--accent-light); }
+    .horario-box { margin-top: var(--sp-2xl); background: rgba(92,147,170,.12); border: .5px solid rgba(92,147,170,.3); border-radius: var(--r-md); padding: var(--sp-lg); }
+    .horario-title { font-size: var(--xs); letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-weight: var(--fw-med); margin-bottom: var(--sp-sm); display: flex; align-items: center; gap: 6px; }
+    .horario-row { display: flex; justify-content: space-between; font-size: var(--sm); color: var(--text-light); padding: 4px 0; border-bottom: .5px solid rgba(255,255,255,.06); }
+    .horario-row:last-child { border-bottom: none; }
+    .contact-whatsapp { display: inline-flex; align-items: center; gap: var(--sp-sm); margin-top: var(--sp-2xl); padding: var(--sp-md) var(--sp-xl); background: var(--whatsapp); color: #fff; border-radius: var(--r-md); font-family: var(--f-sans); font-size: var(--sm); font-weight: var(--fw-med); letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; border: none; cursor: pointer; transition: .2s; }
+    .contact-whatsapp:hover { background: var(--whatsapp-dark); transform: translateY(-1px); }
+    .contact-whatsapp i { font-size: 20px; }
+    .contato-form { background: var(--bg-soft); padding: var(--sp-3xl) var(--sp-2xl); display: flex; flex-direction: column; justify-content: center; }
+    .contato-form h3 { font-family: var(--f-serif); font-size: var(--xl); font-weight: var(--fw-bold); color: var(--primary); margin-bottom: var(--sp-2xl); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-md); margin-bottom: var(--sp-md); }
+    .form-group { display: flex; flex-direction: column; gap: var(--sp-xs); margin-bottom: var(--sp-md); }
+    .form-label { font-size: var(--xs); font-weight: var(--fw-med); letter-spacing: 2px; text-transform: uppercase; color: var(--primary-dark); }
+    .form-input { width: 100%; padding: var(--sp-md); border-radius: var(--r-md); border: 1px solid var(--border); background: var(--bg); font-family: var(--f-sans); font-size: var(--md); color: var(--text); outline: none; transition: .2s; }
+    .form-input::placeholder { color: var(--accent-light); }
+    .form-input:focus { border-color: var(--accent); box-shadow: var(--shadow-focus); }
+    textarea.form-input { resize: vertical; min-height: 100px; }
+    .btn-enviar { width: 100%; padding: var(--sp-md) var(--sp-lg); background: var(--primary); color: var(--text-light); font-family: var(--f-sans); font-size: var(--sm); font-weight: var(--fw-med); letter-spacing: 2px; text-transform: uppercase; border: none; border-radius: var(--r-md); cursor: pointer; transition: .2s; display: flex; align-items: center; justify-content: center; gap: var(--sp-sm); }
+    .btn-enviar:hover { background: var(--primary-dark); }
+    #formMsg { display:none; margin-top: var(--sp-md); padding: 10px 14px; border-radius: var(--r-md); font-size: var(--sm); font-weight: 500; text-align: center; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--primary-dark); padding: var(--sp-2xl); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--sp-lg); }
+    .footer-brand { font-family: var(--f-serif); font-size: var(--md); font-weight: var(--fw-bold); color: var(--text-light); }
+    .footer-copy { font-size: var(--xs); color: var(--accent); margin-top: var(--sp-xs); }
+    .footer-copy a { color: inherit; text-decoration: none; transition: color .2s; }
+    .footer-copy a:hover { color: var(--accent-light); text-decoration: underline; }
+    .footer-socials { display: flex; gap: var(--sp-md); }
+    .social-btn { width: 36px; height: 36px; border-radius: var(--r-md); border: 1px solid rgba(175,193,248,.25); background: transparent; color: var(--accent-light); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: .2s; text-decoration: none; }
+    .social-btn:hover { background: rgba(92,147,170,.2); border-color: var(--accent); }
+    .social-btn.wa:hover { background: rgba(37,211,102,.2); border-color: var(--whatsapp); color: var(--whatsapp); }
+
+    /* ── BOTÃO FLUTUANTE WHATSAPP ── */
+    .whatsapp-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 999;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: var(--whatsapp); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 30px; text-decoration: none;
+      box-shadow: 0 6px 24px rgba(37,211,102,.45);
+      transition: transform .2s, box-shadow .2s;
+      animation: pulse 2.5s infinite;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 8px 32px rgba(37,211,102,.6); animation: none; }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 6px 24px rgba(37,211,102,.45); }
+      50%      { box-shadow: 0 6px 32px rgba(37,211,102,.75); }
+    }
+    .whatsapp-float-tooltip {
+      position: absolute; right: 68px; background: var(--primary); color: var(--text-light);
+      font-size: var(--xs); font-weight: var(--fw-med); letter-spacing: 1px;
+      white-space: nowrap; padding: 6px 12px; border-radius: var(--r-md);
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .whatsapp-float:hover .whatsapp-float-tooltip { opacity: 1; }
+
+    /* ── MODAL ── */
+    .modal-overlay { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,.55); align-items: center; justify-content: center; padding: var(--sp-lg); }
+    .modal-overlay.open { display: flex; }
+    .modal { background: var(--bg); border-radius: var(--r-lg); width: 100%; max-width: 460px; overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,.25); animation: modalIn .25s ease both; }
+    @keyframes modalIn { from { opacity:0; transform:scale(.95) translateY(12px); } to { opacity:1; transform:none; } }
+    .modal-header { background: var(--whatsapp); color: #fff; padding: var(--sp-xl) var(--sp-xl) var(--sp-lg); display: flex; align-items: center; gap: var(--sp-md); }
+    .modal-header i { font-size: 28px; }
+    .modal-header h4 { font-family: var(--f-serif); font-size: var(--lg); font-weight: var(--fw-bold); }
+    .modal-header p { font-size: var(--sm); opacity: .9; margin-top: 2px; }
+    .modal-body { padding: var(--sp-xl); }
+    .modal-product-name { font-family: var(--f-serif); font-size: var(--xl); font-weight: var(--fw-bold); color: var(--primary); margin-bottom: var(--sp-xl); text-align: center; }
+    .modal-group { display: flex; flex-direction: column; gap: var(--sp-xs); margin-bottom: var(--sp-md); }
+    .modal-label { font-size: var(--xs); font-weight: var(--fw-med); letter-spacing: 2px; text-transform: uppercase; color: var(--primary-dark); }
+    .modal-input { width: 100%; padding: var(--sp-md); border-radius: var(--r-md); border: 1px solid var(--border); font-family: var(--f-sans); font-size: var(--md); color: var(--text); outline: none; transition: .2s; }
+    .modal-input:focus { border-color: var(--whatsapp); box-shadow: 0 0 0 3px rgba(37,211,102,.15); }
+    textarea.modal-input { resize: vertical; min-height: 80px; }
+    .modal-footer { display: flex; gap: var(--sp-md); padding: 0 var(--sp-xl) var(--sp-xl); }
+    .btn-modal-cancel { flex: 1; padding: var(--sp-md); background: var(--bg-soft); color: var(--text-sec); border: 1px solid var(--border); border-radius: var(--r-md); font-family: var(--f-sans); font-size: var(--sm); cursor: pointer; transition: .2s; }
+    .btn-modal-cancel:hover { background: var(--border); }
+    .btn-modal-send { flex: 2; padding: var(--sp-md); background: var(--whatsapp); color: #fff; border: none; border-radius: var(--r-md); font-family: var(--f-sans); font-size: var(--sm); font-weight: var(--fw-med); letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: .2s; display: flex; align-items: center; justify-content: center; gap: var(--sp-sm); }
+    .btn-modal-send:hover { background: var(--whatsapp-dark); }
+
+    /* ── RESPONSIVO ── */
+    @media (max-width: 1100px) {
+      nav { padding: 0 var(--sp-xl); }
+      .nav-links { gap: var(--sp-xl); }
+      .nav-links a { font-size: 11px; }
+    }
+
+    @media (max-width: 900px) {
+      .topbar { display: none; }
+
+      body.menu-open { overflow: hidden; }
+
+      nav {
+        height: 64px;
+        padding: 0 var(--sp-lg);
+        gap: var(--sp-md);
+      }
+
+      .nav-logo {
+        max-width: calc(100% - 56px);
+        min-width: 0;
+      }
+
+      .nav-brand {
+        font-size: 15px;
+        white-space: nowrap;
+      }
+
+      .nav-brand small {
+        font-size: 10px;
+        letter-spacing: 2.5px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-hamburger {
+        display: flex;
+        flex-shrink: 0;
+      }
+
+      #home.hero {
+        min-height: calc(100vh - 64px);
+        padding-top: var(--sp-2xl);
+        align-items: center;
+      }
+
+      .hero-content {
+        padding: var(--sp-2xl) var(--sp-lg);
+        max-width: 620px;
+      }
+
+      .hero h1 { font-size: 40px; }
+      .hero p { font-size: var(--md); }
+
+      .hero-stats {
+        position: relative;
+        grid-template-columns: repeat(3, 1fr);
+        margin-top: var(--sp-xl);
+      }
+
+      .hero-stat {
+        padding: var(--sp-lg) var(--sp-md);
+      }
+
+      #sobre.sobre,
+      #contato.contato {
+        grid-template-columns: 1fr;
+      }
+
+      .sobre-visual { min-height: 260px; }
+
+      .pedras-grid,
+      .av-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .steps-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .step-card::after { display: none; }
+
+      #pedras.pedras,
+      #avaliacoes.avaliacoes,
+      #servicos.como-funciona,
+      #faq.faq-section {
+        padding: 60px var(--sp-lg);
+      }
+
+      .contato-info,
+      .contato-form {
+        padding: var(--sp-2xl) var(--sp-lg);
+      }
+
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .pedras-grid,
+      .av-grid,
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        padding: 0 16px;
+      }
+
+      .nav-logo svg {
+        width: 32px;
+        height: 32px;
+      }
+
+      .nav-brand {
+        font-size: 14px;
+      }
+
+      .nav-brand small {
+        font-size: 9px;
+        letter-spacing: 2px;
+      }
+
+      #home.hero {
+        min-height: calc(100vh - 64px);
+        padding-top: var(--sp-xl);
+      }
+
+      .hero-content {
+        padding: var(--sp-xl) var(--sp-lg);
+      }
+
+      .hero h1 {
+        font-size: 34px;
+        line-height: 1.08;
+      }
+
+      .hero p {
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: var(--sp-xl);
+      }
+
+      .hero-btns {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn-primary,
+      .btn-outline {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stat {
+        border-right: none;
+        border-bottom: .5px solid rgba(255,255,255,.1);
+      }
+
+      .hero-stat:last-child {
+        border-bottom: none;
+      }
+
+      .stat-num { font-size: var(--xl); }
+
+      .sobre-text { padding: var(--sp-2xl) var(--sp-lg); }
+
+      .section-header h2,
+      .sobre-text h2,
+      .contato-info h2 {
+        font-size: 30px;
+      }
+
+      .modal-footer {
+        flex-direction: column;
+      }
+
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .whatsapp-float {
+        bottom: 16px;
+        right: 16px;
+        width: 52px;
+        height: 52px;
+        font-size: 26px;
+      }
+
+      .whatsapp-float-tooltip {
+        display: none;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .nav-brand {
+        font-size: 12px;
+      }
+
+      .nav-brand small {
+        font-size: 8px;
+        letter-spacing: 1.5px;
+      }
+
+      .nav-logo svg {
+        width: 30px;
+        height: 30px;
+      }
+
+      .hero h1 {
+        font-size: 30px;
+      }
+    }
+
+  </style>
 </head>
 <body>
-  <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
 
-:root {
-  --color-primary: #161F39;
-  --color-primary-dark: #0C3756;
-  --color-accent: #5C93AA;
-  --color-accent-light: #AFC1F8;
-  --color-bg: #FFFFFF;
-  --color-bg-soft: #EFF2F4;
-  --color-border: #D9D9D9;
-  --color-text: #161F39;
-  --color-text-secondary: #5C93AA;
-  --color-text-light: #EFF2F4;
-  --color-success: #3B6D11;
-  --color-error: #A32D2D;
-  --font-primary: 'Playfair Display', serif;
-  --font-secondary: 'Montserrat', sans-serif;
-  --text-xs: 10px;
-  --text-sm: 12px;
-  --text-md: 14px;
-  --text-lg: 18px;
-  --text-xl: 24px;
-  --text-display: 32px;
-  --font-light: 300;
-  --font-regular: 400;
-  --font-medium: 500;
-  --font-bold: 700;
-  --font-black: 900;
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 12px;
-  --space-lg: 16px;
-  --space-xl: 24px;
-  --space-2xl: 40px;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-pill: 20px;
-  --shadow-soft: 0 2px 6px rgba(0,0,0,0.05);
-  --shadow-focus: 0 0 0 3px rgba(92,147,170,0.15);
-}
-
-* { margin:0; padding:0; box-sizing:border-box; }
-
-.site { font-family: var(--font-secondary); color: var(--color-text); background: var(--color-bg); }
-
-/* ── NAV ── */
-nav {
-  position: sticky; top: 0; z-index: 100;
-  background: var(--color-primary);
-  padding: 0 var(--space-2xl);
-  height: 64px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.nav-logo { display: flex; align-items: center; gap: var(--space-md); cursor: pointer; }
-.isotipo { position: relative; width: 40px; height: 40px; flex-shrink: 0; }
-.isotipo div { position: absolute; border: 1.5px solid var(--color-text-light); }
-.sq1 { width:40px; height:40px; top:0; left:0; }
-.sq2 { width:30px; height:30px; top:5px; left:5px; }
-.sq3 { width:20px; height:20px; top:10px; left:10px; background:var(--color-accent); border-color:var(--color-accent); }
-.dot  { width:9px; height:9px; bottom:0; right:0; background:var(--color-text-light); border:none; position:absolute; }
-.nav-brand { font-family: var(--font-primary); font-size: var(--text-md); font-weight: var(--font-bold); color: var(--color-text-light); line-height:1.1; }
-.nav-brand small { display:block; font-family: var(--font-secondary); font-size: var(--text-xs); font-weight: var(--font-light); letter-spacing:3px; text-transform:uppercase; color: var(--color-accent); }
-.nav-links { display: flex; gap: var(--space-2xl); list-style: none; }
-.nav-links a { font-size: var(--text-sm); font-weight: var(--font-medium); letter-spacing: 1px; text-transform: uppercase; color: var(--color-text-light); text-decoration: none; opacity: 0.8; transition: opacity 0.2s; cursor: pointer; }
-.nav-links a:hover { opacity: 1; }
-.nav-links a.active { opacity: 1; border-bottom: 2px solid var(--color-accent); padding-bottom: 2px; }
-
-/* ── HERO ── */
-.hero {
-  position: relative; min-height: 560px;
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden; background: var(--color-primary);
-}
-.hero-marble {
-  position: absolute; inset: 0; opacity: 0.12; pointer-events: none;
-}
-.hero-content {
-  position: relative; z-index: 2;
-  text-align: center; padding: var(--space-2xl);
-  max-width: 700px;
-}
-.hero-eyebrow {
-  font-size: var(--text-xs); letter-spacing: 5px; text-transform: uppercase;
-  color: var(--color-accent); font-weight: var(--font-medium); margin-bottom: var(--space-lg);
-}
-.hero h1 {
-  font-family: var(--font-primary); font-size: 52px; font-weight: var(--font-black);
-  color: var(--color-text-light); line-height: 1.05; margin-bottom: var(--space-lg);
-}
-.hero h1 em { font-style: italic; color: var(--color-accent-light); }
-.hero p {
-  font-size: var(--text-lg); font-weight: var(--font-light); color: var(--color-accent-light);
-  margin-bottom: var(--space-2xl); line-height: 1.7;
-}
-.hero-btns { display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap; }
-.btn-primary {
-  background: var(--color-text-light); color: var(--color-primary);
-  padding: var(--space-md) var(--space-2xl);
-  font-family: var(--font-secondary); font-size: var(--text-sm);
-  font-weight: var(--font-bold); letter-spacing: 2px; text-transform: uppercase;
-  border: none; border-radius: var(--radius-md); cursor: pointer; transition: 0.2s;
-}
-.btn-primary:hover { background: var(--color-bg-soft); }
-.btn-outline {
-  background: transparent; color: var(--color-text-light);
-  padding: var(--space-md) var(--space-2xl);
-  font-family: var(--font-secondary); font-size: var(--text-sm);
-  font-weight: var(--font-medium); letter-spacing: 2px; text-transform: uppercase;
-  border: 1px solid rgba(255,255,255,0.4); border-radius: var(--radius-md); cursor: pointer; transition: 0.2s;
-}
-.btn-outline:hover { border-color: var(--color-text-light); }
-.hero-stats {
-  position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  border-top: 0.5px solid rgba(255,255,255,0.1);
-}
-.hero-stat {
-  padding: var(--space-xl) var(--space-lg);
-  text-align: center;
-  border-right: 0.5px solid rgba(255,255,255,0.1);
-}
-.hero-stat:last-child { border-right: none; }
-.stat-num { font-family: var(--font-primary); font-size: var(--text-display); font-weight: var(--font-bold); color: var(--color-text-light); }
-.stat-label { font-size: var(--text-xs); letter-spacing: 2px; text-transform: uppercase; color: var(--color-accent); margin-top: var(--space-xs); }
-
-/* ── SOBRE ── */
-.sobre { display: grid; grid-template-columns: 1fr 1fr; min-height: 420px; }
-.sobre-text {
-  background: var(--color-bg-soft); padding: 64px var(--space-2xl);
-  display: flex; flex-direction: column; justify-content: center;
-}
-.section-label { font-size: var(--text-xs); letter-spacing: 4px; text-transform: uppercase; color: var(--color-accent); font-weight: var(--font-medium); margin-bottom: var(--space-md); }
-.sobre-text h2 { font-family: var(--font-primary); font-size: 36px; font-weight: var(--font-bold); color: var(--color-primary); line-height: 1.2; margin-bottom: var(--space-xl); }
-.sobre-text h2 em { font-style: italic; color: var(--color-accent); }
-.sobre-text p { font-size: var(--text-md); color: var(--color-text-secondary); line-height: 1.8; margin-bottom: var(--space-lg); }
-.sobre-values { display: flex; flex-direction: column; gap: var(--space-md); margin-top: var(--space-lg); }
-.value-row { display: flex; align-items: center; gap: var(--space-md); }
-.value-dot { width: 6px; height: 6px; background: var(--color-accent); border-radius: 50%; flex-shrink: 0; }
-.value-text { font-size: var(--text-sm); font-weight: var(--font-medium); color: var(--color-primary); letter-spacing: 1px; text-transform: uppercase; }
-.sobre-visual {
-  background: var(--color-primary-dark); position: relative; overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-}
-
-/* ── PEDRAS ── */
-.pedras { padding: 80px var(--space-2xl); background: var(--color-bg); }
-.section-header { text-align: center; margin-bottom: 48px; }
-.section-header h2 { font-family: var(--font-primary); font-size: 36px; font-weight: var(--font-bold); color: var(--color-primary); margin-top: var(--space-md); }
-.pedras-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); }
-.pedra-card {
-  border-radius: var(--radius-lg); overflow: hidden; border: 0.5px solid var(--color-border);
-  background: var(--color-bg); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;
-}
-.pedra-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(22,31,57,0.1); }
-.pedra-thumb { height: 180px; position: relative; overflow: hidden; }
-.pedra-body { padding: var(--space-lg); }
-.pedra-nome { font-family: var(--font-primary); font-size: var(--text-lg); font-weight: var(--font-bold); color: var(--color-primary); margin-bottom: var(--space-sm); }
-.pedra-desc { font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.6; margin-bottom: var(--space-lg); }
-.pedra-badge {
-  display: inline-flex; align-items: center; gap: var(--space-xs);
-  font-size: var(--text-xs); font-weight: var(--font-medium); letter-spacing: 1px;
-  text-transform: uppercase; color: var(--color-accent);
-  background: var(--color-bg-soft); padding: var(--space-xs) var(--space-md);
-  border-radius: var(--radius-pill);
-}
-.btn-comprar {
-  width: 100%; margin-top: var(--space-md);
-  background: var(--color-primary); color: var(--color-text-light);
-  padding: var(--space-md); font-family: var(--font-secondary);
-  font-size: var(--text-sm); font-weight: var(--font-medium); letter-spacing: 1.5px;
-  text-transform: uppercase; border: none; border-radius: var(--radius-md); cursor: pointer; transition: 0.2s;
-}
-.btn-comprar:hover { background: var(--color-primary-dark); }
-
-/* ── AVALIAÇÕES ── */
-.avaliacoes { padding: 80px var(--space-2xl); background: var(--color-bg-soft); }
-.av-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); margin-top: 48px; }
-.av-card {
-  background: var(--color-bg); border-radius: var(--radius-lg);
-  border: 0.5px solid var(--color-border); padding: var(--space-xl);
-}
-.av-stars { display: flex; gap: 4px; margin-bottom: var(--space-lg); }
-.av-star { color: #F4A823; font-size: 16px; }
-.av-text { font-size: var(--text-md); color: var(--color-primary); line-height: 1.7; font-style: italic; margin-bottom: var(--space-lg); font-family: var(--font-primary); }
-.av-author { display: flex; align-items: center; gap: var(--space-md); }
-.av-avatar {
-  width: 36px; height: 36px; border-radius: 50%;
-  background: var(--color-primary); display: flex; align-items: center; justify-content: center;
-  font-size: var(--text-xs); font-weight: var(--font-bold); color: var(--color-text-light);
-}
-.av-name { font-size: var(--text-sm); font-weight: var(--font-medium); color: var(--color-primary); }
-.av-role { font-size: var(--text-xs); color: var(--color-text-secondary); }
-
-/* ── CONTATO ── */
-.contato { display: grid; grid-template-columns: 1fr 1fr; }
-.contato-info { background: var(--color-primary); padding: 64px var(--space-2xl); }
-.contato-info h2 { font-family: var(--font-primary); font-size: 36px; font-weight: var(--font-bold); color: var(--color-text-light); margin-bottom: var(--space-xl); }
-.contato-info p { font-size: var(--text-md); color: var(--color-accent-light); line-height: 1.8; margin-bottom: var(--space-2xl); }
-.contact-items { display: flex; flex-direction: column; gap: var(--space-lg); }
-.contact-item { display: flex; align-items: center; gap: var(--space-md); }
-.contact-icon {
-  width: 40px; height: 40px; border-radius: var(--radius-md);
-  background: rgba(92,147,170,0.2); display: flex; align-items: center; justify-content: center;
-  color: var(--color-accent-light); font-size: 18px; flex-shrink: 0;
-}
-.contact-text .label { font-size: var(--text-xs); letter-spacing: 2px; text-transform: uppercase; color: var(--color-accent); font-weight: var(--font-medium); }
-.contact-text .value { font-size: var(--text-sm); color: var(--color-text-light); margin-top: 2px; }
-.contato-form { background: var(--color-bg-soft); padding: 64px var(--space-2xl); display: flex; flex-direction: column; justify-content: center; }
-.contato-form h3 { font-family: var(--font-primary); font-size: var(--text-xl); font-weight: var(--font-bold); color: var(--color-primary); margin-bottom: var(--space-2xl); }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); margin-bottom: var(--space-md); }
-.form-group { display: flex; flex-direction: column; gap: var(--space-xs); margin-bottom: var(--space-md); }
-.form-label { font-size: var(--text-xs); font-weight: var(--font-medium); letter-spacing: 2px; text-transform: uppercase; color: var(--color-primary-dark); }
-.form-input {
-  width: 100%; padding: var(--space-md);
-  border-radius: var(--radius-md); border: 1px solid var(--color-border);
-  background: var(--color-bg); font-family: var(--font-secondary);
-  font-size: var(--text-md); color: var(--color-text); outline: none; transition: 0.2s;
-}
-.form-input::placeholder { color: var(--color-accent-light); }
-.form-input:focus { border-color: var(--color-accent); box-shadow: var(--shadow-focus); }
-textarea.form-input { resize: vertical; min-height: 100px; }
-.btn-enviar {
-  width: 100%; padding: var(--space-md) var(--space-lg);
-  background: var(--color-primary); color: var(--color-text-light);
-  font-family: var(--font-secondary); font-size: var(--text-sm);
-  font-weight: var(--font-medium); letter-spacing: 2px; text-transform: uppercase;
-  border: none; border-radius: var(--radius-md); cursor: pointer; transition: 0.2s;
-  display: flex; align-items: center; justify-content: center; gap: var(--space-sm);
-}
-.btn-enviar:hover { background: var(--color-primary-dark); }
-
-/* ── FOOTER ── */
-footer {
-  background: var(--color-primary-dark); padding: var(--space-2xl);
-  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-lg);
-}
-.footer-brand { font-family: var(--font-primary); font-size: var(--text-md); font-weight: var(--font-bold); color: var(--color-text-light); }
-.footer-copy { font-size: var(--text-xs); color: var(--color-accent); margin-top: var(--space-xs); }
-.footer-socials { display: flex; gap: var(--space-md); }
-.social-btn {
-  width: 36px; height: 36px; border-radius: var(--radius-md);
-  border: 1px solid rgba(175,193,248,0.25); background: transparent;
-  color: var(--color-accent-light); font-size: 18px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; transition: 0.2s;
-}
-.social-btn:hover { background: rgba(92,147,170,0.2); border-color: var(--color-accent); }
-</style>
-
-<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Marmoraria Nova Canaã — Página institucional</h2>
-
-<div class="site">
-
-  <!-- NAV -->
-  <nav>
-    <div class="nav-logo">
-        <svg width="36" height="36" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-                <rect x="2"  y="2"  width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
-                <rect x="12" y="12" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
-                <rect x="22" y="22" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
-                <rect x="46" y="46" width="14" height="14" fill="#EFF2F4"/>
-             </svg>
-      <div class="nav-brand">Nova Canaã<small>Marmoraria</small></div>
-    </div>
-    <ul class="nav-links">
-      <li><a class="active">Home</a></li>
-      <li><a>Sobre Nós</a></li>
-      <li><a>Pedras</a></li>
-      <li><a>Avaliações</a></li>
-      <li><a>Contato</a></li>
-    </ul>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero">
-    <svg class="hero-marble" viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 120 Q180 80 360 140 Q540 195 720 120 Q810 85 900 110" stroke="#AFC1F8" stroke-width="1.5" fill="none"/>
-      <path d="M0 220 Q200 180 400 240 Q600 295 800 215 Q860 195 900 210" stroke="#AFC1F8" stroke-width="1" fill="none"/>
-      <path d="M0 320 Q150 290 300 340 Q500 395 700 310 Q810 275 900 310" stroke="#AFC1F8" stroke-width="0.8" fill="none"/>
-      <path d="M0 420 Q200 385 380 435 Q560 480 760 405 Q840 380 900 410" stroke="#AFC1F8" stroke-width="1.2" fill="none"/>
-      <path d="M120 0 Q140 140 115 280 Q95 400 130 560" stroke="#5C93AA" stroke-width="0.8" fill="none"/>
-      <path d="M350 0 Q370 120 345 260 Q325 380 360 560" stroke="#5C93AA" stroke-width="0.6" fill="none"/>
-      <path d="M620 0 Q640 150 615 300 Q598 420 630 560" stroke="#5C93AA" stroke-width="0.7" fill="none"/>
-      <path d="M820 0 Q835 130 812 270 Q798 380 825 560" stroke="#5C93AA" stroke-width="0.5" fill="none"/>
-    </svg>
-    <div class="hero-content">
-      <div class="hero-eyebrow">Qualidade · Precisão · Elegância</div>
-      <h1>Marmoraria<br><em>Nova Canaã</em></h1>
-      <p>Trabalhamos com peças de qualidade, transformando pedras naturais em obras que resistem ao tempo.</p>
-      <div class="hero-btns">
-        <button class="btn-primary">Ver Pedras</button>
-        <button class="btn-outline">Solicitar Orçamento</button>
-      </div>
-    </div>
-    <div class="hero-stats">
-      <div class="hero-stat"><div class="stat-num">15+</div><div class="stat-label">Anos de experiência</div></div>
-      <div class="hero-stat"><div class="stat-num">500+</div><div class="stat-label">Projetos entregues</div></div>
-      <div class="hero-stat"><div class="stat-num">30+</div><div class="stat-label">Tipos de pedra</div></div>
-    </div>
-  </section>
-
-  <!-- SOBRE NÓS -->
-  <section class="sobre">
-    <div class="sobre-text">
-      <div class="section-label">Sobre Nós</div>
-      <h2>Tradição e qualidade<br>em cada <em>detalhe</em></h2>
-      <p>Na Marmoraria Nova Canaã, trabalhamos com granitos, mármores e quartzitos selecionados para entregar o melhor resultado em cada projeto — seja uma bancada, um piso ou um revestimento completo.</p>
-      <p>Com atendimento personalizado e equipe especializada, garantimos precisão do corte à instalação.</p>
-      <div class="sobre-values">
-        <div class="value-row"><div class="value-dot"></div><div class="value-text">Qualidade garantida</div></div>
-        <div class="value-row"><div class="value-dot"></div><div class="value-text">Entrega no prazo</div></div>
-        <div class="value-row"><div class="value-dot"></div><div class="value-text">Atendimento personalizado</div></div>
-        <div class="value-row"><div class="value-dot"></div><div class="value-text">Materiais certificados</div></div>
-      </div>
-    </div>
-    <div class="sobre-visual">
-      <svg width="100%" height="100%" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
-        <rect width="420" height="420" fill="#0C3756"/>
-        <path d="M0 80 Q80 55 160 90 Q240 122 320 80 Q370 58 420 75" stroke="#5C93AA" stroke-width="1.5" fill="none" opacity="0.4"/>
-        <path d="M0 160 Q100 138 200 172 Q300 205 400 162 Q412 158 420 160" stroke="#AFC1F8" stroke-width="1" fill="none" opacity="0.25"/>
-        <path d="M0 240 Q90 218 180 255 Q270 288 380 244 Q400 238 420 242" stroke="#5C93AA" stroke-width="1.2" fill="none" opacity="0.35"/>
-        <path d="M0 320 Q110 298 210 335 Q310 368 410 322 Q415 320 420 322" stroke="#AFC1F8" stroke-width="0.8" fill="none" opacity="0.2"/>
-        <path d="M100 0 Q118 80 95 180 Q78 260 108 420" stroke="#5C93AA" stroke-width="0.8" fill="none" opacity="0.3"/>
-        <path d="M260 0 Q278 90 255 200 Q240 280 268 420" stroke="#AFC1F8" stroke-width="0.6" fill="none" opacity="0.2"/>
-        <rect x="140" y="140" width="140" height="140" fill="none" stroke="#5C93AA" stroke-width="1" opacity="0.3"/>
-        <rect x="155" y="155" width="110" height="110" fill="none" stroke="#AFC1F8" stroke-width="0.8" opacity="0.2"/>
-        <rect x="170" y="170" width="80" height="80" fill="#5C93AA" opacity="0.15"/>
-        <text x="210" y="218" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#AFC1F8" opacity="0.6" letter-spacing="3">PEDRA</text>
-      </svg>
-    </div>
-  </section>
-
-  <!-- PEDRAS -->
-  <section class="pedras">
-    <div class="section-header">
-      <div class="section-label">Catálogo</div>
-      <h2>Pedras em Destaque</h2>
-    </div>
-    <div class="pedras-grid">
-
-      <div class="pedra-card">
-        <div class="pedra-thumb">
-          <svg width="100%" height="180" viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
-            <rect width="300" height="180" fill="#ddd8d0"/>
-            <path d="M0 40 Q60 28 120 45 Q180 60 240 38 Q270 28 300 35" stroke="#b8b0a4" stroke-width="2" fill="none"/>
-            <path d="M0 90 Q80 75 160 95 Q220 110 300 88" stroke="#c8c0b4" stroke-width="1.5" fill="none"/>
-            <path d="M10 135 Q70 122 140 140 Q210 155 280 132 Q290 129 300 132" stroke="#b0a898" stroke-width="1" fill="none"/>
-            <path d="M60 0 Q72 50 58 110 Q48 150 65 180" stroke="#a89e90" stroke-width="1" fill="none" opacity="0.7"/>
-            <path d="M180 0 Q192 60 178 120 Q168 158 185 180" stroke="#b8b0a4" stroke-width="0.8" fill="none" opacity="0.5"/>
-          </svg>
-        </div>
-        <div class="pedra-body">
-          <span class="pedra-badge"><i class="ti ti-diamond" aria-hidden="true"></i> Granito</span>
-          <div class="pedra-nome" style="margin-top:8px;">Branco Dallas</div>
-          <div class="pedra-desc">Pedra clara e refinada, perfeita para quem busca sofisticação e leveza no ambiente.</div>
-          <button class="btn-comprar">Solicitar Orçamento</button>
-        </div>
-      </div>
-
-      <div class="pedra-card">
-        <div class="pedra-thumb">
-          <svg width="100%" height="180" viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
-            <rect width="300" height="180" fill="#2a1f18"/>
-            <path d="M0 35 Q50 48 110 30 Q170 16 230 42 Q265 55 300 38" stroke="#5a4535" stroke-width="2" fill="none"/>
-            <path d="M0 85 Q60 98 130 78 Q195 62 260 90 Q280 97 300 88" stroke="#4a3828" stroke-width="1.5" fill="none"/>
-            <path d="M0 135 Q70 148 140 128 Q205 112 270 138 Q285 144 300 135" stroke="#5a4535" stroke-width="1" fill="none"/>
-            <ellipse cx="80" cy="60" rx="12" ry="7" fill="#3a2c20" opacity="0.6"/>
-            <ellipse cx="210" cy="110" rx="9" ry="5" fill="#3a2c20" opacity="0.5"/>
-            <path d="M140 0 Q155 55 140 115 Q130 150 145 180" stroke="#4a3828" stroke-width="0.8" fill="none" opacity="0.6"/>
-          </svg>
-        </div>
-        <div class="pedra-body">
-          <span class="pedra-badge"><i class="ti ti-diamond" aria-hidden="true"></i> Granito</span>
-          <div class="pedra-nome" style="margin-top:8px;">Imperial Coffee</div>
-          <div class="pedra-desc">Pedra em tom marrom intenso, que traz elegância e personalidade ao ambiente.</div>
-          <button class="btn-comprar">Solicitar Orçamento</button>
-        </div>
-      </div>
-
-      <div class="pedra-card">
-        <div class="pedra-thumb">
-          <svg width="100%" height="180" viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
-            <rect width="300" height="180" fill="#1a1c1a"/>
-            <circle cx="30" cy="25" r="2" fill="#3a3c3a"/><circle cx="80" cy="45" r="1.5" fill="#4a4c4a"/>
-            <circle cx="150" cy="20" r="2.5" fill="#2a2c2a"/><circle cx="220" cy="55" r="1.8" fill="#3a3c3a"/>
-            <circle cx="270" cy="30" r="1.2" fill="#4a4c4a"/><circle cx="50" cy="90" r="2" fill="#3a3c3a"/>
-            <circle cx="120" cy="100" r="1.5" fill="#4a4c4a"/><circle cx="200" cy="85" r="2.2" fill="#2a2c2a"/>
-            <circle cx="260" cy="110" r="1.5" fill="#3a3c3a"/><circle cx="30" cy="140" r="1.8" fill="#4a4c4a"/>
-            <circle cx="100" cy="155" r="2" fill="#3a3c3a"/><circle cx="180" cy="145" r="1.5" fill="#2a2c2a"/>
-            <circle cx="240" cy="160" r="2.5" fill="#3a3c3a"/><circle cx="290" cy="140" r="1.2" fill="#4a4c4a"/>
-          </svg>
-        </div>
-        <div class="pedra-body">
-          <span class="pedra-badge"><i class="ti ti-diamond" aria-hidden="true"></i> Granito</span>
-          <div class="pedra-nome" style="margin-top:8px;">Ubatuba</div>
-          <div class="pedra-desc">Pedra de tom escuro, elegante e resistente, ideal para ambientes modernos.</div>
-          <button class="btn-comprar">Solicitar Orçamento</button>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- AVALIAÇÕES -->
-  <section class="avaliacoes">
-    <div class="section-header">
-      <div class="section-label">Clientes</div>
-      <h2 style="font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--color-primary);margin-top:8px;">Avaliações de Clientes</h2>
-    </div>
-    <div class="av-grid">
-      <div class="av-card">
-        <div class="av-stars">
-          <i class="ti ti-star-filled av-star" style="color:#F4A823;" aria-hidden="true"></i>
-          <i class="ti ti-star-filled av-star" style="color:#F4A823;" aria-hidden="true"></i>
-          <i class="ti ti-star-filled av-star" style="color:#F4A823;" aria-hidden="true"></i>
-          <i class="ti ti-star-filled av-star" style="color:#F4A823;" aria-hidden="true"></i>
-          <i class="ti ti-star-filled av-star" style="color:#F4A823;" aria-hidden="true"></i>
-        </div>
-        <div class="av-text">"Trabalho impecável! O acabamento do mármore da minha cozinha ficou perfeito. Profissionais muito atenciosos."</div>
-        <div class="av-author">
-          <div class="av-avatar">MR</div>
-          <div><div class="av-name">Maria Rosa</div><div class="av-role">Cliente</div></div>
-        </div>
-      </div>
-      <div class="av-card">
-        <div class="av-stars">
-          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
-          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
-          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
-          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
-          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
-        </div>
-        <div class="av-text">"Material de excelente qualidade e entrega no prazo. Recomendo para quem busca sofisticação e durabilidade."</div>
-        <div class="av-author">
-          <div class="av-avatar" style="background:var(--color-accent);">JS</div>
-          <div><div class="av-name">João Silva</div><div class="av-role">Cliente</div></div>
-        </div>
-      </div>
-      <div class="av-card">
-        <div class="av-stars">
-          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
-          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
-          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
-          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
-          <i class="ti ti-star-filled" style="color:#F4A823;" aria-hidden="true"></i>
-        </div>
-        <div class="av-text">"Transformaram meu banheiro com uma bancada de granito linda e resistente. Superou minhas expectativas!"</div>
-        <div class="av-author">
-          <div class="av-avatar" style="background:var(--color-primary-dark);">AL</div>
-          <div><div class="av-name">Ana Lima</div><div class="av-role">Cliente</div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTATO -->
-  <section class="contato">
-    <div class="contato-info">
-      <div class="section-label" style="color:var(--color-accent);">Fale Conosco</div>
-      <h2>Entre em<br>contato</h2>
-      <p>Estamos prontos para ajudar no seu projeto. Entre em contato e solicite um orçamento sem compromisso.</p>
-      <div class="contact-items">
-        <div class="contact-item">
-          <div class="contact-icon"><i class="ti ti-phone" aria-hidden="true"></i></div>
-          <div class="contact-text">
-            <div class="label">Telefone</div>
-            <div class="value">(13) 12345-6789</div>
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon"><i class="ti ti-mail" aria-hidden="true"></i></div>
-          <div class="contact-text">
-            <div class="label">E-mail</div>
-            <div class="value">contato@novacanaa.com.br</div>
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
-          <div class="contact-text">
-            <div class="label">Endereço</div>
-            <div class="value">Praia Grande, SP</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="contato-form">
-      <h3>Envie uma mensagem</h3>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Nome</label>
-          <input class="form-input" type="text" placeholder="Seu nome">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Telefone</label>
-          <input class="form-input" type="text" placeholder="(13) 00000-0000">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">E-mail</label>
-        <input class="form-input" type="email" placeholder="seu@email.com">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Mensagem</label>
-        <textarea class="form-input" placeholder="Descreva seu projeto..."></textarea>
-      </div>
-      <button class="btn-enviar" id="btnEnviar">
-        Enviar mensagem <i class="ti ti-send" aria-hidden="true"></i>
-      </button>
-      <div id="formMsg" style="display:none;margin-top:12px;padding:10px 14px;border-radius:var(--radius-md);font-size:var(--text-sm);font-weight:500;text-align:center;"></div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div>
-      <div class="footer-brand">Nova Canaã Marmoraria</div>
-      <div class="footer-copy">© 2025 Nova Canaã Marmoraria. Todos os direitos reservados.</div>
-    </div>
-    <div class="footer-socials">
-      <button class="social-btn" aria-label="Facebook"><i class="ti ti-brand-facebook" aria-hidden="true"></i></button>
-      <button class="social-btn" aria-label="Instagram"><i class="ti ti-brand-instagram" aria-hidden="true"></i></button>
-      <button class="social-btn" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i></button>
-    </div>
-  </footer>
-
+<!-- TOPBAR -->
+<div class="topbar">
+  <a class="topbar-item" href="https://www.google.com/maps/place/Marmoraria+Nova+Cana%C3%A3/@-24.0400453,-46.5262238,17z/data=!3m1!4b1!4m6!3m5!1s0x94ce21c8ab76dd45:0x1cafc4356c99def1!8m2!3d-24.0400453!4d-46.5236489!16s%2Fg%2F11ltlscgbg?entry=ttu&g_ep=EgoyMDI2MDUyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" aria-label="Abrir localização no Google Maps">
+    <i class="ti ti-map-pin" aria-hidden="true"></i>
+    Praia Grande, SP
+  </a>
+  <div class="topbar-right">
+    <a class="topbar-item" href="tel:+5513997982047">
+      <i class="ti ti-phone" aria-hidden="true"></i>
+      (13) 99798-2047
+    </a>
+    <a class="topbar-item" href="https://wa.me/5513997982047" target="_blank" rel="noopener">
+      <i class="ti ti-brand-whatsapp" aria-hidden="true"></i>
+      WhatsApp
+    </a>
+  </div>
 </div>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">
+    <svg width="36" height="36" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="2"  y="2"  width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+      <rect x="12" y="12" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+      <rect x="22" y="22" width="52" height="52" fill="none" stroke="#EFF2F4" stroke-width="1.5"/>
+      <rect x="46" y="46" width="14" height="14" fill="#EFF2F4"/>
+    </svg>
+    <div class="nav-brand">Nova Canaã<small>Marmoraria</small></div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home"       data-section="home">Home</a></li>
+    <li><a href="#sobre"      data-section="sobre">Sobre</a></li>
+    <li><a href="#servicos"   data-section="servicos">Serviços</a></li>
+    <li><a href="#pedras"     data-section="pedras">Pedras</a></li>
+    <li><a href="#avaliacoes" data-section="avaliacoes">Avaliações</a></li>
+    <li><a href="#contato"    data-section="contato">Contato</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" type="button" aria-label="Abrir menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home"       onclick="closeMobile()">Home</a>
+  <a href="#sobre"      onclick="closeMobile()">Sobre</a>
+  <a href="#servicos"   onclick="closeMobile()">Serviços</a>
+  <a href="#pedras"     onclick="closeMobile()">Pedras</a>
+  <a href="#avaliacoes" onclick="closeMobile()">Avaliações</a>
+  <a href="#contato"    onclick="closeMobile()">Contato</a>
+</div>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <svg class="hero-marble" viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M0 120 Q180 80 360 140 Q540 195 720 120 Q810 85 900 110" stroke="#AFC1F8" stroke-width="1.5" fill="none"/>
+    <path d="M0 220 Q200 180 400 240 Q600 295 800 215 Q860 195 900 210" stroke="#AFC1F8" stroke-width="1" fill="none"/>
+    <path d="M0 320 Q150 290 300 340 Q500 395 700 310 Q810 275 900 310" stroke="#AFC1F8" stroke-width="0.8" fill="none"/>
+    <path d="M0 420 Q200 385 380 435 Q560 480 760 405 Q840 380 900 410" stroke="#AFC1F8" stroke-width="1.2" fill="none"/>
+    <path d="M120 0 Q140 140 115 280 Q95 400 130 560" stroke="#5C93AA" stroke-width="0.8" fill="none"/>
+    <path d="M350 0 Q370 120 345 260 Q325 380 360 560" stroke="#5C93AA" stroke-width="0.6" fill="none"/>
+    <path d="M620 0 Q640 150 615 300 Q598 420 630 560" stroke="#5C93AA" stroke-width="0.7" fill="none"/>
+    <path d="M820 0 Q835 130 812 270 Q798 380 825 560" stroke="#5C93AA" stroke-width="0.5" fill="none"/>
+  </svg>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Qualidade · Precisão · Elegância</div>
+    <h1>Marmoraria<br><em>Nova Canaã</em></h1>
+    <p>Trabalhamos com peças de qualidade, transformando pedras naturais em obras que resistem ao tempo.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="irPara('#pedras')">
+        <i class="ti ti-eye" aria-hidden="true" style="font-size:15px;vertical-align:-2px;margin-right:6px;"></i>Ver Pedras
+      </button>
+      <button class="btn-outline" onclick="irPara('#contato')">
+        <i class="ti ti-file-invoice" aria-hidden="true" style="font-size:15px;vertical-align:-2px;margin-right:6px;"></i>Solicitar Orçamento
+      </button>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <i class="ti ti-award" aria-hidden="true" style="font-size:22px;color:var(--accent);display:block;margin-bottom:6px;"></i>
+      <div class="stat-num">15+</div><div class="stat-label">Anos de experiência</div>
+    </div>
+    <div class="hero-stat">
+      <i class="ti ti-home-check" aria-hidden="true" style="font-size:22px;color:var(--accent);display:block;margin-bottom:6px;"></i>
+      <div class="stat-num">500+</div><div class="stat-label">Projetos entregues</div>
+    </div>
+    <div class="hero-stat">
+      <i class="ti ti-stack" aria-hidden="true" style="font-size:22px;color:var(--accent);display:block;margin-bottom:6px;"></i>
+      <div class="stat-num">30+</div><div class="stat-label">Tipos de pedra</div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE NÓS -->
+<section id="sobre" class="sobre">
+  <div class="sobre-text">
+    <div class="section-label"><i class="ti ti-building-factory-2" aria-hidden="true" style="font-size:13px;margin-right:6px;vertical-align:-1px;"></i>Sobre Nós</div>
+    <h2>Tradição e qualidade<br>em cada <em>detalhe</em></h2>
+    <p>Na Marmoraria Nova Canaã, trabalhamos com granitos, mármores e quartzitos selecionados para entregar o melhor resultado em cada projeto — seja uma bancada, um piso ou um revestimento completo.</p>
+    <p>Com atendimento personalizado e equipe especializada, garantimos precisão do corte à instalação.</p>
+    <div class="sobre-values">
+      <div class="value-row"><i class="ti ti-rosette-discount-check" aria-hidden="true" style="font-size:18px;color:var(--accent);flex-shrink:0;"></i><div class="value-text">Qualidade garantida</div></div>
+      <div class="value-row"><i class="ti ti-clock-check" aria-hidden="true" style="font-size:18px;color:var(--accent);flex-shrink:0;"></i><div class="value-text">Entrega no prazo</div></div>
+      <div class="value-row"><i class="ti ti-user-heart" aria-hidden="true" style="font-size:18px;color:var(--accent);flex-shrink:0;"></i><div class="value-text">Atendimento personalizado</div></div>
+      <div class="value-row"><i class="ti ti-certificate" aria-hidden="true" style="font-size:18px;color:var(--accent);flex-shrink:0;"></i><div class="value-text">Materiais certificados</div></div>
+    </div>
+  </div>
+  <div class="sobre-visual">
+    <svg width="100%" height="100%" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="420" height="420" fill="#0C3756"/>
+      <path d="M0 80 Q80 55 160 90 Q240 122 320 80 Q370 58 420 75" stroke="#5C93AA" stroke-width="1.5" fill="none" opacity="0.4"/>
+      <path d="M0 160 Q100 138 200 172 Q300 205 400 162 Q412 158 420 160" stroke="#AFC1F8" stroke-width="1" fill="none" opacity="0.25"/>
+      <path d="M0 240 Q90 218 180 255 Q270 288 380 244 Q400 238 420 242" stroke="#5C93AA" stroke-width="1.2" fill="none" opacity="0.35"/>
+      <path d="M0 320 Q110 298 210 335 Q310 368 410 322 Q415 320 420 322" stroke="#AFC1F8" stroke-width="0.8" fill="none" opacity="0.2"/>
+      <path d="M100 0 Q118 80 95 180 Q78 260 108 420" stroke="#5C93AA" stroke-width="0.8" fill="none" opacity="0.3"/>
+      <path d="M260 0 Q278 90 255 200 Q240 280 268 420" stroke="#AFC1F8" stroke-width="0.6" fill="none" opacity="0.2"/>
+      <rect x="140" y="140" width="140" height="140" fill="none" stroke="#5C93AA" stroke-width="1" opacity="0.3"/>
+      <rect x="155" y="155" width="110" height="110" fill="none" stroke="#AFC1F8" stroke-width="0.8" opacity="0.2"/>
+      <rect x="170" y="170" width="80" height="80" fill="#5C93AA" opacity="0.15"/>
+      <text x="210" y="218" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#AFC1F8" opacity="0.6" letter-spacing="3">PEDRA</text>
+    </svg>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="servicos" class="como-funciona">
+  <div class="section-header">
+    <div class="section-label"><i class="ti ti-route" aria-hidden="true" style="font-size:13px;margin-right:6px;vertical-align:-1px;"></i>Do início ao fim</div>
+    <h2>Como Funciona</h2>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-icon">
+        <i class="ti ti-messages" aria-hidden="true"></i>
+        <div class="step-num">1</div>
+      </div>
+      <div class="step-title">Contato</div>
+      <div class="step-desc">Entre em contato pelo WhatsApp ou formulário e descreva o seu projeto.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-icon">
+        <i class="ti ti-ruler-measure" aria-hidden="true"></i>
+        <div class="step-num">2</div>
+      </div>
+      <div class="step-title">Medição</div>
+      <div class="step-desc">Nossa equipe vai até o local para medir com precisão e apresentar o orçamento.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-icon">
+        <i class="ti ti-cut" aria-hidden="true"></i>
+        <div class="step-num">3</div>
+      </div>
+      <div class="step-title">Produção</div>
+      <div class="step-desc">Cortamos e polimos as pedras com maquinário especializado para acabamento perfeito.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-icon">
+        <i class="ti ti-tools" aria-hidden="true"></i>
+        <div class="step-num">4</div>
+      </div>
+      <div class="step-title">Instalação</div>
+      <div class="step-desc">Instalamos com cuidado e limpeza, entregando o resultado final que você espera.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PEDRAS -->
+<section id="pedras" class="pedras">
+  <div class="section-header">
+    <div class="section-label"><i class="ti ti-layers-subtract" aria-hidden="true" style="font-size:13px;margin-right:6px;vertical-align:-1px;"></i>Catálogo</div>
+    <h2>Pedras em Destaque</h2>
+  </div>
+  <div class="pedras-grid">
+
+    <div class="pedra-card" style="border-top:3px solid #ddd8d0;">
+      <div class="pedra-thumb">
+        <svg width="100%" height="180" viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="300" height="180" fill="#ddd8d0"/>
+          <path d="M0 40 Q60 28 120 45 Q180 60 240 38 Q270 28 300 35" stroke="#b8b0a4" stroke-width="2" fill="none"/>
+          <path d="M0 90 Q80 75 160 95 Q220 110 300 88" stroke="#c8c0b4" stroke-width="1.5" fill="none"/>
+          <path d="M10 135 Q70 122 140 140 Q210 155 280 132 Q290 129 300 132" stroke="#b0a898" stroke-width="1" fill="none"/>
+          <path d="M60 0 Q72 50 58 110 Q48 150 65 180" stroke="#a89e90" stroke-width="1" fill="none" opacity="0.7"/>
+          <path d="M180 0 Q192 60 178 120 Q168 158 185 180" stroke="#b8b0a4" stroke-width="0.8" fill="none" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="pedra-body">
+        <span class="pedra-badge"><i class="ti ti-diamond" aria-hidden="true"></i> Granito</span>
+        <div class="pedra-nome">Branco Dallas</div>
+        <div class="pedra-desc">Pedra clara e refinada, perfeita para quem busca sofisticação e leveza no ambiente.</div>
+        <div class="pedra-usos">
+          <span class="uso-tag"><i class="ti ti-tools" style="font-size:10px;"></i> Bancadas</span>
+          <span class="uso-tag"><i class="ti ti-bath" style="font-size:10px;"></i> Banheiros</span>
+          <span class="uso-tag"><i class="ti ti-building" style="font-size:10px;"></i> Pisos</span>
+        </div>
+        <button class="btn-whatsapp" onclick="abrirModal('Branco Dallas')">
+          <i class="ti ti-brand-whatsapp" aria-hidden="true"></i> Solicitar Orçamento
+        </button>
+      </div>
+    </div>
+
+    <div class="pedra-card" style="border-top:3px solid #5a4535;">
+      <div class="pedra-thumb">
+        <svg width="100%" height="180" viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="300" height="180" fill="#2a1f18"/>
+          <path d="M0 35 Q50 48 110 30 Q170 16 230 42 Q265 55 300 38" stroke="#5a4535" stroke-width="2" fill="none"/>
+          <path d="M0 85 Q60 98 130 78 Q195 62 260 90 Q280 97 300 88" stroke="#4a3828" stroke-width="1.5" fill="none"/>
+          <path d="M0 135 Q70 148 140 128 Q205 112 270 138 Q285 144 300 135" stroke="#5a4535" stroke-width="1" fill="none"/>
+          <ellipse cx="80" cy="60" rx="12" ry="7" fill="#3a2c20" opacity="0.6"/>
+          <ellipse cx="210" cy="110" rx="9" ry="5" fill="#3a2c20" opacity="0.5"/>
+          <path d="M140 0 Q155 55 140 115 Q130 150 145 180" stroke="#4a3828" stroke-width="0.8" fill="none" opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="pedra-body">
+        <span class="pedra-badge"><i class="ti ti-diamond" aria-hidden="true"></i> Granito</span>
+        <div class="pedra-nome">Imperial Coffee</div>
+        <div class="pedra-desc">Pedra em tom marrom intenso, que traz elegância e personalidade ao ambiente.</div>
+        <div class="pedra-usos">
+          <span class="uso-tag"><i class="ti ti-tools" style="font-size:10px;"></i> Bancadas</span>
+          <span class="uso-tag"><i class="ti ti-wall" style="font-size:10px;"></i> Revestimentos</span>
+          <span class="uso-tag"><i class="ti ti-building" style="font-size:10px;"></i> Pisos</span>
+        </div>
+        <button class="btn-whatsapp" onclick="abrirModal('Imperial Coffee')">
+          <i class="ti ti-brand-whatsapp" aria-hidden="true"></i> Solicitar Orçamento
+        </button>
+      </div>
+    </div>
+
+    <div class="pedra-card" style="border-top:3px solid #3a3c3a;">
+      <div class="pedra-thumb">
+        <svg width="100%" height="180" viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="300" height="180" fill="#1a1c1a"/>
+          <circle cx="30" cy="25" r="2" fill="#3a3c3a"/><circle cx="80" cy="45" r="1.5" fill="#4a4c4a"/>
+          <circle cx="150" cy="20" r="2.5" fill="#2a2c2a"/><circle cx="220" cy="55" r="1.8" fill="#3a3c3a"/>
+          <circle cx="270" cy="30" r="1.2" fill="#4a4c4a"/><circle cx="50" cy="90" r="2" fill="#3a3c3a"/>
+          <circle cx="120" cy="100" r="1.5" fill="#4a4c4a"/><circle cx="200" cy="85" r="2.2" fill="#2a2c2a"/>
+          <circle cx="260" cy="110" r="1.5" fill="#3a3c3a"/><circle cx="30" cy="140" r="1.8" fill="#4a4c4a"/>
+          <circle cx="100" cy="155" r="2" fill="#3a3c3a"/><circle cx="180" cy="145" r="1.5" fill="#2a2c2a"/>
+          <circle cx="240" cy="160" r="2.5" fill="#3a3c3a"/><circle cx="290" cy="140" r="1.2" fill="#4a4c4a"/>
+        </svg>
+      </div>
+      <div class="pedra-body">
+        <span class="pedra-badge"><i class="ti ti-diamond" aria-hidden="true"></i> Granito</span>
+        <div class="pedra-nome">Ubatuba</div>
+        <div class="pedra-desc">Pedra de tom escuro, elegante e resistente, ideal para ambientes modernos.</div>
+        <div class="pedra-usos">
+          <span class="uso-tag"><i class="ti ti-tools" style="font-size:10px;"></i> Bancadas</span>
+          <span class="uso-tag"><i class="ti ti-bath" style="font-size:10px;"></i> Banheiros</span>
+          <span class="uso-tag"><i class="ti ti-stairs" style="font-size:10px;"></i> Escadas</span>
+        </div>
+        <button class="btn-whatsapp" onclick="abrirModal('Ubatuba')">
+          <i class="ti ti-brand-whatsapp" aria-hidden="true"></i> Solicitar Orçamento
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- AVALIAÇÕES -->
+<section id="avaliacoes" class="avaliacoes">
+  <div class="section-header">
+    <div class="section-label"><i class="ti ti-message-star" aria-hidden="true" style="font-size:13px;margin-right:6px;vertical-align:-1px;"></i>Clientes</div>
+    <h2>Avaliações de Clientes</h2>
+  </div>
+  <div class="av-grid">
+    <div class="av-card">
+      <div class="av-stars">
+        <i class="ti ti-star-filled av-star" aria-hidden="true"></i><i class="ti ti-star-filled av-star" aria-hidden="true"></i><i class="ti ti-star-filled av-star" aria-hidden="true"></i><i class="ti ti-star-filled av-star" aria-hidden="true"></i><i class="ti ti-star-filled av-star" aria-hidden="true"></i>
+      </div>
+      <div class="av-text">"Trabalho impecável! O acabamento do mármore da minha cozinha ficou perfeito. Profissionais muito atenciosos."</div>
+      <div class="av-author">
+        <div class="av-avatar">MR</div>
+        <div><div class="av-name">Maria Rosa</div><div class="av-role">Cliente · Praia Grande</div></div>
+      </div>
+    </div>
+    <div class="av-card">
+      <div class="av-stars">
+        <i class="ti ti-star-filled av-star" aria-hidden="true"></i><i class="ti ti-star-filled av-star" aria-hidden="true"></i><i class="ti ti-star-filled av-star" aria-hidden="true"></i><i class="ti ti-star-filled av-star" aria-hidden="true"></i><i class="ti ti-star-filled av-star" aria-hidden="true"></i>
+      </div>
+      <div class="av-text">"Material de excelente qualidade e entrega no prazo. Recomendo para quem busca sofisticação e durabilidade."</div>
+      <div class="av-author">
+        <div class="av-avatar" style="background:var(--accent);">JS</div>
+        <div><div class="av-name">João Silva</div><div class="av-role">Cliente · Santos</div></div>
+      </div>
+    </div>
+    <div class="av-card">
+      <div class="av-stars">
+        <i class="ti ti-star-filled av-star" aria-hidden="true"></i><i class="ti ti-star-filled av-star" aria-hidden="true"></i><i class="ti ti-star-filled av-star" aria-hidden="true"></i><i class="ti ti-star-filled av-star" aria-hidden="true"></i><i class="ti ti-star-filled av-star" aria-hidden="true"></i>
+      </div>
+      <div class="av-text">"Transformaram meu banheiro com uma bancada de granito linda e resistente. Superou minhas expectativas!"</div>
+      <div class="av-author">
+        <div class="av-avatar" style="background:var(--primary-dark);">AL</div>
+        <div><div class="av-name">Ana Lima</div><div class="av-role">Cliente · São Vicente</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq-section">
+  <div class="section-header">
+    <div class="section-label"><i class="ti ti-help-circle" aria-hidden="true" style="font-size:13px;margin-right:6px;vertical-align:-1px;"></i>Dúvidas</div>
+    <h2>Perguntas Frequentes</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Vocês fazem medição e orçamento gratuito?
+        <i class="ti ti-plus" aria-hidden="true"></i>
+      </div>
+      <div class="faq-a">Sim! Oferecemos visita técnica e orçamento totalmente gratuitos, sem compromisso. Entre em contato pelo WhatsApp e agendamos.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Qual é o prazo de entrega e instalação?
+        <i class="ti ti-plus" aria-hidden="true"></i>
+      </div>
+      <div class="faq-a">O prazo varia conforme o tamanho e complexidade do projeto. Em geral, bancadas simples ficam prontas em 7 a 15 dias úteis após a aprovação do orçamento.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Vocês atendem qual região?
+        <i class="ti ti-plus" aria-hidden="true"></i>
+      </div>
+      <div class="faq-a">Atendemos Praia Grande e toda a Baixada Santista: Santos, São Vicente, Guarujá, Cubatão, Mongaguá, Itanhaém e Peruíbe.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Como faço para cuidar do granito e do mármore?
+        <i class="ti ti-plus" aria-hidden="true"></i>
+      </div>
+      <div class="faq-a">Use produtos neutros e panos macios. Evite vinagre, limão e produtos abrasivos. Pedras porosas como o mármore se beneficiam de impermeabilização periódica.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Vocês trabalham com quais tipos de pedra?
+        <i class="ti ti-plus" aria-hidden="true"></i>
+      </div>
+      <div class="faq-a">Trabalhamos com granitos, mármores, quartzitos, porcellanatos e pedras naturais diversas. Temos mais de 30 opções disponíveis em estoque. Solicite nosso catálogo completo pelo WhatsApp.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" class="contato">
+  <div class="contato-info">
+    <div class="section-label" style="color:var(--accent);"><i class="ti ti-headset" aria-hidden="true" style="font-size:13px;margin-right:6px;vertical-align:-1px;"></i>Fale Conosco</div>
+    <h2>Entre em<br>contato</h2>
+    <p>Estamos prontos para ajudar no seu projeto. Entre em contato e solicite um orçamento sem compromisso.</p>
+    <div class="contact-items">
+      <div class="contact-item">
+        <div class="contact-icon"><i class="ti ti-phone" aria-hidden="true"></i></div>
+        <div class="contact-text">
+          <div class="label">Telefone / WhatsApp</div>
+          <div class="value"><a href="tel:+5513997982047">(13) 99798-2047</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon"><i class="ti ti-mail" aria-hidden="true"></i></div>
+        <div class="contact-text">
+          <div class="label">E-mail</div>
+          <div class="value"><a href="mailto:contato@novacanaa.com.br">contato@novacanaa.com.br</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
+        <div class="contact-text">
+          <div class="label">Endereço</div>
+          <div class="value"><a href="https://www.google.com/maps/place/Marmoraria+Nova+Cana%C3%A3/@-24.0400453,-46.5262238,17z/data=!3m1!4b1!4m6!3m5!1s0x94ce21c8ab76dd45:0x1cafc4356c99def1!8m2!3d-24.0400453!4d-46.5236489!16s%2Fg%2F11ltlscgbg?entry=ttu&g_ep=EgoyMDI2MDUyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">Praia Grande, SP</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="horario-box">
+      <div class="horario-title"><i class="ti ti-clock" aria-hidden="true"></i> Horário de Atendimento</div>
+      <div class="horario-row"><span>Segunda a Sexta</span><span>08h – 18h</span></div>
+      <div class="horario-row"><span>Sábado</span><span>08h – 13h</span></div>
+      <div class="horario-row"><span>Domingo</span><span>Fechado</span></div>
+    </div>
+    <a class="contact-whatsapp" href="https://wa.me/5513997982047?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento." target="_blank" rel="noopener">
+      <i class="ti ti-brand-whatsapp"></i> Falar no WhatsApp
+    </a>
+  </div>
+
+  <div class="contato-form">
+    <h3>Envie uma mensagem</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="fNome">Nome</label>
+        <input class="form-input" id="fNome" type="text" placeholder="Seu nome" autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="fTel">Telefone</label>
+        <input class="form-input" id="fTel" type="tel" placeholder="(13) 00000-0000" autocomplete="tel">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="fEmail">E-mail</label>
+      <input class="form-input" id="fEmail" type="email" placeholder="seu@email.com" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="fMsg">Mensagem</label>
+      <textarea class="form-input" id="fMsg" placeholder="Descreva seu projeto..."></textarea>
+    </div>
+    <button class="btn-enviar" id="btnEnviar">
+      Enviar mensagem <i class="ti ti-send" aria-hidden="true"></i>
+    </button>
+    <div id="formMsg"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand"><i class="ti ti-diamond" aria-hidden="true" style="font-size:16px;vertical-align:-2px;margin-right:6px;color:var(--accent);"></i>Nova Canaã Marmoraria</div>
+    <div class="footer-copy"><a href="https://www.google.com/maps/place/Marmoraria+Nova+Cana%C3%A3/@-24.0400453,-46.5262238,17z/data=!3m1!4b1!4m6!3m5!1s0x94ce21c8ab76dd45:0x1cafc4356c99def1!8m2!3d-24.0400453!4d-46.5236489!16s%2Fg%2F11ltlscgbg?entry=ttu&g_ep=EgoyMDI2MDUyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" aria-label="Abrir localização no Google Maps"><i class="ti ti-map-pin" aria-hidden="true" style="font-size:11px;vertical-align:-1px;margin-right:3px;"></i>Praia Grande, SP</a> &nbsp;·&nbsp; (13) 99798-2047 &nbsp;·&nbsp; © 2025 Nova Canaã. Todos os direitos reservados.</div>
+  </div>
+  <div class="footer-socials">
+    <a class="social-btn" href="https://www.facebook.com/marmorarianovacanaa1?mibextid=qi2Omg&rdid=nvfvb2XzfJv5yTYn&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2FMGAZLg7KdaSJ5YEn%2F%3Fmibextid%3Dqi2Omg%26utm_source%3Dig%26utm_medium%3Dsocial%26utm_content%3Dlink_in_bio#" target="_blank" rel="noopener" aria-label="Facebook"><i class="ti ti-brand-facebook" aria-hidden="true"></i></a>
+    <a class="social-btn" href="https://www.instagram.com/marmorarianovacanaapg?utm_source=qr&igsh=MTJoZWJoYXI4aHJlNA%3D%3D" target="_blank" rel="noopener" aria-label="Instagram"><i class="ti ti-brand-instagram" aria-hidden="true"></i></a>
+    <a class="social-btn wa" href="https://wa.me/5513997982047" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i></a>
+  </div>
+</footer>
+
+<!-- BOTÃO FLUTUANTE WHATSAPP -->
+<a class="whatsapp-float" href="https://wa.me/5513997982047?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20orçamento." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <span class="whatsapp-float-tooltip">Fale conosco agora!</span>
+  <i class="ti ti-brand-whatsapp" aria-hidden="true"></i>
+</a>
+
+<!-- MODAL WHATSAPP -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <i class="ti ti-brand-whatsapp" aria-hidden="true"></i>
+      <div>
+        <h4 id="modalTitle">Solicitar Orçamento</h4>
+        <p>Envie sua mensagem direto no WhatsApp</p>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-product-name" id="modalProductName"></div>
+      <div class="modal-group">
+        <label class="modal-label" for="mNome">Seu nome</label>
+        <input class="modal-input" id="mNome" type="text" placeholder="Nome completo" autocomplete="name">
+      </div>
+      <div class="modal-group">
+        <label class="modal-label" for="mDetalhe">Detalhes do projeto (opcional)</label>
+        <textarea class="modal-input" id="mDetalhe" placeholder="Ex: Bancada de cozinha, 2m x 0,6m..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-modal-cancel" onclick="fecharModal()">Cancelar</button>
+      <button class="btn-modal-send" onclick="enviarWhatsApp()">
+        <i class="ti ti-brand-whatsapp" aria-hidden="true"></i> Enviar no WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
 
 <script>
-document.getElementById('btnEnviar').addEventListener('click', () => {
-  const inputs = document.querySelectorAll('.form-input');
-  let vazio = false;
-  inputs.forEach(i => { if (!i.value.trim()) vazio = true; });
-  const msg = document.getElementById('formMsg');
-  if (vazio) {
-    msg.style.display = 'block';
-    msg.style.background = '#FCEBEB';
-    msg.style.color = '#A32D2D';
-    msg.style.border = '0.5px solid #F09595';
-    msg.textContent = 'Preencha todos os campos antes de enviar.';
-  } else {
-    msg.style.display = 'block';
-    msg.style.background = '#EAF3DE';
-    msg.style.color = '#3B6D11';
-    msg.style.border = '0.5px solid #97C459';
-    msg.textContent = 'Mensagem enviada com sucesso! Entraremos em contato em breve.';
-    inputs.forEach(i => i.value = '');
-  }
-});
+  const WA = '5513997982047';
 
-document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => {
-    document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
-    link.classList.add('active');
+  function irPara(id) {
+    const el = document.querySelector(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  const sections = ['home','sobre','servicos','pedras','avaliacoes','faq','contato'];
+  const navLinks  = document.querySelectorAll('.nav-links a[data-section]');
+  function updateActiveNav() {
+    let current = 'home';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 90) current = id;
+    });
+    navLinks.forEach(a => a.classList.toggle('active', a.dataset.section === current));
+  }
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  updateActiveNav();
+
+  const hamburger  = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  function toggleMobileMenu() {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+    hamburger.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+    document.body.classList.toggle('menu-open', isOpen);
+  }
+
+  hamburger.addEventListener('click', toggleMobileMenu);
+
+  function closeMobile() {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.setAttribute('aria-label', 'Abrir menu');
+    document.body.classList.remove('menu-open');
+  }
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 900) closeMobile();
   });
-});
+
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  document.getElementById('btnEnviar').addEventListener('click', () => {
+    const nome  = document.getElementById('fNome').value.trim();
+    const tel   = document.getElementById('fTel').value.trim();
+    const email = document.getElementById('fEmail').value.trim();
+    const msg   = document.getElementById('fMsg').value.trim();
+    const div   = document.getElementById('formMsg');
+    if (!nome || !tel || !email || !msg) {
+      div.style.cssText = 'display:block;background:#FCEBEB;color:#A32D2D;border:.5px solid #F09595;padding:10px 14px;border-radius:8px;font-size:12px;font-weight:500;text-align:center;margin-top:12px;';
+      div.textContent = 'Preencha todos os campos antes de enviar.';
+      return;
+    }
+    const texto = `Olá! Meu nome é ${encodeURIComponent(nome)}.%0A📞 ${encodeURIComponent(tel)}%0A📧 ${encodeURIComponent(email)}%0A%0A${encodeURIComponent(msg)}`;
+    window.open(`https://wa.me/${WA}?text=${texto}`, '_blank', 'noopener');
+    div.style.cssText = 'display:block;background:#EAF3DE;color:#3B6D11;border:.5px solid #97C459;padding:10px 14px;border-radius:8px;font-size:12px;font-weight:500;text-align:center;margin-top:12px;';
+    div.textContent = 'Redirecionando para o WhatsApp...';
+    document.querySelectorAll('.form-input').forEach(i => i.value = '');
+  });
+
+  let produtoAtual = '';
+  function abrirModal(produto) {
+    produtoAtual = produto;
+    document.getElementById('modalProductName').textContent = produto;
+    document.getElementById('mNome').value = '';
+    document.getElementById('mDetalhe').value = '';
+    document.getElementById('modalOverlay').classList.add('open');
+    document.getElementById('mNome').focus();
+  }
+  function fecharModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+  function enviarWhatsApp() {
+    const nome    = document.getElementById('mNome').value.trim();
+    const detalhe = document.getElementById('mDetalhe').value.trim();
+    let texto = `Olá! Gostaria de solicitar um orçamento para *${produtoAtual}*.`;
+    if (nome)    texto += `%0A%0ANome: ${encodeURIComponent(nome)}`;
+    if (detalhe) texto += `%0ADetalhes: ${encodeURIComponent(detalhe)}`;
+    window.open(`https://wa.me/${WA}?text=${texto}`, '_blank', 'noopener');
+    fecharModal();
+  }
+  document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this) fecharModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
 </script>
 
 </body>
