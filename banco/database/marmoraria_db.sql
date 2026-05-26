@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 17/05/2026 às 03:15
+-- Tempo de geração: 26/05/2026 às 06:00
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -17,6 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+
+CREATE DATABASE marmoraria_db;
+
+USE marmoraria_db;
 --
 -- Banco de dados: `marmoraria_db`
 --
@@ -26,7 +30,6 @@ SET time_zone = "+00:00";
 --
 -- Estrutura para tabela `agenda`
 --
-
 
 CREATE TABLE `agenda` (
   `id_agenda` int(11) NOT NULL,
@@ -102,7 +105,7 @@ CREATE TABLE `estoque` (
 --
 
 INSERT INTO `estoque` (`id_estoque`, `id_produto`, `qt_estoque`, `dt_atualizacao`) VALUES
-(1, 1, 9, '2026-04-10'),
+(1, 1, 12, '2026-05-23'),
 (2, 2, 15, '2026-04-10'),
 (3, 3, 8, '2026-04-10'),
 (4, 4, 12, '2026-04-10'),
@@ -110,7 +113,8 @@ INSERT INTO `estoque` (`id_estoque`, `id_produto`, `qt_estoque`, `dt_atualizacao
 (6, 6, 50, '2026-04-10'),
 (7, 7, 25, '2026-04-10'),
 (8, 8, 18, '2026-04-10'),
-(9, 9, 10, '2026-05-02');
+(9, 9, 10, '2026-05-02'),
+(10, 16, 4, '2026-05-23');
 
 -- --------------------------------------------------------
 
@@ -142,24 +146,62 @@ INSERT INTO `movimentacao_estoque` (`id_movimentacao`, `id_produto`, `qt_movimen
 (9, 1, 5, '2026-04-10', 'Entrada'),
 (10, 1, 3, '2026-04-10', 'Saída'),
 (11, 1, 3, '2026-04-10', 'Saída'),
-(12, 9, 10, '2026-05-02', '');
+(12, 9, 10, '2026-05-02', ''),
+(13, 1, 1, '2026-05-23', 'Entrada'),
+(14, 1, 1, '2026-05-23', 'Entrada'),
+(15, 1, 1, '2026-05-23', 'Entrada'),
+(16, 1, 2, '2026-05-23', 'Saída'),
+(17, 1, 2, '2026-05-23', 'Entrada'),
+(18, 17, 3, '2026-05-23', 'Entrada'),
+(19, 16, 4, '2026-05-23', 'Entrada');
 
 --
 -- Acionadores `movimentacao_estoque`
 --
 DELIMITER $$
 CREATE TRIGGER `atualizar_estoque` AFTER INSERT ON `movimentacao_estoque` FOR EACH ROW BEGIN
+
     IF NEW.tp_movimentacao = 'Entrada' THEN
-        UPDATE estoque
-        SET qt_estoque = qt_estoque + NEW.qt_movimentacao,
-            dt_atualizacao = CURRENT_DATE
-        WHERE id_produto = NEW.id_produto;
+
+        IF EXISTS (
+            SELECT 1
+            FROM estoque
+            WHERE id_produto = NEW.id_produto
+        ) THEN
+
+            UPDATE estoque
+            SET 
+                qt_estoque = qt_estoque + NEW.qt_movimentacao,
+                dt_atualizacao = NOW()
+            WHERE id_produto = NEW.id_produto;
+
+        ELSE
+
+            INSERT INTO estoque
+            (
+                id_produto,
+                qt_estoque,
+                dt_atualizacao
+            )
+            VALUES
+            (
+                NEW.id_produto,
+                NEW.qt_movimentacao,
+                NOW()
+            );
+
+        END IF;
+
     ELSEIF NEW.tp_movimentacao = 'Saída' THEN
+
         UPDATE estoque
-        SET qt_estoque = qt_estoque - NEW.qt_movimentacao,
-            dt_atualizacao = CURRENT_DATE
+        SET 
+            qt_estoque = qt_estoque - NEW.qt_movimentacao,
+            dt_atualizacao = NOW()
         WHERE id_produto = NEW.id_produto;
+
     END IF;
+
 END
 $$
 DELIMITER ;
@@ -548,7 +590,8 @@ ALTER TABLE `venda`
 -- Índices de tabela `vendedor`
 --
 ALTER TABLE `vendedor`
-  ADD PRIMARY KEY (`id_vendedor`);
+  ADD PRIMARY KEY (`id_vendedor`),
+  ADD KEY `fk_vendedor_usuario` (`id_usuario`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas
@@ -576,13 +619,13 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de tabela `estoque`
 --
 ALTER TABLE `estoque`
-  MODIFY `id_estoque` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_estoque` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `movimentacao_estoque`
 --
 ALTER TABLE `movimentacao_estoque`
-  MODIFY `id_movimentacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_movimentacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de tabela `orcamento`
@@ -623,7 +666,8 @@ ALTER TABLE `venda`
 --
 -- AUTO_INCREMENT de tabela `vendedor`
 --
-ALTER TABLE `vendedor` MODIFY `id_vendedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `vendedor`
+  MODIFY `id_vendedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restrições para tabelas despejadas
@@ -677,7 +721,8 @@ ALTER TABLE `venda`
 --
 -- Restrições para tabelas `vendedor`
 --
-ALTER TABLE `vendedor` ADD CONSTRAINT `fk_vendedor_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
+ALTER TABLE `vendedor`
+  ADD CONSTRAINT `fk_vendedor_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
