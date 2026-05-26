@@ -74,14 +74,12 @@ include './includes/MovimentacaoEstoque.php';
             <div class="form-group">
                 <label class="form-label" for="id_produto">Produto</label>
                 <select class="form-input form-select" id="id_produto" name="id_produto" required>
-                    <option value="1">Disco de Corte Diamantado</option>
-                    <option value="2">Disco de Polimento</option>
-                    <option value="3">Resina Epóxi</option>
-                    <option value="4">Cera para Polimento</option>
-                    <option value="5">Silicone Incolor</option>
-                    <option value="6">Parafuso e Bucha</option>
-                    <option value="7">Lixa Diamantada</option>
-                    <option value="8">Pasta de Polimento</option>
+                    <option value="">Selecione um produto</option>
+                        <?php foreach ($produtos as $p): ?>
+                        <option value="<?= $p['id_produto'] ?>">
+                        <?= htmlspecialchars($p['nm_produto']) ?>
+                    </option>
+                        <?php endforeach; ?>
                 </select>
             </div>
 

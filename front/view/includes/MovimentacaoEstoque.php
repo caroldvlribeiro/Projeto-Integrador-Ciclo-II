@@ -26,3 +26,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $movimentacoes = $controller->listar();
+$produtos = $pdo->query("SELECT id_produto, nm_produto FROM produto ORDER BY nm_produto ASC")->fetchAll(PDO::FETCH_ASSOC);
