@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 27/05/2026 às 14:55
+-- Tempo de geração: 27/05/2026 às 17:57
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -110,7 +110,10 @@ INSERT INTO `cliente` (`cd_cliente`, `nm_cliente`, `cd_telefone`, `nm_endereco`)
 (35, 'Marcelo Ribeiro Costa', '(15) 99741-8820', 'Rua Joaquim Nabuco, 86 - Itu/SP'),
 (36, 'Ana Maria', '13998069689', 'rua maria isabel n255'),
 (37, 'Maria', '13998069687', 'rua maria isabel n255'),
-(38, 'Maria', '13998069685', 'rua maria isabel n255');
+(38, 'Maria', '13998069685', 'rua maria isabel n255'),
+(39, 'jacqueline da silva ribeiro', '(13)99865369562', 'rua silva oliveira'),
+(40, 'priscila', '(13)99865369564', 'rua silva oliveira'),
+(41, 'jose', '(13)99865369569', 'rua silva oliveira');
 
 -- --------------------------------------------------------
 
@@ -134,12 +137,8 @@ INSERT INTO `estoque` (`id_estoque`, `id_produto`, `qt_estoque`, `dt_atualizacao
 (2, 2, 15, '2026-04-10'),
 (3, 3, 8, '2026-04-10'),
 (4, 4, 12, '2026-04-10'),
-(5, 5, 20, '2026-04-10'),
 (6, 6, 50, '2026-04-10'),
-(7, 7, 25, '2026-04-10'),
 (8, 8, 18, '2026-04-10'),
-(9, 9, 10, '2026-05-02'),
-(10, 16, 4, '2026-05-23'),
 (11, 18, 30, '2026-05-26'),
 (12, 19, 20, '2026-05-26'),
 (13, 20, 38, '2026-05-26'),
@@ -155,9 +154,9 @@ INSERT INTO `estoque` (`id_estoque`, `id_produto`, `qt_estoque`, `dt_atualizacao
 (23, 30, 70, '2026-05-26'),
 (24, 31, 55, '2026-05-26'),
 (25, 32, 90, '2026-05-26'),
-(26, 33, 110, '2026-05-26'),
 (27, 34, 6, '2026-05-26'),
-(28, 35, 3, '2026-05-26');
+(28, 35, 3, '2026-05-26'),
+(29, 48, 9, '2026-05-27');
 
 -- --------------------------------------------------------
 
@@ -182,21 +181,15 @@ INSERT INTO `movimentacao_estoque` (`id_movimentacao`, `id_produto`, `qt_movimen
 (2, 2, 15, '2026-04-10', 'Entrada'),
 (3, 3, 8, '2026-04-10', 'Entrada'),
 (4, 4, 12, '2026-04-10', 'Entrada'),
-(5, 5, 20, '2026-04-10', 'Entrada'),
 (6, 6, 50, '2026-04-10', 'Entrada'),
-(7, 7, 25, '2026-04-10', 'Entrada'),
 (8, 8, 18, '2026-04-10', 'Entrada'),
-(9, 1, 5, '2026-04-10', 'Entrada'),
 (10, 1, 3, '2026-04-10', 'Saída'),
 (11, 1, 3, '2026-04-10', 'Saída'),
-(12, 9, 10, '2026-05-02', ''),
 (13, 1, 1, '2026-05-23', 'Entrada'),
-(14, 1, 1, '2026-05-23', 'Entrada'),
 (15, 1, 1, '2026-05-23', 'Entrada'),
 (16, 1, 2, '2026-05-23', 'Saída'),
 (17, 1, 2, '2026-05-23', 'Entrada'),
 (18, 17, 3, '2026-05-23', 'Entrada'),
-(19, 16, 4, '2026-05-23', 'Entrada'),
 (20, 18, 35, '2026-01-10', 'Entrada'),
 (21, 19, 20, '2026-01-15', 'Entrada'),
 (22, 20, 50, '2026-01-20', 'Entrada'),
@@ -212,11 +205,13 @@ INSERT INTO `movimentacao_estoque` (`id_movimentacao`, `id_produto`, `qt_movimen
 (32, 30, 70, '2026-03-20', 'Entrada'),
 (33, 31, 55, '2026-03-25', 'Entrada'),
 (34, 32, 90, '2026-04-02', 'Entrada'),
-(35, 33, 110, '2026-04-05', 'Entrada'),
 (36, 34, 6, '2026-04-10', 'Entrada'),
 (37, 35, 3, '2026-04-12', 'Entrada'),
 (38, 18, 5, '2026-04-18', 'Saída'),
-(39, 20, 12, '2026-04-25', 'Saída');
+(39, 20, 12, '2026-04-25', 'Saída'),
+(40, 48, 3, '2026-05-27', 'Entrada'),
+(41, 48, 3, '2026-05-27', 'Entrada'),
+(42, 48, 3, '2026-05-27', 'Entrada');
 
 --
 -- Acionadores `movimentacao_estoque`
@@ -318,7 +313,11 @@ INSERT INTO `orcamento` (`id_orcamento`, `cd_cliente`, `dt_pedido`, `vl_total`, 
 (21, 35, '2026-05-02', 4850.00, 'Bancada em L para cozinha', 'Polido', 3, 'Cuba Gourmet Inox', 'Dupla', '10cm', '2026-05-25', 'Aprovado'),
 (22, 36, '2026-05-04', 3200.00, 'Lavatório planejado', 'Escovado', 2, 'Cuba Esculpida', 'Reta', '6cm', '2026-05-20', 'Finalizado'),
 (23, 37, '2026-05-06', 9100.00, 'Área gourmet externa completa', 'Polido', 8, 'Cuba Gourmet Inox', 'Tripla', '15cm', '2026-06-02', 'Aprovado'),
-(24, 38, '2026-05-08', 2700.00, 'Mesa de jantar em granito', 'Fosco', 1, NULL, 'Reta', '4cm', '2026-05-28', 'Aberto');
+(24, 38, '2026-05-08', 2700.00, 'Mesa de jantar em granito', 'Fosco', 1, NULL, 'Reta', '4cm', '2026-05-28', 'Aberto'),
+(36, 39, '2026-05-27', 2500.00, 'balcão de 2,5', 'polido', 6, NULL, NULL, '15', '2026-06-16', 'Cancelado'),
+(37, 40, '2026-05-27', 5500.00, 'balcão de 4,5', 'polido', 6, NULL, NULL, '15', '2026-06-17', 'Aprovado'),
+(38, 41, '2026-05-27', 5500.00, 'balcão', 'polido', 10, NULL, NULL, '15', '2026-06-17', 'Aberto'),
+(39, 39, '2026-05-27', 2500.00, 'balcão de 2,5', 'polido', 10, NULL, NULL, '15', '2026-06-16', 'Aprovado');
 
 --
 -- Acionadores `orcamento`
@@ -366,7 +365,11 @@ INSERT INTO `pagamento` (`id_pagamento`, `id_orcamento`, `dt_pagamento_entrada`,
 (21, 21, '2026-05-03', '2026-05-22', 2500.00, 2350.00),
 (22, 22, '2026-05-05', '2026-05-18', 1700.00, 1500.00),
 (23, 23, '2026-05-07', '2026-05-30', 5000.00, 4100.00),
-(24, 24, '2026-05-09', '2026-05-26', 1400.00, 1300.00);
+(24, 24, '2026-05-09', '2026-05-26', 1400.00, 1300.00),
+(30, 36, '2026-05-27', '0000-00-00', 1750.00, 0.00),
+(31, 37, '2026-05-28', NULL, 5750.00, NULL),
+(32, 38, '2026-05-28', NULL, 5750.00, NULL),
+(33, 39, '2026-05-27', NULL, 1750.00, NULL);
 
 -- --------------------------------------------------------
 
@@ -429,18 +432,10 @@ INSERT INTO `produto` (`id_produto`, `id_categoria`, `nm_produto`, `ds_produto`,
 (2, 1, 'Disco de Polimento', 'Disco para polimento e acabamento da pedra', 95.00),
 (3, 2, 'Resina Epóxi', 'Resina para acabamento e correção de imperfeições na pedra', 120.00),
 (4, 2, 'Cera para Polimento', 'Cera utilizada no acabamento final da pedra', 45.00),
-(5, 3, 'Silicone Incolor', 'Silicone utilizado para vedação e fixação', 22.00),
 (6, 3, 'Parafuso e Bucha', 'Conjunto para fixação de peças de mármore', 12.00),
-(7, 4, 'Lixa Diamantada', 'Lixa especial para acabamento em mármore e granito', 35.00),
 (8, 4, 'Pasta de Polimento', 'Pasta abrasiva para polimento de superfícies', 40.00),
-(9, 1, 'Disco de Corte Diamantado', 'Disco utilizado para corte de granito e mármore', 180.00),
-(10, 1, 'Disco de Polimento', 'Disco para polimento e acabamento da pedra', 95.00),
-(11, 2, 'Resina Epóxi', 'Resina para acabamento e correção de imperfeições na pedra', 120.00),
-(12, 2, 'Cera para Polimento', 'Cera utilizada no acabamento final da pedra', 45.00),
 (13, 3, 'Silicone Incolor', 'Silicone utilizado para vedação e fixação', 22.00),
-(14, 3, 'Parafuso e Bucha', 'Conjunto para fixação de peças de mármore', 12.00),
 (15, 4, 'Lixa Diamantada', 'Lixa especial para acabamento em mármore e granito', 35.00),
-(16, 4, 'Pasta de Polimento', 'Pasta abrasiva para polimento de superfícies', 40.00),
 (17, 5, 'Cuba Inox Luxo', 'Cuba de embutir', 260.00),
 (18, 1, 'Disco Turbo Diamantado', 'Disco de alta precisão para corte', 189.90),
 (19, 1, 'Serra Copo Diamantada', 'Serra para perfuração em pedras', 129.50),
@@ -457,7 +452,6 @@ INSERT INTO `produto` (`id_produto`, `id_categoria`, `nm_produto`, `ds_produto`,
 (30, 7, 'Cantoneira Alumínio', 'Estrutura de apoio metálica', 24.90),
 (31, 7, 'Perfil de Acabamento', 'Perfil metálico decorativo', 34.50),
 (32, 8, 'Cola PU Extra Forte', 'Fixação de pedras e cubas', 49.90),
-(33, 8, 'Silicone Transparente', 'Vedação de acabamento', 19.90),
 (34, 9, 'Politriz Angular', 'Equipamento para polimento', 589.00),
 (35, 9, 'Cortadora Elétrica', 'Máquina de corte profissional', 2890.00),
 (36, 10, 'Luva Anticorte', 'Proteção para manuseio', 29.90),
@@ -466,7 +460,9 @@ INSERT INTO `produto` (`id_produto`, `id_categoria`, `nm_produto`, `ds_produto`,
 (39, 11, 'Nicho Decorativo', 'Nicho em pedra natural', 280.00),
 (40, 2, 'Resina Cristal', 'Resina para acabamento brilhante', 74.90),
 (41, 4, 'Esponja Abrasiva', 'Acabamento de superfícies', 12.50),
-(42, 3, 'Bucha de Fixação', 'Fixação para instalação', 2.50);
+(42, 3, 'Bucha de Fixação', 'Fixação para instalação', 2.50),
+(48, 2, 'Lixa 900', 'lixa d\'agua pra preparação e nivelamento', 10.00),
+(49, 2, 'Lixa 400', 'lixa d\'agua pra preparação e nivelamento', 10.00);
 
 -- --------------------------------------------------------
 
@@ -522,7 +518,11 @@ INSERT INTO `venda` (`id_venda`, `id_orcamento`, `id_vendedor`, `dt_venda`, `vl_
 (10, 13, 2, '2026-03-02', 8900.00),
 (11, 21, 1, '2026-05-03', 4850.00),
 (12, 22, 2, '2026-05-05', 3200.00),
-(13, 23, 1, '2026-05-07', 9100.00);
+(13, 23, 1, '2026-05-07', 9100.00),
+(53, 36, 2, '2026-05-27', 2500.00),
+(54, 37, 1, '2026-05-27', 5500.00),
+(55, 38, 2, '2026-05-27', 5500.00),
+(56, 39, 2, '2026-05-27', 2500.00);
 
 -- --------------------------------------------------------
 
@@ -745,31 +745,31 @@ ALTER TABLE `categoria_produto`
 -- AUTO_INCREMENT de tabela `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `cd_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `cd_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de tabela `estoque`
 --
 ALTER TABLE `estoque`
-  MODIFY `id_estoque` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id_estoque` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de tabela `movimentacao_estoque`
 --
 ALTER TABLE `movimentacao_estoque`
-  MODIFY `id_movimentacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id_movimentacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de tabela `orcamento`
 --
 ALTER TABLE `orcamento`
-  MODIFY `id_orcamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id_orcamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT de tabela `pagamento`
 --
 ALTER TABLE `pagamento`
-  MODIFY `id_pagamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id_pagamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de tabela `pedra`
@@ -781,7 +781,7 @@ ALTER TABLE `pedra`
 -- AUTO_INCREMENT de tabela `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
@@ -793,7 +793,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `venda`
 --
 ALTER TABLE `venda`
-  MODIFY `id_venda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id_venda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT de tabela `vendedor`
