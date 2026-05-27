@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 26/05/2026 às 06:00
+-- Tempo de geração: 27/05/2026 às 14:55
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -17,14 +17,12 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
-
-CREATE DATABASE marmoraria_db;
-
-USE marmoraria_db;
 --
 -- Banco de dados: `marmoraria_db`
 --
+CREATE DATABASE marmoraria_db;
 
+USE marmoraria_db;
 -- --------------------------------------------------------
 
 --
@@ -62,7 +60,13 @@ INSERT INTO `categoria_produto` (`id_categoria`, `nm_categoria`, `ds_categoria`)
 (2, 'Insumos de acabamento', 'Materiais utilizados no acabamento das peças'),
 (3, 'Fixação e instalação.', 'Materiais usados na instalação das pedras!'),
 (4, 'Consumíveis de produção', 'Materiais consumidos durante o processo produtivo'),
-(5, 'Cubas', 'Cubas de Inox e Porcelana');
+(5, 'Cubas', 'Cubas de Inox e Porcelana'),
+(6, 'Produtos de Limpeza', 'Produtos para limpeza e conservação de mármores e granitos'),
+(7, 'Ferragens', 'Ferragens utilizadas na instalação de pedras'),
+(8, 'Adesivos e Colas', 'Materiais para fixação e acabamento'),
+(9, 'Equipamentos Elétricos', 'Equipamentos usados na produção'),
+(10, 'EPIs', 'Equipamentos de proteção individual'),
+(11, 'Acessórios Decorativos', 'Itens decorativos para acabamento de ambientes');
 
 -- --------------------------------------------------------
 
@@ -82,7 +86,28 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`cd_cliente`, `nm_cliente`, `cd_telefone`, `nm_endereco`) VALUES
+(14, 'Carlos Henrique Souza', '(15) 99711-2456', 'Rua das Palmeiras, 120 - Sorocaba/SP'),
 (15, 'Ana Julia', '13998069688', 'ddfsff'),
+(16, 'Fernanda Oliveira Lima', '(15) 99845-7741', 'Av. São Paulo, 450 - Sorocaba/SP'),
+(17, 'Ricardo Mendes Silva', '(15) 99632-8810', 'Rua Antônio Perez Hernandez, 88 - Votorantim/SP'),
+(18, 'Juliana Martins Costa', '(15) 99124-3367', 'Rua do Sol, 501 - Sorocaba/SP'),
+(19, 'André Felipe Moraes', '(15) 99773-1102', 'Alameda Campolim, 220 - Sorocaba/SP'),
+(20, 'Camila Ribeiro Alves', '(15) 99281-5590', 'Rua Maria Aparecida, 76 - Itu/SP'),
+(21, 'Lucas Fernandes Rocha', '(15) 99812-6644', 'Rua Central, 311 - Sorocaba/SP'),
+(22, 'Patrícia Gomes Ferreira', '(15) 99177-4020', 'Av. Ipanema, 920 - Sorocaba/SP'),
+(23, 'Eduardo Nunes Barbosa', '(15) 99654-7821', 'Rua Chile, 654 - Sorocaba/SP'),
+(24, 'Mariana Lopes Santana', '(15) 99321-5588', 'Rua XV de Novembro, 77 - Sorocaba/SP'),
+(25, 'Thiago Almeida Prado', '(15) 99902-7731', 'Rua Benedito Ferreira, 198 - Votorantim/SP'),
+(26, 'Renata Cardoso Mendes', '(15) 99445-8812', 'Rua Professora Maria, 412 - Sorocaba/SP'),
+(27, 'Gustavo Henrique Dias', '(15) 99112-6400', 'Av. Itavuvu, 1590 - Sorocaba/SP'),
+(28, 'Larissa Monteiro Silva', '(15) 99780-1122', 'Rua Goiás, 140 - Itu/SP'),
+(29, 'Bruno César Teixeira', '(15) 99671-2234', 'Rua Santa Clara, 901 - Sorocaba/SP'),
+(30, 'Vanessa Cristina Rocha', '(15) 99876-4450', 'Rua Aparecida, 250 - Sorocaba/SP'),
+(31, 'Felipe Augusto Martins', '(15) 99214-9901', 'Rua Espanha, 100 - Votorantim/SP'),
+(32, 'Aline Pereira Gomes', '(15) 99955-7832', 'Rua Atanázio Soares, 665 - Sorocaba/SP'),
+(33, 'Rodrigo Vieira Campos', '(15) 99345-2281', 'Av. Barão de Tatuí, 300 - Sorocaba/SP'),
+(34, 'Tatiane Moreira Lopes', '(15) 99618-4500', 'Rua Arthur Bernardes, 720 - Sorocaba/SP'),
+(35, 'Marcelo Ribeiro Costa', '(15) 99741-8820', 'Rua Joaquim Nabuco, 86 - Itu/SP'),
 (36, 'Ana Maria', '13998069689', 'rua maria isabel n255'),
 (37, 'Maria', '13998069687', 'rua maria isabel n255'),
 (38, 'Maria', '13998069685', 'rua maria isabel n255');
@@ -114,7 +139,25 @@ INSERT INTO `estoque` (`id_estoque`, `id_produto`, `qt_estoque`, `dt_atualizacao
 (7, 7, 25, '2026-04-10'),
 (8, 8, 18, '2026-04-10'),
 (9, 9, 10, '2026-05-02'),
-(10, 16, 4, '2026-05-23');
+(10, 16, 4, '2026-05-23'),
+(11, 18, 30, '2026-05-26'),
+(12, 19, 20, '2026-05-26'),
+(13, 20, 38, '2026-05-26'),
+(14, 21, 40, '2026-05-26'),
+(15, 22, 300, '2026-05-26'),
+(16, 23, 45, '2026-05-26'),
+(17, 24, 120, '2026-05-26'),
+(18, 25, 100, '2026-05-26'),
+(19, 26, 12, '2026-05-26'),
+(20, 27, 8, '2026-05-26'),
+(21, 28, 60, '2026-05-26'),
+(22, 29, 40, '2026-05-26'),
+(23, 30, 70, '2026-05-26'),
+(24, 31, 55, '2026-05-26'),
+(25, 32, 90, '2026-05-26'),
+(26, 33, 110, '2026-05-26'),
+(27, 34, 6, '2026-05-26'),
+(28, 35, 3, '2026-05-26');
 
 -- --------------------------------------------------------
 
@@ -153,7 +196,27 @@ INSERT INTO `movimentacao_estoque` (`id_movimentacao`, `id_produto`, `qt_movimen
 (16, 1, 2, '2026-05-23', 'Saída'),
 (17, 1, 2, '2026-05-23', 'Entrada'),
 (18, 17, 3, '2026-05-23', 'Entrada'),
-(19, 16, 4, '2026-05-23', 'Entrada');
+(19, 16, 4, '2026-05-23', 'Entrada'),
+(20, 18, 35, '2026-01-10', 'Entrada'),
+(21, 19, 20, '2026-01-15', 'Entrada'),
+(22, 20, 50, '2026-01-20', 'Entrada'),
+(23, 21, 40, '2026-02-02', 'Entrada'),
+(24, 22, 300, '2026-02-05', 'Entrada'),
+(25, 23, 45, '2026-02-10', 'Entrada'),
+(26, 24, 120, '2026-02-14', 'Entrada'),
+(27, 25, 100, '2026-02-18', 'Entrada'),
+(28, 26, 12, '2026-03-01', 'Entrada'),
+(29, 27, 8, '2026-03-05', 'Entrada'),
+(30, 28, 60, '2026-03-10', 'Entrada'),
+(31, 29, 40, '2026-03-15', 'Entrada'),
+(32, 30, 70, '2026-03-20', 'Entrada'),
+(33, 31, 55, '2026-03-25', 'Entrada'),
+(34, 32, 90, '2026-04-02', 'Entrada'),
+(35, 33, 110, '2026-04-05', 'Entrada'),
+(36, 34, 6, '2026-04-10', 'Entrada'),
+(37, 35, 3, '2026-04-12', 'Entrada'),
+(38, 18, 5, '2026-04-18', 'Saída'),
+(39, 20, 12, '2026-04-25', 'Saída');
 
 --
 -- Acionadores `movimentacao_estoque`
@@ -232,10 +295,30 @@ CREATE TABLE `orcamento` (
 --
 
 INSERT INTO `orcamento` (`id_orcamento`, `cd_cliente`, `dt_pedido`, `vl_total`, `ds_descricao`, `acabamento`, `id_pedra`, `nm_cuba`, `vista`, `saia`, `dt_entrega`, `st_orcamento`) VALUES
-(30, 15, '2026-05-14', 1500.00, 'as', 'Polido', 1, 'Não', NULL, NULL, '2026-05-28', 'Aprovado'),
-(32, 36, '2026-05-01', 2500.00, 'ghjhjh', 'Polido', 1, NULL, NULL, NULL, '2026-05-28', 'Aprovado'),
-(33, 37, '2026-05-08', 2500.00, 'bnbnbbbnnnbnbbnbnbn', 'Polido', 1, NULL, NULL, NULL, '2026-05-28', 'Aprovado'),
-(34, 38, '2026-05-08', 2500.00, 'adsdsdsd', 'Polido', 1, NULL, NULL, NULL, '2026-05-28', 'Aprovado');
+(1, 15, '2026-01-05', 4200.00, 'Bancada de cozinha com ilha', 'Polido', 1, 'Cuba Gourmet Inox', 'Reta', '10cm', '2026-01-25', 'Aprovado'),
+(2, 16, '2026-01-08', 2850.00, 'Lavabo planejado', 'Escovado', 2, 'Cuba Esculpida', 'Reta', '8cm', '2026-01-28', 'Finalizado'),
+(3, 17, '2026-01-10', 5100.00, 'Cozinha completa em quartzo', 'Polido', 3, 'Cuba Gourmet Inox', 'Dupla', '12cm', '2026-02-05', 'Aprovado'),
+(4, 18, '2026-01-15', 1900.00, 'Pia simples para área gourmet', 'Fosco', 4, 'Cuba Simples', 'Reta', '6cm', '2026-02-02', 'Aberto'),
+(5, 19, '2026-01-20', 7600.00, 'Escada em mármore', 'Polido', 6, NULL, 'Reta', '5cm', '2026-02-20', 'Aprovado'),
+(6, 20, '2026-01-25', 3300.00, 'Bancada de banheiro', 'Levigado', 5, 'Cuba Esculpida', 'Reta', '7cm', '2026-02-15', 'Finalizado'),
+(7, 21, '2026-02-02', 9800.00, 'Área gourmet completa', 'Polido', 8, 'Cuba Gourmet Inox', 'Dupla', '15cm', '2026-03-01', 'Aprovado'),
+(8, 22, '2026-02-04', 2500.00, 'Nichos decorativos', 'Fosco', 4, NULL, 'Reta', '4cm', '2026-02-22', 'Cancelado'),
+(9, 23, '2026-02-10', 6200.00, 'Balcão para cozinha americana', 'Polido', 7, 'Cuba Gourmet Inox', 'Curva', '10cm', '2026-03-03', 'Finalizado'),
+(10, 24, '2026-02-14', 14200.00, 'Projeto completo de cozinha', 'Polido', 10, 'Cuba Gourmet Inox', 'Dupla', '18cm', '2026-03-20', 'Aprovado'),
+(11, 25, '2026-02-18', 3100.00, 'Lavatório em mármore', 'Escovado', 2, 'Cuba Esculpida', 'Reta', '6cm', '2026-03-05', 'Aberto'),
+(12, 26, '2026-02-22', 4700.00, 'Bancada gourmet externa', 'Fosco', 5, 'Cuba Inox', 'Reta', '8cm', '2026-03-15', 'Aprovado'),
+(13, 27, '2026-03-01', 8900.00, 'Revestimento de escada', 'Polido', 9, NULL, 'Reta', '5cm', '2026-03-28', 'Finalizado'),
+(14, 28, '2026-03-05', 5300.00, 'Pia dupla de cozinha', 'Levigado', 3, 'Cuba Gourmet Inox', 'Dupla', '12cm', '2026-03-30', 'Aprovado'),
+(15, 29, '2026-03-08', 2200.00, 'Mesa em granito', 'Polido', 1, NULL, 'Reta', '4cm', '2026-03-25', 'Finalizado'),
+(16, 30, '2026-03-12', 6800.00, 'Bancadas para escritório', 'Escovado', 7, NULL, 'Reta', '7cm', '2026-04-05', 'Aberto'),
+(17, 31, '2026-03-18', 3950.00, 'Lavanderia planejada', 'Fosco', 4, 'Tanque Inox', 'Reta', '6cm', '2026-04-08', 'Aprovado'),
+(18, 32, '2026-03-22', 11200.00, 'Cozinha premium', 'Polido', 8, 'Cuba Gourmet Inox', 'Tripla', '20cm', '2026-04-20', 'Finalizado'),
+(19, 33, '2026-04-02', 2600.00, 'Bancada de banheiro simples', 'Levigado', 5, 'Cuba Esculpida', 'Reta', '5cm', '2026-04-25', 'Cancelado'),
+(20, 34, '2026-04-05', 7400.00, 'Projeto de churrasqueira', 'Polido', 1, 'Cuba Gourmet Inox', 'Dupla', '14cm', '2026-05-02', 'Aprovado'),
+(21, 35, '2026-05-02', 4850.00, 'Bancada em L para cozinha', 'Polido', 3, 'Cuba Gourmet Inox', 'Dupla', '10cm', '2026-05-25', 'Aprovado'),
+(22, 36, '2026-05-04', 3200.00, 'Lavatório planejado', 'Escovado', 2, 'Cuba Esculpida', 'Reta', '6cm', '2026-05-20', 'Finalizado'),
+(23, 37, '2026-05-06', 9100.00, 'Área gourmet externa completa', 'Polido', 8, 'Cuba Gourmet Inox', 'Tripla', '15cm', '2026-06-02', 'Aprovado'),
+(24, 38, '2026-05-08', 2700.00, 'Mesa de jantar em granito', 'Fosco', 1, NULL, 'Reta', '4cm', '2026-05-28', 'Aberto');
 
 --
 -- Acionadores `orcamento`
@@ -270,10 +353,20 @@ CREATE TABLE `pagamento` (
 --
 
 INSERT INTO `pagamento` (`id_pagamento`, `id_orcamento`, `dt_pagamento_entrada`, `dt_pagamento_saida`, `vl_pagamento_entrada`, `vl_pagamento_saida`) VALUES
-(16, 30, '2026-05-08', '0000-00-00', 750.00, 0.00),
-(18, 32, '2026-05-08', NULL, 1250.00, NULL),
-(19, 33, '2026-05-08', NULL, 1250.00, NULL),
-(20, 34, '2026-05-08', NULL, 1250.00, NULL);
+(11, 14, '2026-03-06', '2026-03-28', 2700.00, 2600.00),
+(12, 15, '2026-03-09', '2026-03-20', 1200.00, 1000.00),
+(13, 16, '2026-03-13', '2026-04-02', 3400.00, 3400.00),
+(14, 17, '2026-03-19', '2026-04-05', 2000.00, 1950.00),
+(15, 18, '2026-03-23', '2026-04-18', 6000.00, 5200.00),
+(16, 19, '2026-04-03', '2026-04-20', 1300.00, 1300.00),
+(17, 20, '2026-04-06', '2026-04-28', 3800.00, 3600.00),
+(18, 4, '2026-01-16', '2026-01-30', 950.00, 950.00),
+(19, 8, '2026-02-05', '2026-02-18', 1250.00, 1250.00),
+(20, 11, '2026-02-19', '2026-03-02', 1600.00, 1500.00),
+(21, 21, '2026-05-03', '2026-05-22', 2500.00, 2350.00),
+(22, 22, '2026-05-05', '2026-05-18', 1700.00, 1500.00),
+(23, 23, '2026-05-07', '2026-05-30', 5000.00, 4100.00),
+(24, 24, '2026-05-09', '2026-05-26', 1400.00, 1300.00);
 
 -- --------------------------------------------------------
 
@@ -297,7 +390,13 @@ INSERT INTO `pedra` (`id_pedra`, `nm_pedra`, `ds_pedra`, `vl_compra_pedra`, `vl_
 (1, 'Granito Verde Ubatuba', 'Granito verde escuro', 110.00, 550.00),
 (2, 'Granito Preto São Gabriel', 'Cor preta, granito', 200.00, 1000.00),
 (3, 'Granito Branco Itaúnas', 'Cor branca com veios cinza, granito', 210.00, 1050.00),
-(4, 'Granito Preto São Gabriel', 'Pedra polida', 350.00, 1750.00);
+(4, 'Granito Preto São Gabriel', 'Pedra polida', 350.00, 1750.00),
+(5, 'Granito Verde Ubatuba', 'Granito verde escuro resistente', 240.00, 1200.00),
+(6, 'Mármore Travertino', 'Mármore bege clássico', 330.00, 1650.00),
+(7, 'Quartzo Cinza', 'Quartzo moderno para cozinhas', 310.00, 1550.00),
+(8, 'Granito Preto Absoluto', 'Granito premium preto intenso', 420.00, 2100.00),
+(9, 'Nano Glass', 'Superfície branca sofisticada', 520.00, 2600.00),
+(10, 'Dekton Sirius', 'Superfície ultracompacta preta', 610.00, 3050.00);
 
 --
 -- Acionadores `pedra`
@@ -342,7 +441,32 @@ INSERT INTO `produto` (`id_produto`, `id_categoria`, `nm_produto`, `ds_produto`,
 (14, 3, 'Parafuso e Bucha', 'Conjunto para fixação de peças de mármore', 12.00),
 (15, 4, 'Lixa Diamantada', 'Lixa especial para acabamento em mármore e granito', 35.00),
 (16, 4, 'Pasta de Polimento', 'Pasta abrasiva para polimento de superfícies', 40.00),
-(17, 5, 'Cuba Inox Luxo', 'Cuba de embutir', 260.00);
+(17, 5, 'Cuba Inox Luxo', 'Cuba de embutir', 260.00),
+(18, 1, 'Disco Turbo Diamantado', 'Disco de alta precisão para corte', 189.90),
+(19, 1, 'Serra Copo Diamantada', 'Serra para perfuração em pedras', 129.50),
+(20, 2, 'Selador Impermeabilizante', 'Proteção contra manchas', 89.90),
+(21, 2, 'Pasta de Polimento Premium', 'Acabamento brilhante', 64.90),
+(22, 3, 'Parafuso Inox 8mm', 'Fixação de estruturas', 1.80),
+(23, 3, 'Suporte Metálico Reforçado', 'Suporte para bancadas', 38.90),
+(24, 4, 'Lixa D\'Água 400', 'Lixa para acabamento fino', 6.50),
+(25, 4, 'Lixa D\'Água 1200', 'Lixa superfina para polimento', 8.90),
+(26, 5, 'Cuba Gourmet Inox 70cm', 'Cuba de cozinha gourmet', 649.90),
+(27, 5, 'Cuba Esculpida Branca', 'Cuba elegante para banheiro', 520.00),
+(28, 6, 'Limpa Mármore Concentrado', 'Produto de limpeza profissional', 42.50),
+(29, 6, 'Removedor de Manchas', 'Remove manchas em granito', 58.90),
+(30, 7, 'Cantoneira Alumínio', 'Estrutura de apoio metálica', 24.90),
+(31, 7, 'Perfil de Acabamento', 'Perfil metálico decorativo', 34.50),
+(32, 8, 'Cola PU Extra Forte', 'Fixação de pedras e cubas', 49.90),
+(33, 8, 'Silicone Transparente', 'Vedação de acabamento', 19.90),
+(34, 9, 'Politriz Angular', 'Equipamento para polimento', 589.00),
+(35, 9, 'Cortadora Elétrica', 'Máquina de corte profissional', 2890.00),
+(36, 10, 'Luva Anticorte', 'Proteção para manuseio', 29.90),
+(37, 10, 'Óculos de Segurança', 'Proteção ocular profissional', 18.90),
+(38, 11, 'Rodapé em Granito', 'Acabamento decorativo', 120.00),
+(39, 11, 'Nicho Decorativo', 'Nicho em pedra natural', 280.00),
+(40, 2, 'Resina Cristal', 'Resina para acabamento brilhante', 74.90),
+(41, 4, 'Esponja Abrasiva', 'Acabamento de superfícies', 12.50),
+(42, 3, 'Bucha de Fixação', 'Fixação para instalação', 2.50);
 
 -- --------------------------------------------------------
 
@@ -386,11 +510,19 @@ CREATE TABLE `venda` (
 --
 
 INSERT INTO `venda` (`id_venda`, `id_orcamento`, `id_vendedor`, `dt_venda`, `vl_total`) VALUES
-(45, 30, 1, '2026-05-14', 1500.00),
-(47, 30, 1, '2026-05-15', 1500.00),
-(48, 32, 1, '2026-05-01', 2500.00),
-(49, 33, 1, '2026-05-08', 2500.00),
-(50, 34, 1, '2026-05-08', 2500.00);
+(1, 1, 1, '2026-01-06', 4200.00),
+(2, 2, 2, '2026-01-09', 2850.00),
+(3, 3, 1, '2026-01-12', 5100.00),
+(4, 5, 2, '2026-01-22', 7600.00),
+(5, 6, 1, '2026-01-27', 3300.00),
+(6, 7, 2, '2026-02-05', 9800.00),
+(7, 9, 1, '2026-02-11', 6200.00),
+(8, 10, 2, '2026-02-16', 14200.00),
+(9, 12, 1, '2026-02-24', 4700.00),
+(10, 13, 2, '2026-03-02', 8900.00),
+(11, 21, 1, '2026-05-03', 4850.00),
+(12, 22, 2, '2026-05-05', 3200.00),
+(13, 23, 1, '2026-05-07', 9100.00);
 
 -- --------------------------------------------------------
 
@@ -607,7 +739,7 @@ ALTER TABLE `agenda`
 -- AUTO_INCREMENT de tabela `categoria_produto`
 --
 ALTER TABLE `categoria_produto`
-  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `cliente`
@@ -619,13 +751,13 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de tabela `estoque`
 --
 ALTER TABLE `estoque`
-  MODIFY `id_estoque` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_estoque` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de tabela `movimentacao_estoque`
 --
 ALTER TABLE `movimentacao_estoque`
-  MODIFY `id_movimentacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_movimentacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT de tabela `orcamento`
@@ -637,19 +769,19 @@ ALTER TABLE `orcamento`
 -- AUTO_INCREMENT de tabela `pagamento`
 --
 ALTER TABLE `pagamento`
-  MODIFY `id_pagamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_pagamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de tabela `pedra`
 --
 ALTER TABLE `pedra`
-  MODIFY `id_pedra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_pedra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
@@ -661,7 +793,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `venda`
 --
 ALTER TABLE `venda`
-  MODIFY `id_venda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id_venda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT de tabela `vendedor`
