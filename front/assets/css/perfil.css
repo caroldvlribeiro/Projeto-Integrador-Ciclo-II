@@ -1,0 +1,327 @@
+/* perfil.css — integrado ao design system base.css */
+
+body {
+    background: var(--color-bg-soft);
+}
+
+/* ── LAYOUT ── */
+main {
+    width: min(1120px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 44px 0 64px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+}
+
+/* ── HERO DO PERFIL ── */
+.perfil-hero {
+    background: var(--color-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+    position: relative;
+    overflow: hidden;
+}
+
+.perfil-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 80% 50%, rgba(92, 147, 170, 0.18) 0%, transparent 60%),
+        radial-gradient(circle at 10% 80%, rgba(175, 193, 248, 0.10) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.perfil-avatar {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid rgba(175, 193, 248, 0.4);
+}
+
+.perfil-avatar svg {
+    width: 48px;
+    height: 48px;
+}
+
+.perfil-info {
+    flex: 1;
+    position: relative;
+}
+
+.perfil-info h1 {
+    font-family: var(--font-primary);
+    color: var(--color-text-light);
+    font-size: var(--text-display);
+    line-height: 1.1;
+    margin-bottom: var(--space-xs);
+}
+
+.perfil-info .perfil-email {
+    color: var(--color-accent-light);
+    font-size: var(--text-md);
+    font-weight: var(--font-regular);
+    opacity: 0.85;
+}
+
+.perfil-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-top: var(--space-md);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.perfil-badge.admin {
+    background: rgba(175, 193, 248, 0.18);
+    color: var(--color-accent-light);
+    border: 1px solid rgba(175, 193, 248, 0.3);
+}
+
+.perfil-badge.vendedor {
+    background: rgba(92, 147, 170, 0.2);
+    color: #a8d8ea;
+    border: 1px solid rgba(92, 147, 170, 0.35);
+}
+
+.perfil-badge::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.8;
+}
+
+.perfil-hero-actions {
+    position: relative;
+}
+
+.btn-relatorio {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-xl);
+    background: var(--color-accent);
+    color: var(--color-text-light);
+    font-family: var(--font-secondary);
+    font-size: var(--text-sm);
+    font-weight: var(--font-bold);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    transition: background 0.2s, transform 0.2s;
+    white-space: nowrap;
+}
+
+.btn-relatorio:hover {
+    background: #4a7d90;
+    transform: translateY(-2px);
+}
+
+/* ── SEÇÃO DE VENDAS ── */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-lg);
+}
+
+.section-title {
+    font-family: var(--font-primary);
+    font-size: var(--text-xl);
+    color: var(--color-primary);
+}
+
+.section-count {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-medium);
+    background: var(--color-bg-soft);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-border);
+}
+
+/* ── CARD WRAPPER ── */
+.card-section {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+}
+
+/* ── TABELA ── */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    background: var(--color-bg-soft);
+    color: var(--color-text-secondary);
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: var(--space-md) var(--space-lg);
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+tbody td {
+    padding: var(--space-md) var(--space-lg);
+    color: var(--color-text);
+    font-size: var(--text-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr {
+    transition: background 0.15s;
+}
+
+tbody tr:hover {
+    background: var(--color-bg-soft);
+}
+
+.td-id {
+    font-family: var(--font-primary);
+    font-weight: var(--font-bold);
+    color: var(--color-primary);
+    font-size: var(--text-lg);
+}
+
+.td-valor {
+    font-weight: var(--font-bold);
+    color: var(--color-primary);
+}
+
+.td-data {
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+}
+
+/* ── EMPTY STATE ── */
+.empty-state {
+    padding: var(--space-2xl) var(--space-lg);
+    text-align: center;
+    color: var(--color-text-secondary);
+}
+
+.empty-state p {
+    font-size: var(--text-md);
+    margin-top: var(--space-sm);
+}
+
+/* ── NAV ACTIVE ── */
+.nav-links a.active {
+    color: var(--branco);
+    border-bottom: 2px solid var(--pedra-claro);
+    padding-bottom: 2px;
+}
+
+/* ── AVATAR NAV ── */
+.nav-avatar-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    text-decoration: none;
+    color: var(--color-text-light);
+    opacity: 0.9;
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    transition: opacity 0.2s;
+}
+
+.nav-avatar-link:hover {
+    opacity: 1;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+    .perfil-hero {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-lg);
+    }
+
+    .perfil-hero-actions {
+        width: 100%;
+    }
+
+    .btn-relatorio {
+        width: 100%;
+        justify-content: center;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tbody tr {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-xs) var(--space-md);
+        padding: var(--space-md) var(--space-lg);
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    tbody td {
+        padding: var(--space-xs) 0;
+        border-bottom: none;
+    }
+
+    tbody td::before {
+        display: block;
+        font-size: var(--text-xs);
+        color: var(--color-text-secondary);
+        font-weight: var(--font-bold);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 2px;
+    }
+
+    td:nth-child(1)::before {
+        content: "ID";
+    }
+
+    td:nth-child(2)::before {
+        content: "Orçamento";
+    }
+
+    td:nth-child(3)::before {
+        content: "Data";
+    }
+
+    td:nth-child(4)::before {
+        content: "Valor";
+    }
+}
